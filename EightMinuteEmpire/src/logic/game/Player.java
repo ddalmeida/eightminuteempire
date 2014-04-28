@@ -1,33 +1,32 @@
-package logic;
+package logic.game;
 
 public class Player {
-	private String nome;
-	private int moedas;
+	private String name;
+	private int coins;
 	
 	Player(String nome, int moedas)
 	{
-		this.nome = nome;
-		this.moedas = moedas;
+		this.name = nome;
+		this.coins = moedas;
 	}
 	
 	public String getNome()
 	{
-		return nome;
+		return name;
 	}
 	
 	public int getMoedas()
 	{
-		return moedas;
+		return coins;
 	}
 	
 	public void retirarMoedas(int n)
 	{
-		moedas = moedas - n >= 0 ? moedas - n : 0;
+		coins -= n >= 0 ? coins - n : 0;
 	}
 	
 	public void adicionarMoedas(int n)
 	{
-		moedas = moedas + n;
+		coins += n;
 	}
-
 }

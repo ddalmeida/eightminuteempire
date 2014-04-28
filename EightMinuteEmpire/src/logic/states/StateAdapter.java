@@ -1,4 +1,4 @@
-package logic;
+package logic.states;
 
 public class StateAdapter implements State {
 
