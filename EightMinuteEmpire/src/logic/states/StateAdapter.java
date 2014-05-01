@@ -1,79 +1,85 @@
 package logic.states;
 
-public class StateAdapter implements State {
+import logic.game.Game;
+
+public abstract class StateAdapter extends State {
+
+    public StateAdapter(Game game) {
+        super(game);
+    }
 
     @Override
-    public State pickNumberPlayers() {
+    public State pickNumberPlayers(Game game) {
         return this;
     }
 
     @Override
-    public State run() {
+    public State run(Game game) {
         return this;
     }
 
     @Override
-    public State bet() {
+    public State bet(Game game) {
         return this;
     }
 
     @Override
-    public State endTurn() {
+    public State endTurn(Game game) {
         return this;
     }
 
     @Override
-    public State playMoveArmyCard() {
+    public State playMoveArmyCard(Game game) {
         return this;
     }
 
     @Override
-    public State moveArmy() {
+    public State moveArmy(Game game) {
         return this;
     }
 
     @Override
-    public State playFoundCityCard() {
+    public State playFoundCityCard(Game game) {
         return this;
     }
 
     @Override
-    public State foundCity() {
+    public State foundCity(Game game) {
         return this;
     }
 
     @Override
-    public State pickAction() {
+    public State pickAction(Game game) {
         return this;
     }
 
     @Override
-    public State pickFirstAction() {
+    public State pickFirstAction(Game game) {
         return this;
     }
 
     @Override
-    public State playPlaceArmyCard() {
+    public State playPlaceArmyCard(Game game) {
         return this;
     }
 
     @Override
-    public State placeArmy() {
+    public State placeArmy(Game game) {
         return this;
     }
 
     @Override
-    public State playRemoveArmyCard() {
+    public State playRemoveArmyCard(Game game) {
         return this;
     }
 
     @Override
-    public State removeArmy() {
+    public State removeArmy(Game game) {
         return this;
     }
 
     @Override
-    public State endGame() {
+    public State endGame(Game game) {
         return this;
     }
 }

@@ -1,7 +1,7 @@
 package logic.resources;
 
 public abstract class BaseResource {
-    String name;
+    private String name;
 
     public BaseResource(String name) {
         this.name = name;
