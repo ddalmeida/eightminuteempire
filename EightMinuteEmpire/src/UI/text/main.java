@@ -1,20 +1,50 @@
 package UI.text;
 
+import java.util.Scanner;
 import logic.game.Game;
 
 public class main {
 
     public static void main(String[] args) {
         Game game = new Game();
-        
-        printf("Shall we play a game?", 0, 0);
-        printf("EIGHT MINUTE EMPIRE", 2, 0);
-        printf("== PA HELL EDITION ==", 3, 0);
-        printf("by Luís Costa - 21210392", 10, 1);
-        printf("and Nuno Aguiar - 21160515", 11, 1);
+
+        System.out.println("== EIGHT MINUTE EMPIRE ==");
+        System.out.println("  == PA HELL EDITION ==");
+        System.out.println("");
+        System.out.println("by Luís Costa - 21210392");
+        System.out.println("and Nuno Aguiar - 21160515");
+        System.out.println("");
+
+        while (game.getState() != null) {
+            switch (game.getState().getClass().toString()) {
+                case "class logic.states.StartGameState":
+                    doStartGameState(game);
+                    break;
+                case "class logic.states.AuctionState":
+                    doAuctionState(game);
+                    break;
+            }
+        }
     }
 
-    private static void printf(String s, int l, int c) {
-        System.out.print(String.format("%c[%d;%df%s", 0x1B, l, c, s));
+    private static void doStartGameState(Game game) {
+        Scanner sc = new Scanner(System.in);
+
+        if (game.numberOfPlayers() == 0) {
+            System.out.print("How many Players? ");
+        } else {
+            System.out.print("There must be atleast 2 players. How many more Players? ");
+        }
+        int players = sc.nextInt();
+
+        for (int i = 1; i <= players; ++i) {
+            System.out.print("New Player: ");
+            game.setState(game.getState().AddPlayer(sc.next()));
+        }
+        game.setState(game.getState().AddPlayer(null));
+    }
+
+    private static void doAuctionState(Game game) {
+        Scanner sc = new Scanner(System.in);
     }
 }

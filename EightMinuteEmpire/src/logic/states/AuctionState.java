@@ -8,6 +8,7 @@ public class AuctionState extends StateAdapter {
         super(game);
     }
 
+    @Override
     public State bet(int playerNumber, int coins) {
         //if (game.getPlayer(playerNumber).getCoins() < coins) {
         //}

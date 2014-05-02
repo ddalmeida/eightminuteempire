@@ -9,7 +9,7 @@ public class StartGameState extends StateAdapter {
     }
     
     @Override
-    State AddPlayer(String name){
+    public State AddPlayer(String name){
         if (name != null || game.numberOfPlayers() < 2)
         { // new player
            game.addPlayer(name);

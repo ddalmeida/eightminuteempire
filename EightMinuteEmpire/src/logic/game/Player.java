@@ -1,7 +1,6 @@
 package logic.game;
 
 public class Player {
-
     private String name;
     private int coins;
     private int points;

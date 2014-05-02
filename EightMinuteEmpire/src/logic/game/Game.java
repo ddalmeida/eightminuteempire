@@ -6,11 +6,19 @@ import logic.states.*;
 public class Game {
 
     private ArrayList<Player> players;
-    State state;
+    private State state;
 
     public Game() {
         players = new ArrayList<>();
         state = new StartGameState(this);
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public void addPlayer(String name) {
@@ -27,7 +35,7 @@ public class Game {
 
     public void addInitialCoins() {
         int coins = 8; // 5+ players
-        
+
         if (numberOfPlayers() == 2) {
             coins = 14;
         } else if (numberOfPlayers() == 3) {
@@ -40,7 +48,7 @@ public class Game {
             players.get(i).addCoins(coins);
         }
     }
-    
+
     public void betCoins(int playerNumber, int coins) {
         players.get(playerNumber).removeCoins(coins);
         players.get(playerNumber).setInitialBet(coins);

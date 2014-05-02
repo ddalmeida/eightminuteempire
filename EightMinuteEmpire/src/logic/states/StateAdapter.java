@@ -9,7 +9,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    State AddPlayer(String name){
+    public State AddPlayer(String name){
         return this;
     }
 

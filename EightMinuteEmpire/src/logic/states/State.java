@@ -10,19 +10,19 @@ public abstract class State {
         this.game = game;
     }
     
-    abstract State AddPlayer(String name);
-    abstract State run();
-    abstract State bet(int playerNumber, int coins);
-    abstract State endTurn();
-    abstract State playMoveArmyCard();
-    abstract State moveArmy();
-    abstract State playFoundCityCard();
-    abstract State foundCity();
-    abstract State pickAction();
-    abstract State pickFirstAction();
-    abstract State playPlaceArmyCard();
-    abstract State placeArmy();
-    abstract State playRemoveArmyCard();
-    abstract State removeArmy();
-    abstract State endGame();
+    public abstract State AddPlayer(String name);
+    public abstract State run();
+    public abstract State bet(int playerNumber, int coins);
+    public abstract State endTurn();
+    public abstract State playMoveArmyCard();
+    public abstract State moveArmy();
+    public abstract State playFoundCityCard();
+    public abstract State foundCity();
+    public abstract State pickAction();
+    public abstract State pickFirstAction();
+    public abstract State playPlaceArmyCard();
+    public abstract State placeArmy();
+    public abstract State playRemoveArmyCard();
+    public abstract State removeArmy();
+    public abstract State endGame();
 }
