@@ -9,7 +9,7 @@ public class Game {
     State state;
 
     public Game() {
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         state = new StartGameState(this);
     }
 
@@ -39,5 +39,10 @@ public class Game {
         for (int i = 0; i < numberOfPlayers(); ++i) {
             players.get(i).addCoins(coins);
         }
+    }
+    
+    public void betCoins(int playerNumber, int coins) {
+        players.get(playerNumber).removeCoins(coins);
+        players.get(playerNumber).setInitialBet(coins);
     }
 }

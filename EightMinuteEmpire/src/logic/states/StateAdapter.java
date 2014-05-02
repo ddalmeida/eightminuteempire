@@ -19,7 +19,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State bet() {
+    public State bet(int playerNumber, int coins) {
         return this;
     }
 

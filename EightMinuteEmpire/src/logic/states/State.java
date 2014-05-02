@@ -12,7 +12,7 @@ public abstract class State {
     
     abstract State AddPlayer(String name);
     abstract State run();
-    abstract State bet();
+    abstract State bet(int playerNumber, int coins);
     abstract State endTurn();
     abstract State playMoveArmyCard();
     abstract State moveArmy();

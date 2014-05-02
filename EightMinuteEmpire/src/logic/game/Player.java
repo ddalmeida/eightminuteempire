@@ -5,11 +5,13 @@ public class Player {
     private String name;
     private int coins;
     private int points;
+    private int initialBet;
 
     Player(String name, int coins) {
         this.name = name;
         this.coins = coins;
         points = 0;
+        initialBet = 0;
     }
 
     public String getName() {
@@ -18,6 +20,14 @@ public class Player {
 
     public int getCoins() {
         return coins;
+    }
+
+    public int getInitialBet() {
+        return initialBet;
+    }
+
+    public void setInitialBet(int initialBet) {
+        this.initialBet = initialBet;
     }
 
     public void removeCoins(int n) {

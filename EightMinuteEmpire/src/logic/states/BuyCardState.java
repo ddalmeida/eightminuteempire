@@ -7,5 +7,4 @@ public class BuyCardState extends StateAdapter {
     public BuyCardState(Game game) {
         super(game);
     }
-
 }
