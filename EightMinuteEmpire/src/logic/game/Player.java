@@ -1,6 +1,6 @@
 package logic.game;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private String name;
     private int coins;
     private int points;
@@ -11,6 +11,11 @@ public class Player {
         this.coins = coins;
         points = 0;
         initialBet = 0;
+    }
+    
+    @Override
+    public int compareTo(Player o) {
+        return (int)(this.points - o.getPoints());
     }
 
     public String getName() {
@@ -42,7 +47,7 @@ public class Player {
         points += n;
     }
     
-    public int getPoints(int n)
+    public int getPoints()
     {
         return points;
     }

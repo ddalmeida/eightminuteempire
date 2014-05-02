@@ -1,6 +1,10 @@
 package logic.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import logic.states.*;
 
 public class Game {
@@ -50,7 +54,23 @@ public class Game {
     }
 
     public void betCoins(int playerNumber, int coins) {
+        // Jogador apostou mais do que o tem.
+        if (coins > players.get(playerNumber).getCoins()) {
+            coins = players.get(playerNumber).getCoins();
+        }
+
+        // Jogador engraçadinho aposto um valor negativo.
+        if (coins < 0) {
+            coins = 0;
+        }
+
         players.get(playerNumber).removeCoins(coins);
         players.get(playerNumber).setInitialBet(coins);
+
+    }
+
+    public ArrayList<Player> getScoreTable() {
+        Collections.sort(players);
+        return players;
     }
 }
