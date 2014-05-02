@@ -41,7 +41,7 @@ public class main {
             System.out.print("New Player: ");
             game.setState(game.getState().AddPlayer(sc.next()));
         }
-        game.setState(game.getState().AddPlayer(null));
+        game.setState(game.getState().run());
     }
 
     private static void doAuctionState(Game game) {
