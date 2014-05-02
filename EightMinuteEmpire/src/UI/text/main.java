@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 import logic.game.Game;
 import logic.game.Player;
+import logic.states.GameOverState;
 
 public class main {
 
@@ -66,24 +67,23 @@ public class main {
     
     private static void doGameOver(Game game)
     {
-        System.out.println("=================");
-        System.out.println();
-        // Apresentar tabela de pontuação
+        System.out.println("=================================");
+        System.out.println("POS\tPOINTS\tNAME");
         
+        // Apresentar tabela de pontuação e mensagem de parabens
         ArrayList<Player> scoreTable = game.getScoreTable();
         
         for (int i = 0; i < game.numberOfPlayers(); ++i)
         {
-            System.out.println(String.format("%d - % s - %d",
-                    i+1, scoreTable.get(i).getName(), scoreTable.get(i).getPoints()));
+            System.out.println(String.format("%d\t%d\t%s",
+                    i+1, scoreTable.get(i).getPoints(), scoreTable.get(i).getName()));
     }
-        System.out.println();
-        System.out.println("=================");
-        System.out.println();
+        System.out.println("=================================");
         System.out.println();
         System.out.println(String.format("CONGRATULATIONS, %s!",scoreTable.get(0).getName()));
         System.out.println("YOU ARE THE STRATEGY MASTER OF THE WORLD!!!");
         
+        // Sai do jogo
         game.setState(null);
     }
 }

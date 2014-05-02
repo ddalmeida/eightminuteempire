@@ -15,7 +15,7 @@ public class Player implements Comparable<Player> {
     
     @Override
     public int compareTo(Player o) {
-        return (int)(this.points - o.getPoints());
+        return (int)(o.getPoints()- this.points);
     }
 
     public String getName() {
