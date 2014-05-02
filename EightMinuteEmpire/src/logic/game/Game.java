@@ -54,6 +54,9 @@ public class Game {
     }
 
     public void betCoins(int playerNumber, int coins) {
+        
+        state = new AuctionState(this);
+        
         // Jogador apostou mais do que o tem.
         if (coins > players.get(playerNumber).getCoins()) {
             coins = players.get(playerNumber).getCoins();

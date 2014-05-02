@@ -41,9 +41,9 @@ public class main {
         System.out.println();
 
         if (game.numberOfPlayers() == 0) {
-            System.out.print("How many Players? ");
+            System.out.print("How many players? ");
         } else {
-            System.out.print("There must be atleast 2 players. How many more Players? ");
+            System.out.print("There must be atleast 2 players. How many more players? ");
         }
         int players = sc.nextInt();
 
@@ -59,7 +59,7 @@ public class main {
         System.out.println();
 
         for (int i = 0; i < game.numberOfPlayers(); ++i) {
-            System.out.print(String.format("Player %s, you have %d coins. How many do want to bet? ",
+            System.out.print(String.format("Player %s, you have %d coins. How many do you want to bet? ",
                     game.getPlayer(i).getName(), game.getPlayer(i).getCoins()));
             game.betCoins(i, sc.nextInt());
         }

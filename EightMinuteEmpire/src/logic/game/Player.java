@@ -35,7 +35,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void removeCoins(int n) {
-        coins -= n >= 0 ? coins - n : 0;
+        coins -= n >= 0 ? n : 0;
     }
 
     public void addCoins(int n) {
