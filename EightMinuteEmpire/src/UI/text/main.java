@@ -12,10 +12,10 @@ public class main {
 
         System.out.println("== EIGHT MINUTE EMPIRE ==");
         System.out.println("  == PA HELL EDITION ==");
-        System.out.println("");
+        System.out.println();
         System.out.println("by Luís Costa - 21210392");
         System.out.println("and Nuno Aguiar - 21160515");
-        System.out.println("");
+        System.out.println();
 
         while (game.getState() != null) {
             switch (game.getState().getClass().toString()) {
@@ -26,9 +26,41 @@ public class main {
                     doAuctionState(game);
                     break;
 
+                case "class logic.states.BuyCardState":
+                    doBuyCardState(game);
+                    break;
+
+                case "class logic.states.PlaceArmyState":
+                    doPlaceArmyState(game);
+                    break;
+
+                case "class logic.state.MoveArmyState":
+                    doMoveArmyState(game);
+                    break;
+
+                case "class logic.state.RemoveArmyState":
+                    doRemoveArmyState(game);
+                    break;
+
+                case "class logic.state.FoundCityState":
+                    doFoundCityState(game);
+                    break;
+
+                case "class logic.state.AndState":
+                    doAndState(game);
+                    break;
+
+                case "class logic.state.OrState":
+                    doOrState(game);
+                    break;
+
                 case "class logic.states.GameOverState":
                     doGameOver(game);
                     break;
+
+                default:
+                    System.out.println("ERROR! Unknown state! Killing the game!");
+                    System.exit(-1);
             }
         }
     }
@@ -62,24 +94,30 @@ public class main {
         }
     }
     
-    private static void doGameOver(Game game)
-    {
+    private static void doBuyCardState(Game game){}
+    private static void doPlaceArmyState(Game game){}
+    private static void doMoveArmyState(Game game){}
+    private static void doRemoveArmyState(Game game){}
+    private static void doFoundCityState(Game game){}
+    private static void doAndState(Game game){}
+    private static void doOrState(Game game){}
+
+    private static void doGameOver(Game game) {
         System.out.println("=================================");
         System.out.println("POS\tPOINTS\tNAME");
-        
+
         // Apresentar tabela de pontuação e mensagem de parabens
         List<Player> scoreTable = game.getScoreTable();
-        
-        for (int i = 0; i < game.numberOfPlayers(); ++i)
-        {
+
+        for (int i = 0; i < game.numberOfPlayers(); ++i) {
             System.out.println(String.format("%d\t%d\t%s",
-                    i+1, scoreTable.get(i).getPoints(), scoreTable.get(i).getName()));
-    }
+                    i + 1, scoreTable.get(i).getPoints(), scoreTable.get(i).getName()));
+        }
         System.out.println("=================================");
         System.out.println();
-        System.out.println(String.format("CONGRATULATIONS, %s!",scoreTable.get(0).getName()));
+        System.out.println(String.format("CONGRATULATIONS, %s!", scoreTable.get(0).getName()));
         System.out.println("YOU ARE THE STRATEGY MASTER OF THE WORLD!!!");
-        
+
         // Sai do jogo
         game.setState(null);
     }
