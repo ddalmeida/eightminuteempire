@@ -1,14 +1,17 @@
 package logic.cards;
 
-import logic.resources.*;
-import logic.actions.*;
-
-public abstract class BaseCard {
-    BaseResource resource;
+public class BaseCard {
+    String resource;
     int resourceNumber;
-    BaseAction action;
+    String action;
 
-    public BaseResource getResource() {
+    public BaseCard(String resource, int resourceNumber, String action) {
+        this.resource = resource;
+        this.resourceNumber = resourceNumber;
+        this.action = action;
+    }
+
+    public String getResource() {
         return resource;
     }
 
@@ -16,7 +19,7 @@ public abstract class BaseCard {
         return resourceNumber;
     }
 
-    public BaseAction getAction() {
+    public String getAction() {
         return action;
     }
 }

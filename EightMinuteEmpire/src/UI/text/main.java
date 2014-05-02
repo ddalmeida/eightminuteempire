@@ -1,12 +1,9 @@
 package UI.text;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
 import logic.game.Game;
 import logic.game.Player;
-import logic.states.GameOverState;
 
 public class main {
 
@@ -71,7 +68,7 @@ public class main {
         System.out.println("POS\tPOINTS\tNAME");
         
         // Apresentar tabela de pontuação e mensagem de parabens
-        ArrayList<Player> scoreTable = game.getScoreTable();
+        List<Player> scoreTable = game.getScoreTable();
         
         for (int i = 0; i < game.numberOfPlayers(); ++i)
         {

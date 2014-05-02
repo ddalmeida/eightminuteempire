@@ -1,19 +1,22 @@
 package logic.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import logic.cards.*;
 import logic.states.*;
 
 public class Game {
 
-    private ArrayList<Player> players;
+    private List<Player> players;
     private State state;
+    private Map<BaseCard, Integer> cards;
 
     public Game() {
         players = new ArrayList<>();
+        cards = new HashMap<>();
         state = new StartGameState(this);
     }
 
@@ -52,6 +55,49 @@ public class Game {
             players.get(i).addCoins(coins);
         }
     }
+    
+    public void initializeCards() {
+        
+        //Não inclui as cartas para jogos de 5+ jogadores
+        
+        cards.put(new BaseCard("Jewels", 1, "PlaceArmy"), 1);
+        cards.put(new BaseCard("Jewels", 1, "PlaceArmyTwoTimes"), 2);
+        cards.put(new BaseCard("Jewels", 1, "PlaceArmyTwoTimes"), 3);
+        cards.put(new BaseCard("Jewels", 1, "MoveArmyLand"), 4);
+        cards.put(new BaseCard("Food", 1, "FoundCity"), 5);
+        cards.put(new BaseCard("Food", 1, "FoundCity"), 6);
+        cards.put(new BaseCard("Food", 1, "MoveArmyThreeTimesLand"), 7);
+        cards.put(new BaseCard("Food", 2, "MoveArmyThreeTimesLand"), 8);
+        cards.put(new BaseCard("Food", 1, "MoveArmyFourTimesLand"), 9);
+        cards.put(new BaseCard("Food", 1, "MoveArmyFourTimesLand"), 10);
+        cards.put(new BaseCard("Food", 1, "MoveArmyFiveTimesLand"), 11);
+        cards.put(new BaseCard("Food", 1, "MoveArmyThreeTimesLandWater"), 12);
+        cards.put(new BaseCard("Food", 1, "PlaceArmy AND RemoveArmy"), 13);
+        cards.put(new BaseCard("Wood", 1, "FoundCity"), 14);
+        cards.put(new BaseCard("Wood", 1, "PlaceArmyThreeTimes"), 15);
+        cards.put(new BaseCard("Wood", 1, "MoveArmyThreeTimesLand"), 16);
+        cards.put(new BaseCard("Wood", 1, "MoveArmyTwoTimesLand OR MoveArmyThreeTimesLand"), 17);
+        cards.put(new BaseCard("Wood", 1, "MoveArmyThreeTimesLandWater"), 18);
+        cards.put(new BaseCard("Wood", 1, "MoveArmyFourTimesLandWater"), 19);
+        cards.put(new BaseCard("Wood", 1, "RemoveArmy OR FoundCity"), 20);
+        cards.put(new BaseCard("Iron", 1, "PlaceArmyTwoTimes"), 21);
+        cards.put(new BaseCard("Iron", 1, "PlaceArmyThreeTimes"), 22);
+        cards.put(new BaseCard("Iron", 1, "PlaceArmyThreeTimes"), 23);
+        cards.put(new BaseCard("Iron", 1, "MoveArmyTwoTimesLand"), 24);
+        cards.put(new BaseCard("Iron", 1, "MoveArmyTwoTimesLandWater"), 25);
+        cards.put(new BaseCard("Iron", 1, "MoveArmyThreeTimesLandWater"), 26);
+        cards.put(new BaseCard("Tools", 1, "FoundCity"), 27);
+        cards.put(new BaseCard("Tools", 1, "PlaceArmyThreeTimes"), 28);
+        cards.put(new BaseCard("Tools", 1, "PlaceArmyThreeTimes"), 29);
+        cards.put(new BaseCard("Tools", 1, "MoveArmyThreeTimesLandWater"), 30);
+        cards.put(new BaseCard("Tools", 1, "MoveArmyFourTimesLand"), 31);
+        cards.put(new BaseCard("Tools", 1, "PlaceArmyThreeTimes OR MoveArmyThreeTimesLand"), 32);
+        cards.put(new BaseCard("Tools", 1, "PlaceArmyThreeTimes OR MoveArmyFourTimesLand"), 33);
+        cards.put(new BaseCard("Tools", 1, "MoveArmyFiveTimesLand"), 34);
+        cards.put(new BaseCard("Joker", 1, "PlaceArmyTwoTimes"), 35);
+        cards.put(new BaseCard("Joker", 1, "MoveArmyTwoTimesLandWater"), 36);
+        cards.put(new BaseCard("Joker", 1, "MoveArmyTwoTimesLandWater"), 37);
+    }
 
     public void betCoins(int playerNumber, int coins) {
         
@@ -72,7 +118,7 @@ public class Game {
 
     }
 
-    public ArrayList<Player> getScoreTable() {
+    public List<Player> getScoreTable() {
         Collections.sort(players);
         return players;
     }

@@ -1,16 +1,22 @@
 package logic.game;
 
+import java.util.ArrayList;
+import java.util.List;
+import logic.cards.*;
+
 public class Player implements Comparable<Player> {
     private String name;
     private int coins;
     private int points;
     private int initialBet;
+    private List<BaseCard> cardsInHand;
 
     Player(String name, int coins) {
         this.name = name;
         this.coins = coins;
         points = 0;
         initialBet = 0;
+        cardsInHand = new ArrayList<>();
     }
     
     @Override
