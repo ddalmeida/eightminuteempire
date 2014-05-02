@@ -7,9 +7,10 @@ public class main {
     public static void main(String[] args) {
         Game game = new Game();
         
-
         printf("Shall we play a game?", 0, 0);
-        printf("by Luís Costa - 21XXXXXXX", 10, 1);
+        printf("EIGHT MINUTE EMPIRE", 2, 0);
+        printf("== PA HELL EDITION ==", 3, 0);
+        printf("by Luís Costa - 21210392", 10, 1);
         printf("and Nuno Aguiar - 21160515", 11, 1);
     }
 

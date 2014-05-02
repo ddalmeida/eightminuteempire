@@ -9,77 +9,77 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State pickNumberPlayers(Game game) {
+    State AddPlayer(String name){
         return this;
     }
 
     @Override
-    public State run(Game game) {
+    public State run() {
         return this;
     }
 
     @Override
-    public State bet(Game game) {
+    public State bet() {
         return this;
     }
 
     @Override
-    public State endTurn(Game game) {
+    public State endTurn() {
         return this;
     }
 
     @Override
-    public State playMoveArmyCard(Game game) {
+    public State playMoveArmyCard() {
         return this;
     }
 
     @Override
-    public State moveArmy(Game game) {
+    public State moveArmy() {
         return this;
     }
 
     @Override
-    public State playFoundCityCard(Game game) {
+    public State playFoundCityCard() {
         return this;
     }
 
     @Override
-    public State foundCity(Game game) {
+    public State foundCity() {
         return this;
     }
 
     @Override
-    public State pickAction(Game game) {
+    public State pickAction() {
         return this;
     }
 
     @Override
-    public State pickFirstAction(Game game) {
+    public State pickFirstAction() {
         return this;
     }
 
     @Override
-    public State playPlaceArmyCard(Game game) {
+    public State playPlaceArmyCard() {
         return this;
     }
 
     @Override
-    public State placeArmy(Game game) {
+    public State placeArmy() {
         return this;
     }
 
     @Override
-    public State playRemoveArmyCard(Game game) {
+    public State playRemoveArmyCard() {
         return this;
     }
 
     @Override
-    public State removeArmy(Game game) {
+    public State removeArmy() {
         return this;
     }
 
     @Override
-    public State endGame(Game game) {
+    public State endGame() {
         return this;
     }
 }
