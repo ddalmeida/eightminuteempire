@@ -1,7 +1,9 @@
 package logic.map;
 
 import java.util.ArrayList;
-import logic.game.*;
+import logic.armies.Army;
+import logic.cities.City;
+import logic.game.Player;
 
 public abstract class BaseRegion {
     int x;
@@ -58,7 +60,7 @@ public abstract class BaseRegion {
     public int addCity(Player player, City city) {
         if (settleable) {
             for (int i = 0; i < armies.size(); i++) {
-                if (armies.get(i).getOwner == player) {
+                if (armies.get(i).getOwner() == player) {
                     for (int j = 0; j < cities.size(); j++) {
                         //  ********WTF não me deixa aceder aos métodos da classe City******************
                         if (cities.get(j).getOwner() == player) {
@@ -80,7 +82,7 @@ public abstract class BaseRegion {
     public int countArmies(Player player) {
         int number = 0;
         for (int i = 0; i < armies.size(); i++) {
-            if (armies.get(i).getOwner == player) {
+            if (armies.get(i).getOwner() == player) {
                 number++;
             }
         }

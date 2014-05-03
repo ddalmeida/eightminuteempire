@@ -54,27 +54,24 @@ public class Game {
             state = state.run();
         }
     }
-    
-    public void S_choseCard(int cardNumber, boolean useAction)
-    {
-        if (useAction)
-        state = cardsTable.get(cardNumber).getAction().doAction(this);
-        else
-        state = state.endTurn();
+
+    public void S_choseCard(int cardNumber, boolean useAction) {
+        if (useAction) {
+            state = cardsTable.get(cardNumber).getAction().doAction(this);
+        } else {
+            state = state.endTurn();
+        }
     }
-    
-    public void S_bet(int playerNumber, int coins)
-    {
+
+    public void S_bet(int playerNumber, int coins) {
         state = state.bet(playerNumber, coins);
     }
 
     // ** JOGADORES
-    
-    public void addPlayer(String name)
-    {
+    public void addPlayer(String name) {
         players.add(new Player(name, 0));
     }
-    
+
     public int numberOfPlayers() {
         return players.size();
     }

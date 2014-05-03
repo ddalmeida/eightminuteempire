@@ -2,7 +2,9 @@ package logic.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import logic.armies.Army;
 import logic.cards.*;
+import logic.cities.City;
 
 public class Player implements Comparable<Player> {
     private String name;

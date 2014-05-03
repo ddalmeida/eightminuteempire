@@ -1,7 +1,6 @@
 package logic.actions;
 
 import logic.game.Game;
-import logic.states.FoundCityState;
 import logic.states.State;
 
 public class FoundCityAction extends BaseAction{
@@ -12,7 +11,7 @@ public class FoundCityAction extends BaseAction{
 
     @Override
     public State doAction(Game game) {
-        return new FoundCityState(game);
+        return game.getState().playFoundCityCard();
     }
 
     @Override

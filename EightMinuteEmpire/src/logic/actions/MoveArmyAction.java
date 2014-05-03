@@ -1,7 +1,6 @@
 package logic.actions;
 
 import logic.game.Game;
-import logic.states.MoveArmyState;
 import logic.states.State;
 
 public class MoveArmyAction extends BaseAction{
@@ -14,7 +13,7 @@ public class MoveArmyAction extends BaseAction{
 
     @Override
     public State doAction(Game game) {
-        return new MoveArmyState(game);
+        return game.getState().playMoveArmyCard();
     }
 
     @Override
