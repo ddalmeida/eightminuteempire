@@ -9,7 +9,9 @@ public class Player implements Comparable<Player> {
     private int coins;
     private int points;
     private int initialBet;
-    private List<BaseCard> cardsInHand;
+    private List<RegularCard> cardsInHand;
+    private List<Army> armies;
+    private List<City> cities;
 
     Player(String name, int coins) {
         this.name = name;
@@ -17,6 +19,8 @@ public class Player implements Comparable<Player> {
         points = 0;
         initialBet = 0;
         cardsInHand = new ArrayList<>();
+        armies = new ArrayList<>();
+        cities = new ArrayList<>();
     }
     
     @Override

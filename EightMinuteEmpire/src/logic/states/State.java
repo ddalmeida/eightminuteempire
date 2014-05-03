@@ -3,7 +3,7 @@ package logic.states;
 import logic.game.Game;
 
 public abstract class State {
-    protected Game game;
+    Game game;
     
     State(Game game)
     {

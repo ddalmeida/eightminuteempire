@@ -1,11 +1,13 @@
 package logic.cards;
 
-public class BaseCard {
+import logic.actions.BaseAction;
+
+public class RegularCard {
     String resource;
     int resourceNumber;
-    String action;
+    BaseAction action;
 
-    public BaseCard(String resource, int resourceNumber, String action) {
+    public RegularCard(String resource, int resourceNumber, BaseAction action) {
         this.resource = resource;
         this.resourceNumber = resourceNumber;
         this.action = action;
@@ -19,7 +21,7 @@ public class BaseCard {
         return resourceNumber;
     }
 
-    public String getAction() {
+    public BaseAction getAction() {
         return action;
     }
 }
