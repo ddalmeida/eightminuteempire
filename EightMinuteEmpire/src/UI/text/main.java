@@ -90,7 +90,7 @@ public class main {
         for (int i = 0; i < game.numberOfPlayers(); ++i) {
             System.out.print(String.format("Player %s, you have %d coins. How many do you want to bet? ",
                     game.getPlayer(i).getName(), game.getPlayer(i).getCoins()));
-            game.betCoins(i, sc.nextInt());
+            game.setState(game.getState().bet(i, sc.nextInt()));
         }
     }
     

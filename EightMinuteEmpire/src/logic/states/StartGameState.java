@@ -17,6 +17,7 @@ public class StartGameState extends StateAdapter {
         return this;
     }
 
+    @Override
     public State run() {
         if (game.numberOfPlayers() >= 2) {
             game.addInitialCoins();

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import logic.cards.*;
 import logic.states.*;
 
@@ -13,6 +14,7 @@ public class Game {
     private List<Player> players;
     private State state;
     private Map<BaseCard, Integer> cards;
+    private int activePlayer;
 
     public Game() {
         players = new ArrayList<>();
@@ -29,7 +31,9 @@ public class Game {
     }
 
     public void addPlayer(String name) {
-        players.add(new Player(name, 0));
+        if (name != null) {
+            players.add(new Player(name, 0));
+        }
     }
 
     public int numberOfPlayers() {
@@ -55,11 +59,10 @@ public class Game {
             players.get(i).addCoins(coins);
         }
     }
-    
+
     public void initializeCards() {
-        
+
         //Não inclui as cartas para jogos de 5+ jogadores
-        
         cards.put(new BaseCard("Jewels", 1, "PlaceArmy"), 1);
         cards.put(new BaseCard("Jewels", 1, "PlaceArmyTwoTimes"), 2);
         cards.put(new BaseCard("Jewels", 1, "PlaceArmyTwoTimes"), 3);
@@ -100,9 +103,6 @@ public class Game {
     }
 
     public void betCoins(int playerNumber, int coins) {
-        
-        state = new AuctionState(this);
-        
         // Jogador apostou mais do que o tem.
         if (coins > players.get(playerNumber).getCoins()) {
             coins = players.get(playerNumber).getCoins();
@@ -115,7 +115,31 @@ public class Game {
 
         players.get(playerNumber).removeCoins(coins);
         players.get(playerNumber).setInitialBet(coins);
+    }
 
+    public void determinateActivePlayer() {
+        ArrayList<Player> highestBidders = new ArrayList<Player>();
+        highestBidders.add(players.get(0));
+
+        // Ver quem é que apostou mais
+        for (int i = 1; i < numberOfPlayers(); ++i) {
+            if (players.get(i).getInitialBet() > highestBidders.get(0).getInitialBet()) // Maior que o(s) maior(s) actual(s)
+            {
+                highestBidders.clear();
+                highestBidders.add(players.get(i));
+            } else if (players.get(i).getInitialBet() == highestBidders.get(0).getInitialBet()) // Empate com o(s) maior(s)
+            {
+                highestBidders.add(players.get(i));
+            }
+        }
+
+        // Ver se houve empate
+        if (highestBidders.size() > 1) {
+            Random r = new Random();
+            activePlayer = players.indexOf(highestBidders.get(r.nextInt(highestBidders.size())));
+        } else {
+            activePlayer = players.indexOf(highestBidders.get(0));
+        }
     }
 
     public List<Player> getScoreTable() {
