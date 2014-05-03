@@ -19,4 +19,5 @@ public abstract class BaseAction {
     }
     
     public abstract void action();
+    public abstract String toString();
 }

@@ -24,4 +24,9 @@ public class RegularCard {
     public BaseAction getAction() {
         return action;
     }
+    
+    public String toString()
+    {
+        return resource + " card with " + action.toString();
+    }
 }

@@ -10,5 +10,10 @@ public class PlaceArmyAction extends BaseAction{
     public void action() {
         
     }
+
+    @Override
+    public String toString() {
+        return "Place an Army"  + times + " time(s)";
+    }
     
 }

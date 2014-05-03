@@ -1,8 +1,10 @@
 package UI.text;
 
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import logic.cards.RegularCard;
 import logic.game.Game;
 import logic.game.Player;
 
@@ -68,6 +70,7 @@ public class main {
 
     private static void doStartGameState(Game game) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("***");
         System.out.println();
 
         int players = 0;
@@ -98,6 +101,7 @@ public class main {
     }
 
     private static void doAuctionState(Game game) {
+        System.out.println("***");
         System.out.println();
 
         for (int i = 0; i < game.numberOfPlayers(); ++i) {
@@ -108,6 +112,19 @@ public class main {
     }
 
     private static void doBuyCardState(Game game) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("***");
+        System.out.println();
+        
+        System.out.println(game.getActivePlayer().getName() + ", it's your turn! Pick a card!");
+        System.out.println("You have: " + game.getActivePlayer().getCoins() + " coins");
+        System.out.println();
+        
+        ArrayList<RegularCard> cardsTable = game.getCardsTable();
+        for (int i = 0; i < cardsTable.size(); i++)
+        {
+            System.out.println(String.format("[CARD %d][%s][Cost: %d]", i+1, cardsTable.get(i).toString(), (i/2)));
+        }
     }
 
     private static void doPlaceArmyState(Game game) {

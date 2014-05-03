@@ -12,5 +12,10 @@ public class MoveArmyAction extends BaseAction{
     public void action() {
         
     }
+
+    @Override
+    public String toString() {
+       return "Move a Army " + times + " time(s)";
+    }
     
 }

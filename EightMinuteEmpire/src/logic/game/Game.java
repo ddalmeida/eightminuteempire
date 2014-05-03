@@ -10,16 +10,18 @@ import logic.states.*;
 
 public class Game {
 
-    private List<Player> players;
-    private List<RegularCard> cards;
-    private List<RegularCard> cardsTable;
+    private ArrayList<Player> players;
+    private ArrayList<RegularCard> cards;
+    private ArrayList<RegularCard> cardsTable;
     private int activePlayer;
     private State state;
+    private Random rnd;
 
     public Game() {
         players = new ArrayList<>();
         cards = new ArrayList<>();
         cardsTable = new ArrayList<>();
+        rnd = new Random();
 
         // Carregar mapa?
         state = new StartGameState(this);
@@ -46,6 +48,11 @@ public class Game {
     public Player getPlayer(int i) {
         return players.get(i);
     }
+        
+    public Player getActivePlayer()
+    {
+        return players.get(activePlayer);
+    }
 
     public void addInitialCoins() {
         int coins = 8; // 5+ players
@@ -68,7 +75,7 @@ public class Game {
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(2)));
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(2)));
         cards.add(new RegularCard("Jewels", 1, new MoveArmyAction(2, false)));
-        
+
         cards.add(new RegularCard("Food", 1, new FoundCityAction(1)));
         cards.add(new RegularCard("Food", 1, new FoundCityAction(1)));
         cards.add(new RegularCard("Food", 1, new MoveArmyAction(3, false)));
@@ -78,7 +85,7 @@ public class Game {
         cards.add(new RegularCard("Food", 1, new MoveArmyAction(5, false)));
         cards.add(new RegularCard("Food", 1, new MoveArmyAction(3, true)));
         cards.add(new AndCard("Food", 1, new PlaceArmyAction(1), new RemoveArmyAction(1)));
-        
+
         cards.add(new RegularCard("Wood", 1, new FoundCityAction(1)));
         cards.add(new RegularCard("Wood", 1, new PlaceArmyAction(3)));
         cards.add(new RegularCard("Wood", 1, new MoveArmyAction(3, false)));
@@ -86,7 +93,7 @@ public class Game {
         cards.add(new RegularCard("Wood", 1, new MoveArmyAction(3, true)));
         cards.add(new RegularCard("Wood", 1, new MoveArmyAction(4, true)));
         cards.add(new OrCard("Wood", 1, new RemoveArmyAction(1), new FoundCityAction(1)));
-        
+
         cards.add(new RegularCard("Iron", 1, new PlaceArmyAction(2)));
         cards.add(new RegularCard("Iron", 1, new PlaceArmyAction(3)));
         cards.add(new RegularCard("Iron", 1, new PlaceArmyAction(3)));
@@ -102,7 +109,7 @@ public class Game {
         cards.add(new OrCard("Tools", 1, new PlaceArmyAction(3), new MoveArmyAction(3, false)));
         cards.add(new OrCard("Tools", 1, new PlaceArmyAction(3), new MoveArmyAction(4, false)));
         cards.add(new RegularCard("Tools", 1, new MoveArmyAction(5, false)));
-        
+
         cards.add(new RegularCard("Joker", 1, new PlaceArmyAction(2)));
         cards.add(new RegularCard("Joker", 1, new MoveArmyAction(2, true)));
         cards.add(new RegularCard("Joker", 1, new MoveArmyAction(2, true)));
@@ -110,11 +117,21 @@ public class Game {
         // Cartas apenas disponiveis se houve 5+ jogadores
         if (numberOfPlayers() >= 5) {
             cards.add(new RegularCard("Jewels", 1, new MoveArmyAction(2, false)));
-              cards.add(new OrCard("Food", 1, new PlaceArmyAction(4), new MoveArmyAction(2, false)));
-              cards.add(new RegularCard("Wood", 1, new MoveArmyAction(6, false)));
-              cards.add(new RegularCard("Iron", 1, new MoveArmyAction(2, true)));
-               cards.add(new RegularCard("Tools", 2, new MoveArmyAction(4, false)));
+            cards.add(new OrCard("Food", 1, new PlaceArmyAction(4), new MoveArmyAction(2, false)));
+            cards.add(new RegularCard("Wood", 1, new MoveArmyAction(6, false)));
+            cards.add(new RegularCard("Iron", 1, new MoveArmyAction(2, true)));
+            cards.add(new RegularCard("Tools", 2, new MoveArmyAction(4, false)));
         }
+
+        // Escolher 6 e mete-las na "mesa"
+        for (int i = 1; i <= 6; ++i) {
+            cardsTable.add(cards.get(rnd.nextInt(cards.size())));
+        }
+    }
+    
+    public ArrayList<RegularCard> getCardsTable()
+    {
+        return cardsTable;
     }
 
     public void betCoins(int playerNumber, int coins) {
@@ -150,8 +167,7 @@ public class Game {
 
         // Ver se houve empate
         if (highestBidders.size() > 1) {
-            Random r = new Random();
-            activePlayer = players.indexOf(highestBidders.get(r.nextInt(highestBidders.size())));
+            activePlayer = players.indexOf(highestBidders.get(rnd.nextInt(highestBidders.size())));
         } else {
             activePlayer = players.indexOf(highestBidders.get(0));
         }

@@ -9,4 +9,9 @@ public class AndCard extends RegularCard{
         super(resource, resourceNumber, action);
         this.action2 = action2;
     }
+    
+    public String toString()
+    {
+        return resource + " card with " + action.toString() + " AND " + action2.toString();
+    }
 }

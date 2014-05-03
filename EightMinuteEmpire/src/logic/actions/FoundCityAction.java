@@ -9,5 +9,10 @@ public class FoundCityAction extends BaseAction{
     @Override
     public void action() {
     }
+
+    @Override
+    public String toString() {
+        return "Found " + times + " City";
+    }
     
 }

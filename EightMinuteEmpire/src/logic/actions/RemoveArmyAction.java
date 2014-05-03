@@ -10,4 +10,9 @@ public class RemoveArmyAction extends BaseAction{
     public void action() {
     }
 
+    @Override
+    public String toString() {
+       return "Remove an Army" + times + " time(s)";
+    }
+
 }
