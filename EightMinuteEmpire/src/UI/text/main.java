@@ -1,5 +1,6 @@
 package UI.text;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Scanner;
 import logic.game.Game;
@@ -69,38 +70,63 @@ public class main {
         Scanner sc = new Scanner(System.in);
         System.out.println();
 
-        if (game.numberOfPlayers() == 0) {
-            System.out.print("How many players? ");
-        } else {
-            System.out.print("There must be atleast 2 players. How many more players? ");
-        }
-        int players = sc.nextInt();
+        int players = 0;
 
+        // Quantos jogadores sao?
+        while (players == 0) {
+            if (game.numberOfPlayers() == 0) {
+                System.out.print("How many players? ");
+            } else {
+                System.out.print("There must be atleast 2 players. How many more players? ");
+            }
+
+            try {
+                players = Integer.parseInt(sc.next());
+            } catch (Exception e) {
+                players = 0;
+            }
+        }
+
+        // Perguntar pelos nomes
         for (int i = 1; i <= players; ++i) {
             System.out.print("New Player: ");
             game.setState(game.getState().AddPlayer(sc.next()));
         }
+
+        // Tentar iniciar jogo
         game.setState(game.getState().run());
     }
 
     private static void doAuctionState(Game game) {
-        Scanner sc = new Scanner(System.in);
         System.out.println();
 
         for (int i = 0; i < game.numberOfPlayers(); ++i) {
             System.out.print(String.format("Player %s, you have %d coins. How many do you want to bet? ",
                     game.getPlayer(i).getName(), game.getPlayer(i).getCoins()));
-            game.setState(game.getState().bet(i, sc.nextInt()));
+            game.setState(game.getState().bet(i, readBet()));
         }
     }
-    
-    private static void doBuyCardState(Game game){}
-    private static void doPlaceArmyState(Game game){}
-    private static void doMoveArmyState(Game game){}
-    private static void doRemoveArmyState(Game game){}
-    private static void doFoundCityState(Game game){}
-    private static void doAndState(Game game){}
-    private static void doOrState(Game game){}
+
+    private static void doBuyCardState(Game game) {
+    }
+
+    private static void doPlaceArmyState(Game game) {
+    }
+
+    private static void doMoveArmyState(Game game) {
+    }
+
+    private static void doRemoveArmyState(Game game) {
+    }
+
+    private static void doFoundCityState(Game game) {
+    }
+
+    private static void doAndState(Game game) {
+    }
+
+    private static void doOrState(Game game) {
+    }
 
     private static void doGameOver(Game game) {
         System.out.println("=================================");
@@ -120,5 +146,23 @@ public class main {
 
         // Sai do jogo
         game.setState(null);
+    }
+
+    private static int readBet() {
+        Console console = System.console();
+        String bet;
+
+        if (console != null) { // Se estiver a executar numa consola dá para ocultar os caracteres
+            bet = new String(console.readPassword("f"));
+        } else {
+            Scanner sc = new Scanner(System.in); // Não está numa consola por isso é impossivel ocultar caracteres
+            bet = sc.next();
+        }
+
+        try {
+            return Integer.parseInt(bet);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }
