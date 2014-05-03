@@ -19,6 +19,10 @@ public class main {
         System.out.println("by Luís Costa - 21210392");
         System.out.println("and Nuno Aguiar - 21160515");
         System.out.println();
+        System.out.println("Warning: This is a professional and serious game. If you or your friends think they are");
+        System.out.println("comedians and type some randomness when you are supposed to pick something,");
+        System.out.println("the game with pick the worst option for you! Punch them or yourself now!");
+        System.out.println();
 
         while (game.getState() != null) {
             switch (game.getState().getClass().toString()) {
@@ -93,11 +97,10 @@ public class main {
         // Perguntar pelos nomes
         for (int i = 1; i <= players; ++i) {
             System.out.print("New Player: ");
-            game.setState(game.getState().AddPlayer(sc.next()));
+            game.S_addPlayer(sc.next());
         }
 
-        // Tentar iniciar jogo
-        game.setState(game.getState().run());
+        game.S_addPlayer(null); // não há mais players.
     }
 
     private static void doAuctionState(Game game) {
@@ -107,7 +110,7 @@ public class main {
         for (int i = 0; i < game.numberOfPlayers(); ++i) {
             System.out.print(String.format("Player %s, you have %d coins. How many do you want to bet? ",
                     game.getPlayer(i).getName(), game.getPlayer(i).getCoins()));
-            game.setState(game.getState().bet(i, readBet()));
+            game.S_bet(i, readBet());
         }
     }
 
@@ -115,15 +118,28 @@ public class main {
         Scanner sc = new Scanner(System.in);
         System.out.println("***");
         System.out.println();
-        
+
         System.out.println(game.getActivePlayer().getName() + ", it's your turn! Pick a card!");
         System.out.println("You have: " + game.getActivePlayer().getCoins() + " coins");
         System.out.println();
-        
+
         ArrayList<RegularCard> cardsTable = game.getCardsTable();
-        for (int i = 0; i < cardsTable.size(); i++)
-        {
-            System.out.println(String.format("[CARD %d][%s][Cost: %d]", i+1, cardsTable.get(i).toString(), (i/2)));
+        for (int i = 0; i < cardsTable.size(); i++) {
+            System.out.println(String.format("[CARD %d][%s][Cost: %d]", i + 1, cardsTable.get(i).toString(), ((i + 1) / 2)));
+        }
+
+        int cardChosen;
+        try {
+            cardChosen = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            cardChosen = 0;
+        }
+
+        System.out.println("Do you want to use it's action? (Y/N): ");
+        if (sc.next().toUpperCase() == "Y") {
+            game.S_choseCard(cardChosen, true);
+        } else {
+            game.S_choseCard(cardChosen, false);
         }
     }
 

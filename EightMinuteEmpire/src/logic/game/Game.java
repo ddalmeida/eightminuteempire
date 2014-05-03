@@ -24,21 +24,21 @@ public class Game {
         cards = new ArrayList<>();
         cardsTable = new ArrayList<>();
         map = new BaseRegion[3][3];
-        map[0][0] = new LandRegion(0,0, true);
-        map[0][1] = new LandRegion(0,1, true);
-        map[0][2] = new WaterRegion(0,2, false);
-        map[1][0] = new LandRegion(1,0, true);
-        map[1][1] = new WaterRegion(1,1, false);
-        map[1][2] = new WaterRegion(1,2, false);
-        map[2][0] = new WaterRegion(2,0, false);
-        map[2][1] = new LandRegion(2,1, false);
-        map[2][2] = new LandRegion(2,2, false);
+        map[0][0] = new LandRegion(0, 0, true);
+        map[0][1] = new LandRegion(0, 1, true);
+        map[0][2] = new WaterRegion(0, 2, false);
+        map[1][0] = new LandRegion(1, 0, true);
+        map[1][1] = new WaterRegion(1, 1, false);
+        map[1][2] = new WaterRegion(1, 2, false);
+        map[2][0] = new WaterRegion(2, 0, false);
+        map[2][1] = new LandRegion(2, 1, false);
+        map[2][2] = new LandRegion(2, 2, false);
         rnd = new Random();
 
-        // Carregar mapa?
         state = new StartGameState(this);
     }
 
+    // ** ESTADOS
     public State getState() {
         return state;
     }
@@ -47,12 +47,34 @@ public class Game {
         this.state = state;
     }
 
-    public void addPlayer(String name) {
-        if (name != "") {
-            players.add(new Player(name, 0));
+    public void S_addPlayer(String name) {
+        if (name != null) {
+            state = state.AddPlayer(name);
+        } else {
+            state = state.run();
         }
     }
+    
+    public void S_choseCard(int cardNumber, boolean useAction)
+    {
+        if (useAction)
+        state = cardsTable.get(cardNumber).getAction().doAction(this);
+        else
+        state = state.endTurn();
+    }
+    
+    public void S_bet(int playerNumber, int coins)
+    {
+        state = state.bet(playerNumber, coins);
+    }
 
+    // ** JOGADORES
+    
+    public void addPlayer(String name)
+    {
+        players.add(new Player(name, 0));
+    }
+    
     public int numberOfPlayers() {
         return players.size();
     }
@@ -63,6 +85,21 @@ public class Game {
 
     public Player getActivePlayer() {
         return players.get(activePlayer);
+    }
+
+    public void betCoins(int playerNumber, int coins) {
+        // Jogador apostou mais do que o tem.
+        if (coins > players.get(playerNumber).getCoins()) {
+            coins = players.get(playerNumber).getCoins();
+        }
+
+        // Jogador engraçadinho aposto um valor negativo.
+        if (coins < 0) {
+            coins = 0;
+        }
+
+        players.get(playerNumber).removeCoins(coins);
+        players.get(playerNumber).setInitialBet(coins);
     }
 
     public void addInitialCoins() {
@@ -76,11 +113,37 @@ public class Game {
             coins = 9;
         }
 
+        // Atribuir as moedas a todos os jogadores
         for (int i = 0; i < numberOfPlayers(); ++i) {
             players.get(i).addCoins(coins);
         }
     }
 
+    public void determinateActivePlayer() {
+        ArrayList<Player> highestBidders = new ArrayList<Player>();
+        highestBidders.add(players.get(0));
+
+        // Ver quem é que apostou mais
+        for (int i = 1; i < numberOfPlayers(); ++i) {
+            if (players.get(i).getInitialBet() > highestBidders.get(0).getInitialBet()) // Maior que o(s) maior(s) actual(s)
+            {
+                highestBidders.clear();
+                highestBidders.add(players.get(i));
+            } else if (players.get(i).getInitialBet() == highestBidders.get(0).getInitialBet()) // Empate com o(s) maior(s)
+            {
+                highestBidders.add(players.get(i));
+            }
+        }
+
+        // Ver se houve empate
+        if (highestBidders.size() > 1) {
+            activePlayer = players.indexOf(highestBidders.get(rnd.nextInt(highestBidders.size())));
+        } else {
+            activePlayer = players.indexOf(highestBidders.get(0));
+        }
+    }
+
+    // ** CARTAS
     public void initializeCards() {
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(1)));
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(2)));
@@ -144,46 +207,9 @@ public class Game {
         return cardsTable;
     }
 
-    public void betCoins(int playerNumber, int coins) {
-        // Jogador apostou mais do que o tem.
-        if (coins > players.get(playerNumber).getCoins()) {
-            coins = players.get(playerNumber).getCoins();
-        }
-
-        // Jogador engraçadinho aposto um valor negativo.
-        if (coins < 0) {
-            coins = 0;
-        }
-
-        players.get(playerNumber).removeCoins(coins);
-        players.get(playerNumber).setInitialBet(coins);
-    }
-
-    public void determinateActivePlayer() {
-        ArrayList<Player> highestBidders = new ArrayList<Player>();
-        highestBidders.add(players.get(0));
-
-        // Ver quem é que apostou mais
-        for (int i = 1; i < numberOfPlayers(); ++i) {
-            if (players.get(i).getInitialBet() > highestBidders.get(0).getInitialBet()) // Maior que o(s) maior(s) actual(s)
-            {
-                highestBidders.clear();
-                highestBidders.add(players.get(i));
-            } else if (players.get(i).getInitialBet() == highestBidders.get(0).getInitialBet()) // Empate com o(s) maior(s)
-            {
-                highestBidders.add(players.get(i));
-            }
-        }
-
-        // Ver se houve empate
-        if (highestBidders.size() > 1) {
-            activePlayer = players.indexOf(highestBidders.get(rnd.nextInt(highestBidders.size())));
-        } else {
-            activePlayer = players.indexOf(highestBidders.get(0));
-        }
-    }
-
+    // ** OUTRAS
     public List<Player> getScoreTable() {
+        // muito imcompleto
         Collections.sort(players);
         return players;
     }

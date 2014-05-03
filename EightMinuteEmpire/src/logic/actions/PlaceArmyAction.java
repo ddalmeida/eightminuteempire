@@ -1,5 +1,9 @@
 package logic.actions;
 
+import logic.game.Game;
+import logic.states.PlaceArmyState;
+import logic.states.State;
+
 public class PlaceArmyAction extends BaseAction{
 
     public PlaceArmyAction(int times) {
@@ -7,8 +11,8 @@ public class PlaceArmyAction extends BaseAction{
     }
 
     @Override
-    public void action() {
-        
+    public State doAction(Game game) {
+        return new PlaceArmyState(game);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package logic.actions;
 
+import logic.game.Game;
+import logic.states.State;
+
 public abstract class BaseAction {
     int times;
     
@@ -18,6 +21,6 @@ public abstract class BaseAction {
         return times;
     }
     
-    public abstract void action();
+    public abstract State doAction(Game game);
     public abstract String toString();
 }

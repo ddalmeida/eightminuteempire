@@ -10,6 +10,10 @@ public class OrCard extends RegularCard{
         this.action2 = action2;
     }
     
+        public BaseAction getAction2() {
+        return action2;
+    }
+    
     public String toString()
     {
         return resource + " card with " + action.toString() +  " OR " + action2.toString();

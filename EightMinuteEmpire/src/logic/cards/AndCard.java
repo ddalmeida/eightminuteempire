@@ -14,4 +14,8 @@ public class AndCard extends RegularCard{
     {
         return resource + " card with " + action.toString() + " AND " + action2.toString();
     }
+    
+       public BaseAction getAction2() {
+        return action2;
+    }
 }

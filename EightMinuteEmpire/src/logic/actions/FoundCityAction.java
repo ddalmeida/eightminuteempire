@@ -1,5 +1,9 @@
 package logic.actions;
 
+import logic.game.Game;
+import logic.states.FoundCityState;
+import logic.states.State;
+
 public class FoundCityAction extends BaseAction{
 
     public FoundCityAction(int times) {
@@ -7,12 +11,12 @@ public class FoundCityAction extends BaseAction{
     }
 
     @Override
-    public void action() {
+    public State doAction(Game game) {
+        return new FoundCityState(game);
     }
 
     @Override
     public String toString() {
         return "Found " + times + " City";
-    }
-    
+    }    
 }

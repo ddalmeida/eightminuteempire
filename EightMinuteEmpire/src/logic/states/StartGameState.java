@@ -10,10 +10,7 @@ public class StartGameState extends StateAdapter {
 
     @Override
     public State AddPlayer(String name) {
-        if (name != null) {
-            game.addPlayer(name);
-        }
-
+        game.addPlayer(name);
         return this;
     }
 

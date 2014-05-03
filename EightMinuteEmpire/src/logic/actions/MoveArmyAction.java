@@ -1,5 +1,9 @@
 package logic.actions;
 
+import logic.game.Game;
+import logic.states.MoveArmyState;
+import logic.states.State;
+
 public class MoveArmyAction extends BaseAction{
     private boolean sea;
 
@@ -9,8 +13,8 @@ public class MoveArmyAction extends BaseAction{
     }
 
     @Override
-    public void action() {
-        
+    public State doAction(Game game) {
+        return new MoveArmyState(game);
     }
 
     @Override
