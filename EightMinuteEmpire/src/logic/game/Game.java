@@ -66,43 +66,54 @@ public class Game {
     public void initializeCards() {
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(1)));
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(2)));
+        cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(2)));
         cards.add(new RegularCard("Jewels", 1, new MoveArmyAction(2, false)));
-        cards.add(new RegularCard("Food", 1, "FoundCity"));
-        cards.add(new RegularCard("Food", 1, "MoveArmyThreeTimesLand"));
-        cards.add(new RegularCard("Food", 2, "MoveArmyThreeTimesLand"));
-        cards.add(new RegularCard("Food", 1, "MoveArmyFourTimesLand"));
-        cards.add(new RegularCard("Food", 1, "MoveArmyFourTimesLand"));
-        cards.add(new RegularCard("Food", 1, "MoveArmyFiveTimesLand"));
-        cards.add(new RegularCard("Food", 1, "MoveArmyThreeTimesLandWater"));
-        cards.add(new RegularCard("Food", 1, "PlaceArmy AND RemoveArmy"));
-        cards.add(new RegularCard("Wood", 1, "FoundCity"));
-        cards.add(new RegularCard("Wood", 1, "PlaceArmyThreeTimes"));
-        cards.add(new RegularCard("Wood", 1, "MoveArmyThreeTimesLand"));
-        cards.add(new RegularCard("Wood", 1, "MoveArmyTwoTimesLand OR MoveArmyThreeTimesLand"));
-        cards.add(new RegularCard("Wood", 1, "MoveArmyThreeTimesLandWater"));
-        cards.add(new RegularCard("Wood", 1, "MoveArmyFourTimesLandWater"));
-        cards.add(new RegularCard("Wood", 1, "RemoveArmy OR FoundCity"));
-        cards.add(new RegularCard("Iron", 1, "PlaceArmyTwoTimes"));
-        cards.add(new RegularCard("Iron", 1, "PlaceArmyThreeTimes"));
-        cards.add(new RegularCard("Iron", 1, "PlaceArmyThreeTimes"));
-        cards.add(new RegularCard("Iron", 1, "MoveArmyTwoTimesLand"));
-        cards.add(new RegularCard("Iron", 1, "MoveArmyTwoTimesLandWater"));
-        cards.add(new RegularCard("Iron", 1, "MoveArmyThreeTimesLandWater"));
-        cards.add(new RegularCard("Tools", 1, "FoundCity"));
-        cards.add(new RegularCard("Tools", 1, "PlaceArmyThreeTimes"));
-        cards.add(new RegularCard("Tools", 1, "PlaceArmyThreeTimes"));
-        cards.add(new RegularCard("Tools", 1, "MoveArmyThreeTimesLandWater"));
-        cards.add(new RegularCard("Tools", 1, "MoveArmyFourTimesLand"));
-        cards.add(new RegularCard("Tools", 1, "PlaceArmyThreeTimes OR MoveArmyThreeTimesLand"));
-        cards.add(new RegularCard("Tools", 1, "PlaceArmyThreeTimes OR MoveArmyFourTimesLand"));
-        cards.add(new RegularCard("Tools", 1, "MoveArmyFiveTimesLand"));
-        cards.add(new RegularCard("Joker", 1, "PlaceArmyTwoTimes"));
-        cards.add(new RegularCard("Joker", 1, "MoveArmyTwoTimesLandWater"));
-        cards.add(new RegularCard("Joker", 1, "MoveArmyTwoTimesLandWater"));
+        
+        cards.add(new RegularCard("Food", 1, new FoundCityAction(1)));
+        cards.add(new RegularCard("Food", 1, new FoundCityAction(1)));
+        cards.add(new RegularCard("Food", 1, new MoveArmyAction(3, false)));
+        cards.add(new RegularCard("Food", 2, new MoveArmyAction(3, false)));
+        cards.add(new RegularCard("Food", 1, new MoveArmyAction(4, false)));
+        cards.add(new RegularCard("Food", 1, new MoveArmyAction(4, false)));
+        cards.add(new RegularCard("Food", 1, new MoveArmyAction(5, false)));
+        cards.add(new RegularCard("Food", 1, new MoveArmyAction(3, true)));
+        cards.add(new AndCard("Food", 1, new PlaceArmyAction(1), new RemoveArmyAction(1)));
+        
+        cards.add(new RegularCard("Wood", 1, new FoundCityAction(1)));
+        cards.add(new RegularCard("Wood", 1, new PlaceArmyAction(3)));
+        cards.add(new RegularCard("Wood", 1, new MoveArmyAction(3, false)));
+        cards.add(new OrCard("Wood", 1, new MoveArmyAction(2, true), new MoveArmyAction(3, false)));
+        cards.add(new RegularCard("Wood", 1, new MoveArmyAction(3, true)));
+        cards.add(new RegularCard("Wood", 1, new MoveArmyAction(4, true)));
+        cards.add(new OrCard("Wood", 1, new RemoveArmyAction(1), new FoundCityAction(1)));
+        
+        cards.add(new RegularCard("Iron", 1, new PlaceArmyAction(2)));
+        cards.add(new RegularCard("Iron", 1, new PlaceArmyAction(3)));
+        cards.add(new RegularCard("Iron", 1, new PlaceArmyAction(3)));
+        cards.add(new RegularCard("Iron", 1, new MoveArmyAction(2, false)));
+        cards.add(new RegularCard("Iron", 1, new MoveArmyAction(2, true)));
+        cards.add(new RegularCard("Iron", 1, new MoveArmyAction(3, true)));
+        ;
+        cards.add(new RegularCard("Tools", 1, new FoundCityAction(1)));
+        cards.add(new RegularCard("Tools", 1, new PlaceArmyAction(3)));
+        cards.add(new RegularCard("Tools", 1, new PlaceArmyAction(3)));
+        cards.add(new RegularCard("Tools", 1, new MoveArmyAction(3, true)));
+        cards.add(new RegularCard("Tools", 1, new MoveArmyAction(4, false)));
+        cards.add(new OrCard("Tools", 1, new PlaceArmyAction(3), new MoveArmyAction(3, false)));
+        cards.add(new OrCard("Tools", 1, new PlaceArmyAction(3), new MoveArmyAction(4, false)));
+        cards.add(new RegularCard("Tools", 1, new MoveArmyAction(5, false)));
+        
+        cards.add(new RegularCard("Joker", 1, new PlaceArmyAction(2)));
+        cards.add(new RegularCard("Joker", 1, new MoveArmyAction(2, true)));
+        cards.add(new RegularCard("Joker", 1, new MoveArmyAction(2, true)));
 
         // Cartas apenas disponiveis se houve 5+ jogadores
         if (numberOfPlayers() >= 5) {
             cards.add(new RegularCard("Jewels", 1, new MoveArmyAction(2, false)));
+              cards.add(new OrCard("Food", 1, new PlaceArmyAction(4), new MoveArmyAction(2, false)));
+              cards.add(new RegularCard("Wood", 1, new MoveArmyAction(6, false)));
+              cards.add(new RegularCard("Iron", 1, new MoveArmyAction(2, true)));
+               cards.add(new RegularCard("Tools", 2, new MoveArmyAction(4, false)));
         }
     }
 
