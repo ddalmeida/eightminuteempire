@@ -9,28 +9,29 @@ public class BuyCardState extends StateAdapter {
     }
 
     @Override
-    public State playFoundCityCard() {
+    public State playFoundCityCard(int cardNumber) {
+        game.boughtCard(cardNumber);
         return new FoundCityState(game);
     }
 
     @Override
-    public State playMoveArmyCard() {
+    public State playMoveArmyCard(int cardNumber) {
         return new MoveArmyState(game);
     }
 
     @Override
-    public State playPlaceArmyCard() {
+    public State playPlaceArmyCard(int cardNumber) {
         return new PlaceArmyState(game);
     }
 
     @Override
-    public State playRemoveArmyCard() {
+    public State playRemoveArmyCard(int cardNumber) {
         return new RemoveArmyState(game);
     }
 
     @Override
     public State endTurn() {
+        game.nextPlayer();
         return this;
     }
-
 }

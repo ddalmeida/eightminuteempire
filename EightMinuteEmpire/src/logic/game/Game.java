@@ -61,7 +61,7 @@ public class Game {
             cardNumber = 0;
         }
         if (useAction) {
-            state = cardsTable.get(cardNumber).getAction().doAction(this);
+            state = cardsTable.get(cardNumber).getAction().doAction(this, cardNumber);
         } else {
             state = state.endTurn();
         }
@@ -156,6 +156,11 @@ public class Game {
 
         // adicionar uma nova carta à "mesa"
         cardToTable();
+    }
+    
+    public void nextPlayer()
+    {
+        activePlayer = (activePlayer + 1) % numberOfPlayers();
     }
 
     // ** CARTAS

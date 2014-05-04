@@ -29,7 +29,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State playMoveArmyCard() {
+    public State playMoveArmyCard(int cardNumber) {
         return this;
     }
 
@@ -39,7 +39,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State playFoundCityCard() {
+    public State playFoundCityCard(int cardNumber) {
         return this;
     }
 
@@ -59,7 +59,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State playPlaceArmyCard() {
+    public State playPlaceArmyCard(int cardNumber) {
         return this;
     }
 
@@ -69,7 +69,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State playRemoveArmyCard() {
+    public State playRemoveArmyCard(int cardNumber) {
         return this;
     }
 

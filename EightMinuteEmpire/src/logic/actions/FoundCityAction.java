@@ -10,8 +10,8 @@ public class FoundCityAction extends BaseAction {
     }
 
     @Override
-    public State doAction(Game game) {
-        return game.getState().playFoundCityCard();
+    public State doAction(Game game, int cardNumber) {
+        return game.getState().playFoundCityCard(cardNumber);
     }
 
     @Override

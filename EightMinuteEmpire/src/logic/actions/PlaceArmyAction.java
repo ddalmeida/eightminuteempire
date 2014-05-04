@@ -10,8 +10,8 @@ public class PlaceArmyAction extends BaseAction {
     }
 
     @Override
-    public State doAction(Game game) {
-        return game.getState().playPlaceArmyCard();
+    public State doAction(Game game, int cardNumber) {
+        return game.getState().playPlaceArmyCard(cardNumber);
     }
 
     @Override

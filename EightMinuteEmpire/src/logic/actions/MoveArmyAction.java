@@ -13,8 +13,8 @@ public class MoveArmyAction extends BaseAction {
     }
 
     @Override
-    public State doAction(Game game) {
-        return game.getState().playMoveArmyCard();
+    public State doAction(Game game, int cardNumber) {
+        return game.getState().playMoveArmyCard(cardNumber);
     }
 
     @Override

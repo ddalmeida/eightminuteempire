@@ -14,15 +14,15 @@ public abstract class State {
     public abstract State run();
     public abstract State bet(int playerNumber, int coins);
     public abstract State endTurn();
-    public abstract State playMoveArmyCard();
+    public abstract State playMoveArmyCard(int cardNumber);
     public abstract State moveArmy();
-    public abstract State playFoundCityCard();
+    public abstract State playFoundCityCard(int cardNumber);
     public abstract State foundCity();
     public abstract State pickAction();
     public abstract State pickFirstAction();
-    public abstract State playPlaceArmyCard();
+    public abstract State playPlaceArmyCard(int cardNumber);
     public abstract State placeArmy();
-    public abstract State playRemoveArmyCard();
+    public abstract State playRemoveArmyCard(int cardNumber);
     public abstract State removeArmy();
     public abstract State endGame();
 }

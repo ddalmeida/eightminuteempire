@@ -19,7 +19,7 @@ public abstract class BaseAction {
         return times;
     }
 
-    public abstract State doAction(Game game);
+    public abstract State doAction(Game game, int cardNumber);
 
     public abstract String toString();
 }
