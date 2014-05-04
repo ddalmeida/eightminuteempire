@@ -151,7 +151,14 @@ public class main {
 
         System.out.print("Do you want to use it's action? (Y/N): ");
         if (sc.next().toUpperCase().charAt(0) == 'Y') {
-            game.S_boughtCard(cardChosen, true);
+            int errorCode = game.S_boughtCard(cardChosen, true);
+            if (errorCode == 1) {
+                System.err.println("You already have a maximum of 14 Armies");
+                sc.next();
+            } else if (errorCode == 2) {
+                System.err.println("You already have a maximum of 3 Cities");
+                sc.next();
+            }
         } else {
             game.S_boughtCard(cardChosen, false);
         }
@@ -163,7 +170,7 @@ public class main {
         System.out.println("***");
         System.out.println();
         drawMap(game);
-        
+
         System.out.println("In which region do you want to add an Army?");
         System.out.print("Y: ");
         int y;
@@ -180,13 +187,13 @@ public class main {
         } catch (Exception e) {
             x = 0;
         }
-        
-        if (!game.foundCity(y, x))
+
+        if (!game.S_PlaceArmy(y, x));
         {
             System.err.println("You can't add an Army there!");
-            sc.next();
+            sc.nextLine();
         }
-        
+
     }
 
     private static void doMoveArmyState(Game game) {
@@ -228,11 +235,10 @@ public class main {
         } catch (Exception e) {
             x = 0;
         }
-        
-        if (!game.foundCity(y, x))
-        {
+
+        if (!game.S_foundCity(y, x)) {
             System.err.println("You can't found a City there!");
-            sc.next();
+            sc.nextLine();
         }
     }
 

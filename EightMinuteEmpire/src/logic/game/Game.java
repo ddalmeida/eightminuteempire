@@ -44,20 +44,72 @@ public class Game {
         }
     }
 
-    public void S_boughtCard(int cardNumber, boolean useAction) {
+    public int S_boughtCard(int cardNumber, boolean useAction) {
         // Se o jogador não tiver moedas para a carta que escolheu, escolher a primeira.
         if ((cardNumber + 1) / 2 > getActivePlayer().getCoins()) {
             cardNumber = 0;
         }
         if (useAction) {
-            state = cardsTable.get(cardNumber).getAction().doAction(this, cardNumber);
+            if (cardsTable.get(cardNumber) instanceof OrCard)
+            {
+                state = state.pickAction(cardNumber);
+            }
+            // Ver se é uma carta de colocar excecito e se nao atingiu os 14
+            if (cardsTable.get(cardNumber).getAction() instanceof PlaceArmyAction) {
+                if (getActivePlayer().getArmies().size() < 14) {
+                    state = cardsTable.get(cardNumber).getAction().doAction(this, cardNumber);
+                } else {
+                    state = state.endTurn();
+                    return 1;
+                }
+            }
+
+            // Ver se é uma carta de fundar cidade e se nao atingiu as 3
+            if (cardsTable.get(cardNumber).getAction() instanceof FoundCityAction) {
+                if (getActivePlayer().getCities().size() < 3) {
+                    state = cardsTable.get(cardNumber).getAction().doAction(this, cardNumber);
+                } else {
+                    state = state.endTurn();
+                    return 2;
+                }
+            }
+
         } else {
             state = state.endTurn();
         }
+
+        return 0;
     }
 
     public void S_bet(int playerNumber, int coins) {
         state = state.bet(playerNumber, coins);
+    }
+
+    public boolean S_foundCity(int y, int x) {
+        City newCity = board.getRegion(y, x).addCity(y, x, getActivePlayer());
+        if (newCity == null) {
+            return false;
+        } else {
+            getActivePlayer().addCity(newCity);
+            state = state.endTurn();
+            return true;
+        }
+    }
+
+    public boolean S_PlaceArmy(int y, int x) {
+        Army newArmy = board.getRegion(y, x).addArmy(y, x, getActivePlayer());
+        if (newArmy == null) {
+            return false;
+        } else {
+            getActivePlayer().addArmy(newArmy);
+            if (getActivePlayer().getArmies().size() >= 14) {
+                state = state.endTurn();
+            } else {
+                state = state.placeArmy();
+            }
+        }
+
+        return true;
     }
 
     // ** JOGADORES
@@ -149,17 +201,6 @@ public class Game {
 
     public void nextPlayer() {
         activePlayer = (activePlayer + 1) % numberOfPlayers();
-    }
-
-    public boolean foundCity(int y, int x) {
-        City newCity = board.getRegion(y, x).addCity(y, x, getActivePlayer());
-        if (newCity == null) {
-            return false;
-        } else {
-            getActivePlayer().addCity(newCity);
-            state = state.endTurn();
-            return true;
-        }
     }
 
     public void addInitialArmies() {

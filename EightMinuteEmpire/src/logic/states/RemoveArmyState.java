@@ -24,4 +24,9 @@ public class RemoveArmyState extends StateAdapter {
         }
         return this;
     }
+    
+    public State endTurn() {
+        game.nextPlayer();
+        return new BuyCardState(game);
+    }
 }

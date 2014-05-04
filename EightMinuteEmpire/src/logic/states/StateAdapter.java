@@ -31,7 +31,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State playMoveArmyCard(int cardNumber) {
+    public State playMoveArmyCard(int cardNumber,  int x) {
         return this;
     }
 
@@ -51,7 +51,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State pickAction() {
+    public State pickAction(int cardNumber) {
         return this;
     }
 
@@ -61,7 +61,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State playPlaceArmyCard(int cardNumber) {
+    public State playPlaceArmyCard(int cardNumber,  int x) {
         return this;
     }
 
