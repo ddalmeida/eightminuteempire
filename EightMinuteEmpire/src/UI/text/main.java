@@ -163,6 +163,30 @@ public class main {
         System.out.println("***");
         System.out.println();
         drawMap(game);
+        
+        System.out.println("In which region do you want to add an Army?");
+        System.out.print("Y: ");
+        int y;
+        try {
+            y = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            y = 0;
+        }
+
+        System.out.print("X: ");
+        int x;
+        try {
+            x = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            x = 0;
+        }
+        
+        if (!game.foundCity(y, x))
+        {
+            System.err.println("You can't add an Army there!");
+            sc.next();
+        }
+        
     }
 
     private static void doMoveArmyState(Game game) {
@@ -188,7 +212,7 @@ public class main {
         System.out.println();
         drawMap(game);
 
-        System.out.println("In witch region do you want to found a city?");
+        System.out.println("In which region do you want to found a City?");
         System.out.print("Y: ");
         int y;
         try {
@@ -207,7 +231,7 @@ public class main {
         
         if (!game.foundCity(y, x))
         {
-            System.err.println("You can't put a City there!");
+            System.err.println("You can't found a City there!");
             sc.next();
         }
     }
