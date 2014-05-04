@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import logic.actions.*;
 import logic.cards.*;
-import logic.map.*;
 import logic.states.*;
 
 public class Game {
@@ -14,27 +13,17 @@ public class Game {
     private ArrayList<Player> players;
     private ArrayList<RegularCard> cards;
     private ArrayList<RegularCard> cardsTable;
-    private BaseRegion map[][];
     private int activePlayer;
     private State state;
+    private Board board;
     private Random rnd;
 
     public Game() {
         players = new ArrayList<>();
         cards = new ArrayList<>();
         cardsTable = new ArrayList<>();
-        map = new BaseRegion[3][3];
-        map[0][0] = new LandRegion(0, 0, true);
-        map[0][1] = new LandRegion(0, 1, true);
-        map[0][2] = new WaterRegion(0, 2, false);
-        map[1][0] = new LandRegion(1, 0, true);
-        map[1][1] = new WaterRegion(1, 1, false);
-        map[1][2] = new WaterRegion(1, 2, false);
-        map[2][0] = new WaterRegion(2, 0, false);
-        map[2][1] = new LandRegion(2, 1, false);
-        map[2][2] = new LandRegion(2, 2, false);
+        board = new Board();
         rnd = new Random();
-
         state = new StartGameState(this);
     }
 
@@ -157,9 +146,8 @@ public class Game {
         // adicionar uma nova carta à "mesa"
         cardToTable();
     }
-    
-    public void nextPlayer()
-    {
+
+    public void nextPlayer() {
         activePlayer = (activePlayer + 1) % numberOfPlayers();
     }
 
@@ -237,6 +225,11 @@ public class Game {
     }
 
     // ** OUTRAS
+    public Board getBoard()
+    {
+        return board;
+    }
+    
     public List<Player> getScoreTable() {
         // muito imcompleto
         Collections.sort(players);
