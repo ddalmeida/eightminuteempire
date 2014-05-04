@@ -2,8 +2,8 @@ package logic.map;
 
 public class LandRegion extends BaseRegion {
 
-    public LandRegion(int x, int y, boolean initialRegion) {
-        super(x, y, initialRegion);
+    public LandRegion(int y, int x) {
+        super(y, x);
         passable = true;
         settleable = true;
     }

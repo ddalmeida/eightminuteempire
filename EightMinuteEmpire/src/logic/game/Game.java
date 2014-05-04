@@ -45,7 +45,7 @@ public class Game {
     }
 
     public void S_boughtCard(int cardNumber, boolean useAction) {
-        // Ver se o jogador não tiver moedas para a carta que escolheu, escolher a primeira.
+        // Se o jogador não tiver moedas para a carta que escolheu, escolher a primeira.
         if ((cardNumber + 1) / 2 > getActivePlayer().getCoins()) {
             cardNumber = 0;
         }
@@ -151,6 +151,25 @@ public class Game {
         activePlayer = (activePlayer + 1) % numberOfPlayers();
     }
 
+    public boolean foundCity(int y, int x) {
+        City newCity = board.getRegion(y, x).addCity(y, x, getActivePlayer());
+        if (newCity == null) {
+            return false;
+        } else {
+            getActivePlayer().addCity(newCity);
+            state = state.endTurn();
+            return true;
+        }
+    }
+
+    public void addInitialArmies() {
+        for (int i = 0; i < numberOfPlayers(); ++i) {
+            for (int j = 0; j < 3; ++j) {
+                players.get(i).addArmy(board.getInicialRegion().addArmy(players.get(i)));
+            }
+        }
+    }
+
     // ** CARTAS
     public void initializeCards() {
         cards.add(new RegularCard("Jewels", 1, new PlaceArmyAction(1)));
@@ -225,11 +244,10 @@ public class Game {
     }
 
     // ** OUTRAS
-    public Board getBoard()
-    {
+    public Board getBoard() {
         return board;
     }
-    
+
     public List<Player> getScoreTable() {
         // muito imcompleto
         Collections.sort(players);

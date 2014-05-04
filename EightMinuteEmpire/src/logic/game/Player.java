@@ -2,6 +2,7 @@ package logic.game;
 
 import java.util.ArrayList;
 import logic.cards.RegularCard;
+import logic.map.BaseRegion;
 
 public class Player implements Comparable<Player> {
 
@@ -71,6 +72,10 @@ public class Player implements Comparable<Player> {
     public void addCity(City city) {
         cities.add(city);
     }
+    
+        public ArrayList<City> getCities() {
+        return cities;
+    }
 
     public ArrayList<Army> getArmies() {
         return armies;
@@ -79,8 +84,37 @@ public class Player implements Comparable<Player> {
     public void addArmy(Army army) {
         armies.add(army);
     }
-
-    public ArrayList<City> getCities() {
-        return cities;
+    
+    public boolean haveArmyInRegion(int y, int x)
+    {
+        for (int i = 0; i < armies.size(); ++i)
+        {
+            if (armies.get(i).getRegion().getY() == y && armies.get(i).getRegion().getX() == x)
+                return true;
+        }
+        
+        return false;
+    }
+    
+     public boolean haveArmyInRegion(BaseRegion region)
+    {
+        for (int i = 0; i < armies.size(); ++i)
+        {
+            if (armies.get(i).getRegion() == region)
+                return true;
+        }
+        
+        return false;
+    }
+     
+          public boolean haveCityInRegion(BaseRegion region)
+    {
+        for (int i = 0; i < armies.size(); ++i)
+        {
+            if (cities.get(i).getRegion() == region)
+                return true;
+        }
+        
+        return false;
     }
 }

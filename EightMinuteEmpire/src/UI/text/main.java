@@ -108,6 +108,7 @@ public class main {
     }
 
     private static void doAuctionState(Game game) {
+        System.out.println();
         System.out.println("***");
         System.out.println();
 
@@ -148,7 +149,7 @@ public class main {
             cardChosen = 0;
         }
 
-        System.out.println("Do you want to use it's action? (Y/N): ");
+        System.out.print("Do you want to use it's action? (Y/N): ");
         if (sc.next().toUpperCase().charAt(0) == 'Y') {
             game.S_boughtCard(cardChosen, true);
         } else {
@@ -186,6 +187,29 @@ public class main {
         System.out.println("***");
         System.out.println();
         drawMap(game);
+
+        System.out.println("In witch region do you want to found a city?");
+        System.out.print("Y: ");
+        int y;
+        try {
+            y = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            y = 0;
+        }
+
+        System.out.print("X: ");
+        int x;
+        try {
+            x = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            x = 0;
+        }
+        
+        if (!game.foundCity(y, x))
+        {
+            System.err.println("You can't put a City there!");
+            sc.next();
+        }
     }
 
     private static void doAndState(Game game) {

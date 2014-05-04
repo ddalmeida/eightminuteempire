@@ -6,6 +6,7 @@ import logic.game.City;
 import logic.game.Player;
 
 public abstract class BaseRegion {
+
     int x;
     int y;
     boolean passable;
@@ -14,10 +15,10 @@ public abstract class BaseRegion {
     ArrayList<City> cities;
     ArrayList<Army> armies;
 
-    public BaseRegion(int x, int y, boolean initialRegion) {
+    public BaseRegion(int y, int x) {
         this.x = x;
         this.y = y;
-        this.initialRegion = initialRegion;
+        this.initialRegion = false;
         cities = new ArrayList<>();
         armies = new ArrayList<>();
     }
@@ -38,45 +39,44 @@ public abstract class BaseRegion {
         return settleable;
     }
 
-    // ***************************************************IMPORTANTE*****************************************************
-    public int addArmy(Player player, Army army) {
-        if (initialRegion) {
-            armies.add(army);
-            return 0;
-        } else if (passable) {
-            for (int i = 0; i < cities.size(); i++) {
-                //  ********WTF não me deixa aceder aos métodos da classe City**********************************
-                if (cities.get(i).getOwner() == player) {
-                    armies.add(army);
-                } else {
-                    return 1; // 1 = não possui cidade nesta região
-                }
-            }
-        } else {
-            return 2; // 2 = não é possível colocar exércitos nesta região
-        }
-        return 3; // 3 = erro desconhecido
+    public boolean isInitialRegion() {
+        return initialRegion;
     }
-    public int addCity(Player player, City city) {
-        if (settleable) {
-            for (int i = 0; i < armies.size(); i++) {
-                if (armies.get(i).getOwner() == player) {
-                    for (int j = 0; j < cities.size(); j++) {
-                        //  ********WTF não me deixa aceder aos métodos da classe City******************
-                        if (cities.get(j).getOwner() == player) {
-                            return 1; // 1 = já possui uma cidade aqui
-                        } else {
-                            return 0; // 0 = Okay
-                        }
-                    }
-                } else {
-                    return 3; // 3 = não possui exércitos aqui
-                }
-            }
-        } else {
-            return 2; // 2 = não é possível fundar cidade - água
+
+    public Army addArmy(int y, int x, Player player) {
+        // jogador escolheu regiao inicial
+        if (initialRegion) {
+            Army newArmy = new Army(player, this);
+            armies.add(newArmy);
+            return newArmy;
         }
-        return 4; // 4 = erro desconhecido
+
+        // jogador escolheu regiao onde tem uma cidade
+        if (player.haveCityInRegion(this)) {
+            Army newArmy = new Army(player, this);
+            armies.add(newArmy);
+            return newArmy;
+        }
+
+        return null;
+    }
+
+    public Army addArmy(Player player) {
+        // Para uso nos 3 exercitos ao inicio
+        Army newArmy = new Army(player, this);
+        armies.add(newArmy);
+        return newArmy;
+    }
+
+    public City addCity(int y, int x, Player player) {
+        // Jogador escolheu regiao onde tem um exercito E não é no meio do mar
+        if (player.haveArmyInRegion(this) && settleable) {
+            City newCity = new City(player, this);
+            cities.add(newCity);
+            return newCity;
+        }
+
+        return null;
     }
 
     public int countArmies(Player player) {
@@ -87,5 +87,9 @@ public abstract class BaseRegion {
             }
         }
         return number;
+    }
+
+    public void setInicialRegion(boolean b) {
+        initialRegion = b;
     }
 }

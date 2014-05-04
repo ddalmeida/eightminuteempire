@@ -18,6 +18,7 @@ public class StartGameState extends StateAdapter {
     public State run() {
         if (game.numberOfPlayers() >= 2) {
             game.addInitialCoins();
+            game.addInitialArmies();
             game.initializeCards();
             return new AuctionState(game);
         } else {
