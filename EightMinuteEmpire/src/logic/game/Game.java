@@ -55,7 +55,11 @@ public class Game {
         }
     }
 
-    public void S_choseCard(int cardNumber, boolean useAction) {
+    public void S_boughtCard(int cardNumber, boolean useAction) {
+        // Ver se o jogador não tiver moedas para a carta que escolheu, escolher a primeira.
+        if ((cardNumber + 1) / 2 > getActivePlayer().getCoins()) {
+            cardNumber = 0;
+        }
         if (useAction) {
             state = cardsTable.get(cardNumber).getAction().doAction(this);
         } else {
@@ -95,7 +99,6 @@ public class Game {
             coins = 0;
         }
 
-        players.get(playerNumber).removeCoins(coins);
         players.get(playerNumber).setInitialBet(coins);
     }
 
@@ -138,6 +141,21 @@ public class Game {
         } else {
             activePlayer = players.indexOf(highestBidders.get(0));
         }
+
+        // Retirar-lhe as moedas que licitou
+        getActivePlayer().removeCoins(getActivePlayer().getInitialBet());
+    }
+
+    public void boughtCard(int cardNumber) {
+        // remover moedas ao jogador
+        getActivePlayer().removeCoins((cardNumber + 1) / 2);
+
+        // remover carta da mesa e adicionar ao jogador
+        getActivePlayer().addCard(cardsTable.get(cardNumber));
+        cardsTable.remove(cardNumber);
+
+        // adicionar uma nova carta à "mesa"
+        cardToTable();
     }
 
     // ** CARTAS
@@ -196,12 +214,21 @@ public class Game {
 
         // Escolher 6 e mete-las na "mesa"
         for (int i = 1; i <= 6; ++i) {
-            cardsTable.add(cards.get(rnd.nextInt(cards.size())));
+            cardToTable();
         }
     }
 
     public ArrayList<RegularCard> getCardsTable() {
         return cardsTable;
+    }
+
+    private void cardToTable() {
+        // Retira uma carta do barulho e mete-a na mesa
+        if (cards.size() >= 1) {
+            int randomCard = rnd.nextInt(cards.size());
+            cardsTable.add(cards.get(randomCard));
+            cards.remove(randomCard);
+        }
     }
 
     // ** OUTRAS

@@ -3,7 +3,8 @@ package logic.actions;
 import logic.game.Game;
 import logic.states.State;
 
-public class MoveArmyAction extends BaseAction{
+public class MoveArmyAction extends BaseAction {
+
     private boolean sea;
 
     public MoveArmyAction(int times, boolean sea) {
@@ -18,7 +19,7 @@ public class MoveArmyAction extends BaseAction{
 
     @Override
     public String toString() {
-       return "Move a Army " + times + " time(s)";
+        return "Move a Army " + times + " time(s)";
     }
-    
+
 }

@@ -21,8 +21,7 @@ public class main {
         System.out.println();
         System.out.println("Warning: This is a professional and serious game. If you or your friends think they are");
         System.out.println("comedians and type some randomness when you are supposed to pick something,");
-        System.out.println("the game with pick the worst option for you! Punch them or yourself now!");
-        System.out.println();
+        System.out.println("the game will pick the worst option for you! Punch them or yourself now!");
 
         while (game.getState() != null) {
             switch (game.getState().getClass().toString()) {
@@ -41,23 +40,23 @@ public class main {
                     doPlaceArmyState(game);
                     break;
 
-                case "class logic.state.MoveArmyState":
+                case "class logic.states.MoveArmyState":
                     doMoveArmyState(game);
                     break;
 
-                case "class logic.state.RemoveArmyState":
+                case "class logic.states.RemoveArmyState":
                     doRemoveArmyState(game);
                     break;
 
-                case "class logic.state.FoundCityState":
+                case "class logic.states.FoundCityState":
                     doFoundCityState(game);
                     break;
 
-                case "class logic.state.AndState":
+                case "class logic.states.AndState":
                     doAndState(game);
                     break;
 
-                case "class logic.state.OrState":
+                case "class logic.states.OrState":
                     doOrState(game);
                     break;
 
@@ -74,6 +73,7 @@ public class main {
 
     private static void doStartGameState(Game game) {
         Scanner sc = new Scanner(System.in);
+        System.out.println();
         System.out.println("***");
         System.out.println();
 
@@ -116,6 +116,7 @@ public class main {
 
     private static void doBuyCardState(Game game) {
         Scanner sc = new Scanner(System.in);
+        System.out.println();
         System.out.println("***");
         System.out.println();
 
@@ -125,21 +126,27 @@ public class main {
 
         ArrayList<RegularCard> cardsTable = game.getCardsTable();
         for (int i = 0; i < cardsTable.size(); i++) {
-            System.out.println(String.format("[CARD %d][%s][Cost: %d]", i + 1, cardsTable.get(i).toString(), ((i + 1) / 2)));
+            int cost = ((i + 1) / 2);
+            if (cost <= game.getActivePlayer().getCoins()) {
+                System.out.println(String.format("[CARD %d][Cost: %d][%s]", i + 1, cost, cardsTable.get(i).toString()));
+            } else {
+                System.out.println(String.format("[CARD X][Cost: %d][%s] You don't have enough coins for this one!", cost, cardsTable.get(i).toString()));
+            }
         }
+        System.out.print("Card: ");
 
         int cardChosen;
         try {
-            cardChosen = Integer.parseInt(sc.next());
+            cardChosen = Integer.parseInt(sc.next()) - 1;
         } catch (Exception e) {
             cardChosen = 0;
         }
 
         System.out.println("Do you want to use it's action? (Y/N): ");
-        if (sc.next().toUpperCase() == "Y") {
-            game.S_choseCard(cardChosen, true);
+        if (sc.next().toUpperCase().charAt(0) == 'Y') {
+            game.S_boughtCard(cardChosen, true);
         } else {
-            game.S_choseCard(cardChosen, false);
+            game.S_boughtCard(cardChosen, false);
         }
     }
 

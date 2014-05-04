@@ -3,7 +3,7 @@ package logic.actions;
 import logic.game.Game;
 import logic.states.State;
 
-public class RemoveArmyAction extends BaseAction{
+public class RemoveArmyAction extends BaseAction {
 
     public RemoveArmyAction(int times) {
         super(times);
@@ -16,7 +16,7 @@ public class RemoveArmyAction extends BaseAction{
 
     @Override
     public String toString() {
-       return "Remove an Army" + times + " time(s)";
+        return "Remove an Army " + times + " time(s)";
     }
 
 }

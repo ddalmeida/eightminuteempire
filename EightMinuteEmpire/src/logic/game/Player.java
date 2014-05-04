@@ -1,9 +1,8 @@
 package logic.game;
 
 import java.util.ArrayList;
-import java.util.List;
 import logic.armies.Army;
-import logic.cards.*;
+import logic.cards.RegularCard;
 import logic.cities.City;
 
 public class Player implements Comparable<Player> {
@@ -11,9 +10,9 @@ public class Player implements Comparable<Player> {
     private int coins;
     private int points;
     private int initialBet;
-    private List<RegularCard> cardsInHand;
-    private List<Army> armies;
-    private List<City> cities;
+    private ArrayList<RegularCard> cardsInHand;
+    private ArrayList<Army> armies;
+    private ArrayList<City> cities;
 
     Player(String name, int coins) {
         this.name = name;
@@ -62,5 +61,15 @@ public class Player implements Comparable<Player> {
     public int getPoints()
     {
         return points;
+    }
+    
+    public void addCard(RegularCard Card)
+    {
+        cardsInHand.add(Card);
+    }
+    
+    public ArrayList<RegularCard> getCardsInHand()
+    {
+        return cardsInHand;
     }
 }

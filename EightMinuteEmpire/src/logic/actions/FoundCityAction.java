@@ -3,7 +3,7 @@ package logic.actions;
 import logic.game.Game;
 import logic.states.State;
 
-public class FoundCityAction extends BaseAction{
+public class FoundCityAction extends BaseAction {
 
     public FoundCityAction(int times) {
         super(times);
@@ -17,5 +17,5 @@ public class FoundCityAction extends BaseAction{
     @Override
     public String toString() {
         return "Found " + times + " City";
-    }    
+    }
 }
