@@ -3,6 +3,7 @@ package logic.states;
 import logic.game.Game;
 
 public class AuctionState extends StateAdapter {
+
     int playersBet; // numero de jogadores que já apostou
 
     public AuctionState(Game game) {

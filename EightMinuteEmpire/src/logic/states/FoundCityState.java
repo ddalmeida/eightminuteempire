@@ -7,10 +7,9 @@ public class FoundCityState extends StateAdapter {
     public FoundCityState(Game game) {
         super(game);
     }
-    
-    public State endTurn()
-    {
-         game.nextPlayer();
+
+    public State endTurn() {
+        game.nextPlayer();
         return new BuyCardState(game);
     }
 }

@@ -1,8 +1,8 @@
 package logic.map;
 
 import java.util.ArrayList;
-import logic.armies.Army;
-import logic.cities.City;
+import logic.game.Army;
+import logic.game.City;
 import logic.game.Player;
 
 public abstract class BaseRegion {

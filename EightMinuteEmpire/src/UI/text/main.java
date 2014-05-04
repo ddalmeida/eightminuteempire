@@ -121,7 +121,9 @@ public class main {
         System.out.println();
 
         System.out.println(game.getActivePlayer().getName() + ", it's your turn! Pick a card!");
-        System.out.println("You have: " + game.getActivePlayer().getCoins() + " coins");
+        System.out.println("You have: " + game.getActivePlayer().getCoins() + " coins, " +
+                game.getActivePlayer().getArmies().size() + " armies and " +
+                game.getActivePlayer().getCities().size() + " cities");
         System.out.println();
 
         ArrayList<RegularCard> cardsTable = game.getCardsTable();
