@@ -16,16 +16,19 @@ public class BuyCardState extends StateAdapter {
 
     @Override
     public State playMoveArmyCard(int cardNumber) {
+         game.boughtCard(cardNumber);
         return new MoveArmyState(game);
     }
 
     @Override
     public State playPlaceArmyCard(int cardNumber) {
+         game.boughtCard(cardNumber);
         return new PlaceArmyState(game);
     }
 
     @Override
     public State playRemoveArmyCard(int cardNumber) {
+         game.boughtCard(cardNumber);
         return new RemoveArmyState(game);
     }
 
