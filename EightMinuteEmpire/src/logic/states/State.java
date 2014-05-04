@@ -1,6 +1,8 @@
 package logic.states;
 
 import logic.game.Game;
+import logic.game.Player;
+import logic.map.BaseRegion;
 
 public abstract class State {
     Game game;
@@ -23,6 +25,6 @@ public abstract class State {
     public abstract State playPlaceArmyCard(int cardNumber);
     public abstract State placeArmy();
     public abstract State playRemoveArmyCard(int cardNumber);
-    public abstract State removeArmy();
+    public abstract State removeArmy(Player player, BaseRegion region);
     public abstract State endGame();
 }

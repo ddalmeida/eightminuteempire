@@ -1,6 +1,8 @@
 package logic.states;
 
 import logic.game.Game;
+import logic.game.Player;
+import logic.map.BaseRegion;
 
 public abstract class StateAdapter extends State {
 
@@ -74,7 +76,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State removeArmy() {
+    public State removeArmy(Player player, BaseRegion region) {
         return this;
     }
 

@@ -79,6 +79,18 @@ public abstract class BaseRegion {
         return null;
     }
 
+    public int removeArmy(Player player) {
+
+        for (int i = 0; i < armies.size(); i++) {
+            if (armies.get(i).getOwner().equals(player)) {
+                armies.remove(i);
+                return 0; // Okay
+            }
+            return 1; // Exército não existe
+        }
+        return 2; // Erro desconhecido
+    }
+
     public int countArmies(Player player) {
         int number = 0;
         for (int i = 0; i < armies.size(); i++) {
