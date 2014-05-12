@@ -101,10 +101,10 @@ public class main {
         // Perguntar pelos nomes
         for (int i = 1; i <= players; ++i) {
             System.out.print("New Player: ");
-            game.S_addPlayer(sc.next());
+            game.addPlayer(sc.next());
         }
 
-        game.S_addPlayer(null); // não há mais players.
+        game.addPlayer(null); // não há mais players.
     }
 
     private static void doAuctionState(Game game) {

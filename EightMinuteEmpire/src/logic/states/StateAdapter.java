@@ -11,7 +11,7 @@ public abstract class StateAdapter extends State {
     }
 
     @Override
-    public State AddPlayer(String name){
+    public State playersAdded(){
         return this;
     }
 

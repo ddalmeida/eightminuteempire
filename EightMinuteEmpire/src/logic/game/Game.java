@@ -36,11 +36,11 @@ public class Game {
         this.state = state;
     }
 
-    public void S_addPlayer(String name) {
+    public void addPlayer(String name) {
         if (name != null) {
-            state = state.AddPlayer(name);
+            players.add(new Player(name, 0));
         } else {
-            state = state.run();
+            state = state.playersAdded();
         }
     }
 
@@ -113,9 +113,6 @@ public class Game {
     }
 
     // ** JOGADORES
-    public void addPlayer(String name) {
-        players.add(new Player(name, 0));
-    }
 
     public int numberOfPlayers() {
         return players.size();

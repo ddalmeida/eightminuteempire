@@ -12,7 +12,7 @@ public abstract class State {
         this.game = game;
     }
     
-    public abstract State AddPlayer(String name);
+    public abstract State playersAdded();
     public abstract State run();
     public abstract State bet(int playerNumber, int coins);
     public abstract State endTurn();

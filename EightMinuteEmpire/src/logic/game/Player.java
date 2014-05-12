@@ -53,10 +53,12 @@ public class Player implements Comparable<Player> {
         coins += n;
     }
 
+    // inutil?
     public void addPoints(int n) {
         points += n;
     }
 
+    // inutil?
     public int getPoints() {
         return points;
     }
