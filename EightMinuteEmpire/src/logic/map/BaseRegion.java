@@ -1,11 +1,12 @@
 package logic.map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import logic.game.Army;
 import logic.game.City;
 import logic.game.Player;
 
-public abstract class BaseRegion {
+public abstract class BaseRegion implements Serializable{
 
     int x;
     int y;

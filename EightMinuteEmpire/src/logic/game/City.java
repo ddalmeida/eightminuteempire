@@ -1,8 +1,9 @@
 package logic.game;
 
+import java.io.Serializable;
 import logic.map.BaseRegion;
 
-public class City {
+public class City implements Serializable{
 
     Player owner;
     BaseRegion region;

@@ -1,12 +1,13 @@
 package logic.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import logic.map.BaseRegion;
 import logic.map.Continent;
 import logic.map.LandRegion;
 import logic.map.WaterRegion;
 
-public class Board {
+public class Board implements Serializable{
 
     private BaseRegion map[][];
     private ArrayList<Continent> continents;

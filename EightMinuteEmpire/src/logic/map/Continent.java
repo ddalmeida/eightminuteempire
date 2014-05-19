@@ -1,8 +1,9 @@
 package logic.map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Continent {
+public class Continent implements Serializable{
 
     private ArrayList<BaseRegion> regions;
 

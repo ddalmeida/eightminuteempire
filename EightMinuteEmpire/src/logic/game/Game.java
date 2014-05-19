@@ -1,5 +1,6 @@
 package logic.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +9,7 @@ import logic.actions.*;
 import logic.cards.*;
 import logic.states.*;
 
-public class Game {
+public class Game implements Serializable{
 
     private ArrayList<Player> players;
     private ArrayList<RegularCard> cards;

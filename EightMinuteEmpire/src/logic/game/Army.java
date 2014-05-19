@@ -1,8 +1,9 @@
 package logic.game;
 
+import java.io.Serializable;
 import logic.map.BaseRegion;
 
-public class Army {
+public class Army implements Serializable{
 
     Player owner;
     BaseRegion region;

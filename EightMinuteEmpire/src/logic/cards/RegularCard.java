@@ -1,8 +1,9 @@
 package logic.cards;
 
+import java.io.Serializable;
 import logic.actions.BaseAction;
 
-public class RegularCard {
+public class RegularCard implements Serializable{
     String resource;
     int resourceNumber;
     BaseAction action;

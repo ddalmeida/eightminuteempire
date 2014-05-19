@@ -1,10 +1,11 @@
 package logic.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import logic.cards.RegularCard;
 import logic.map.BaseRegion;
 
-public class Player implements Comparable<Player> {
+public class Player implements Comparable<Player>, Serializable {
 
     private String name;
     private int coins;

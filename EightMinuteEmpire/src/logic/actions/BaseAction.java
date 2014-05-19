@@ -1,9 +1,10 @@
 package logic.actions;
 
+import java.io.Serializable;
 import logic.game.Game;
 import logic.states.State;
 
-public abstract class BaseAction {
+public abstract class BaseAction implements Serializable{
 
     int times;
 

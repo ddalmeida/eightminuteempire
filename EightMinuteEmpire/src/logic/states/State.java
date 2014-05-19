@@ -1,10 +1,11 @@
 package logic.states;
 
+import java.io.Serializable;
 import logic.game.Game;
 import logic.game.Player;
 import logic.map.BaseRegion;
 
-public abstract class State {
+public abstract class State implements Serializable{
     Game game;
     
     State(Game game)

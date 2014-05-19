@@ -1,9 +1,17 @@
 package UI.text;
 
 import java.io.Console;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.cards.RegularCard;
 import logic.game.Game;
 import logic.game.Player;
@@ -13,9 +21,11 @@ import logic.map.LandRegion;
 public class main {
 
     final static int REGION_SIZE = 7;
+    static Game game;
+    static Scanner sc;
 
     public static void main(String[] args) {
-        Game game = new Game();
+        sc = new Scanner(System.in);
 
         System.out.println("== EIGHT MINUTE EMPIRE ==");
         System.out.println("  == PA HELL EDITION ==");
@@ -23,49 +33,61 @@ public class main {
         System.out.println("by Luís Costa - 21210392");
         System.out.println("and Nuno Aguiar - 21160515");
         System.out.println();
-        System.out.println("Warning: This is a professional and serious game. If you or your friends think they are");
+        System.out.println("Warning:");
+        System.out.println("This is a professional and serious game. If you or your friends think they are");
         System.out.println("comedians and type some randomness when you are supposed to pick something,");
         System.out.println("the game will pick the worst option for you! Punch them or yourself now!");
+        System.out.println();
+        System.out.println();
+
+        // perguntar se quer carregar um jogo ou iniciar um novo
+        System.out.println("Load a game? (Enter a file name to load or just press Enter for a New Game):");
+        String filename = sc.nextLine();
+        if (filename.equals("")) {
+            game = new Game();
+        } else {
+            game = loadGame(filename);
+        }
 
         while (game.getState() != null) {
             switch (game.getState().getClass().toString()) {
                 case "class logic.states.StartGameState":
-                    doStartGameState(game);
+                    doStartGameState();
                     break;
                 case "class logic.states.AuctionState":
-                    doAuctionState(game);
+                    doAuctionState();
                     break;
 
                 case "class logic.states.BuyCardState":
-                    doBuyCardState(game);
+                    doBuyCardState();
                     break;
 
                 case "class logic.states.PlaceArmyState":
-                    doPlaceArmyState(game);
+                    doPlaceArmyState();
                     break;
 
                 case "class logic.states.MoveArmyState":
-                    doMoveArmyState(game);
+                    doMoveArmyState();
                     break;
 
                 case "class logic.states.RemoveArmyState":
-                    doRemoveArmyState(game);
+                    doRemoveArmyState();
                     break;
 
                 case "class logic.states.FoundCityState":
-                    doFoundCityState(game);
+                    doFoundCityState();
                     break;
 
                 case "class logic.states.AndState":
-                    doAndState(game);
+                    doAndState();
                     break;
 
                 case "class logic.states.OrState":
-                    doOrState(game);
+                    doOrState();
                     break;
 
                 case "class logic.states.GameOverState":
-                    doGameOver(game);
+                    doGameOver();
                     break;
 
                 default:
@@ -75,8 +97,7 @@ public class main {
         }
     }
 
-    private static void doStartGameState(Game game) {
-        Scanner sc = new Scanner(System.in);
+    private static void doStartGameState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
@@ -107,7 +128,7 @@ public class main {
         game.addPlayer(null); // não há mais players.
     }
 
-    private static void doAuctionState(Game game) {
+    private static void doAuctionState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
@@ -119,13 +140,12 @@ public class main {
         }
     }
 
-    private static void doBuyCardState(Game game) {
-        Scanner sc = new Scanner(System.in);
+    private static void doBuyCardState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
 
-        System.out.println(game.getActivePlayer().getName() + ", it's your turn! Pick a card!");
+        System.out.println(game.getActivePlayer().getName() + ", it's your turn! Pick a card! (enter 'S' to save the game)");
         System.out.println("You have: " + game.getActivePlayer().getCoins() + " coins, "
                 + game.getActivePlayer().getArmies().size() + " armies and "
                 + game.getActivePlayer().getCities().size() + " cities");
@@ -143,10 +163,16 @@ public class main {
         System.out.print("Card: ");
 
         int cardChosen;
+        String input = sc.next();
         try {
-            cardChosen = Integer.parseInt(sc.next()) - 1;
+            cardChosen = Integer.parseInt(input) - 1;
         } catch (Exception e) {
-            cardChosen = 0;
+            if (input.toUpperCase().charAt(0) == 'S') {
+                saveGame();
+                return;
+            } else {
+                cardChosen = 0;
+            }
         }
 
         System.out.print("Do you want to use it's action? (Y/N): ");
@@ -164,12 +190,11 @@ public class main {
         }
     }
 
-    private static void doPlaceArmyState(Game game) {
-        Scanner sc = new Scanner(System.in);
+    private static void doPlaceArmyState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
-        drawMap(game);
+        drawMap();
 
         System.out.println("In which region do you want to add an Army?");
         System.out.print("Y: ");
@@ -196,28 +221,25 @@ public class main {
 
     }
 
-    private static void doMoveArmyState(Game game) {
-        Scanner sc = new Scanner(System.in);
+    private static void doMoveArmyState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
-        drawMap(game);
+        drawMap();
     }
 
-    private static void doRemoveArmyState(Game game) {
-        Scanner sc = new Scanner(System.in);
+    private static void doRemoveArmyState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
-        drawMap(game);
+        drawMap();
     }
 
-    private static void doFoundCityState(Game game) {
-        Scanner sc = new Scanner(System.in);
+    private static void doFoundCityState() {
         System.out.println();
         System.out.println("***");
         System.out.println();
-        drawMap(game);
+        drawMap();
 
         System.out.println("In which region do you want to found a City?");
         System.out.print("Y: ");
@@ -242,13 +264,13 @@ public class main {
         }
     }
 
-    private static void doAndState(Game game) {
+    private static void doAndState() {
     }
 
-    private static void doOrState(Game game) {
+    private static void doOrState() {
     }
 
-    private static void doGameOver(Game game) {
+    private static void doGameOver() {
         System.out.println("=================================");
         System.out.println("POS\tPOINTS\tNAME");
 
@@ -268,14 +290,42 @@ public class main {
         game.setState(null);
     }
 
+    private static Game loadGame(String filename) {
+        FileOutputStream f;
+        try {
+            FileInputStream fis = new FileInputStream(filename + ".sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            return (Game) ois.readObject();
+        } catch (Exception ex) {
+            System.err.println("Error reading file! Starting a New Game!");
+            return new Game();
+        }
+    }
+
+    private static void saveGame() {
+        System.out.print("Save the game with the name: ");
+        String filename = sc.next();
+        try {
+            FileOutputStream fos = new FileOutputStream(filename + ".sav");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(game);
+            oos.close();
+            fos.close();
+            System.err.println("Game saved!");
+        } catch (Exception ex) {
+            System.err.println("Failed to save the game! " + ex.getMessage());
+        }
+    }
+
     private static int readBet() {
         Console console = System.console();
         String bet;
 
-        if (console != null) { // Se estiver a executar numa consola dá para ocultar os caracteres
-            bet = new String(console.readPassword("f"));
+        if (console != null) {
+            // Se estiver a executar numa consola dá para ocultar os caracteres
+            bet = new String(console.readPassword(""));
         } else {
-            Scanner sc = new Scanner(System.in); // Não está numa consola por isso é impossivel ocultar caracteres
+            // Não está numa consola por isso é impossivel ocultar caracteres
             bet = sc.next();
         }
 
@@ -286,7 +336,7 @@ public class main {
         }
     }
 
-    private static void drawMap(Game game) {
+    private static void drawMap() {
         // Inicializar buffer
         StringBuilder drawBuffer[] = new StringBuilder[game.getBoard().getMapSizeY() * REGION_SIZE + 2];
 
