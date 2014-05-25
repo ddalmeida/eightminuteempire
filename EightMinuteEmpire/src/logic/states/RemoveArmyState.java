@@ -12,19 +12,15 @@ public class RemoveArmyState extends StateAdapter {
 
     @Override
     public State removeArmy(Player player, BaseRegion region) {
-        int aux = region.removeArmy(player);
-        switch (aux) {
-            case 0:
-                game.nextPlayer();
-                return new BuyCardState(game);
-            case 1:
-                return this;
-            case 2:
-                return this;
+        boolean deleted = player.removeArmy(region);
+        if (deleted) {
+            game.nextPlayer();
+            return new BuyCardState(game);
         }
+
         return this;
     }
-    
+
     public State endTurn() {
         game.nextPlayer();
         return new BuyCardState(game);

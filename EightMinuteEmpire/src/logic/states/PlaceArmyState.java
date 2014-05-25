@@ -3,8 +3,7 @@ package logic.states;
 import logic.game.Game;
 
 public class PlaceArmyState extends StateAdapter {
-
-    private int x;
+    private int x; // numero de vezes
 
     public PlaceArmyState(Game game, int x) {
         super(game);

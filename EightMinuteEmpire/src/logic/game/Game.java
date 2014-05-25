@@ -102,7 +102,6 @@ public class Game implements Serializable{
         if (newArmy == null) {
             return false;
         } else {
-            getActivePlayer().addArmy(newArmy);
             if (getActivePlayer().getArmies().size() >= 14) {
                 state = state.endTurn();
             } else {
@@ -204,7 +203,7 @@ public class Game implements Serializable{
     public void addInitialArmies() {
         for (int i = 0; i < numberOfPlayers(); ++i) {
             for (int j = 0; j < 3; ++j) {
-                players.get(i).addArmy(board.getInicialRegion().addArmy(players.get(i)));
+                players.get(i).addArmy(new Army(board.getInicialRegion()));
             }
         }
     }

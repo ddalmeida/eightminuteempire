@@ -88,6 +88,17 @@ public class Player implements Comparable<Player>, Serializable {
         armies.add(army);
     }
     
+    public boolean removeArmy(BaseRegion region) {
+
+        for (int i = 0; i < armies.size(); i++) {
+            if (armies.get(i).getRegion().equals(region)) {
+                armies.remove(i);
+                return true; // Apaga o primeiro exercito encontrado na regiao
+            }
+        }
+            return false; // Nenhum exercito encontrado na regiao
+    }
+    
     public boolean haveArmyInRegion(int y, int x)
     {
         for (int i = 0; i < armies.size(); ++i)

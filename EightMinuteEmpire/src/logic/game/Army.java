@@ -3,21 +3,19 @@ package logic.game;
 import java.io.Serializable;
 import logic.map.BaseRegion;
 
-public class Army implements Serializable{
+public class Army implements Serializable {
 
-    Player owner;
     BaseRegion region;
 
-    public Army(Player owner, BaseRegion region) {
-        this.owner = owner;
+    public Army(BaseRegion region) {
         this.region = region;
-    }
-
-    public Player getOwner() {
-        return owner;
     }
 
     public BaseRegion getRegion() {
         return region;
+    }
+
+    public void setRegion(BaseRegion newRegion) {
+        region = newRegion;
     }
 }

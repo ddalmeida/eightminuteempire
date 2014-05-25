@@ -14,14 +14,12 @@ public abstract class BaseRegion implements Serializable{
     boolean settleable; //Se é possível fundar cidades
     boolean initialRegion;
     ArrayList<City> cities;
-    ArrayList<Army> armies;
 
     public BaseRegion(int y, int x) {
         this.x = x;
         this.y = y;
         this.initialRegion = false;
         cities = new ArrayList<>();
-        armies = new ArrayList<>();
     }
 
     public int getX() {
@@ -44,29 +42,15 @@ public abstract class BaseRegion implements Serializable{
         return initialRegion;
     }
 
-    public Army addArmy(int y, int x, Player player) {
+    public boolean addArmy(int y, int x, Player player) {
         // jogador escolheu regiao inicial
-        if (initialRegion) {
-            Army newArmy = new Army(player, this);
-            armies.add(newArmy);
-            return newArmy;
+        // ou jogador escolheu regiao onde tem uma cidade
+        if (initialRegion || player.haveCityInRegion(this)) {
+            player.addArmy(new Army(this));
+            return true;
         }
 
-        // jogador escolheu regiao onde tem uma cidade
-        if (player.haveCityInRegion(this)) {
-            Army newArmy = new Army(player, this);
-            armies.add(newArmy);
-            return newArmy;
-        }
-
-        return null;
-    }
-
-    public Army addArmy(Player player) {
-        // Para uso nos 3 exercitos ao inicio
-        Army newArmy = new Army(player, this);
-        armies.add(newArmy);
-        return newArmy;
+        return false;
     }
 
     public City addCity(int y, int x, Player player) {
@@ -80,22 +64,10 @@ public abstract class BaseRegion implements Serializable{
         return null;
     }
 
-    public int removeArmy(Player player) {
-
-        for (int i = 0; i < armies.size(); i++) {
-            if (armies.get(i).getOwner().equals(player)) {
-                armies.remove(i);
-                return 0; // Okay
-            }
-            return 1; // Exército não existe
-        }
-        return 2; // Erro desconhecido
-    }
-
-    public int countArmies(Player player) {
+    public int countArmiesOfPlayer(Player player) {
         int number = 0;
-        for (int i = 0; i < armies.size(); i++) {
-            if (armies.get(i).getOwner() == player) {
+        for (int i = 0; i < player.getArmies().size(); ++i) {
+            if (player.getArmies().get(i).getRegion().equals(this)) {
                 number++;
             }
         }

@@ -3,7 +3,6 @@ package logic.states;
 import logic.game.Game;
 
 public class MoveArmyState extends StateAdapter {
-
     private int x;
 
     public MoveArmyState(Game game, int x) {
@@ -24,5 +23,4 @@ public class MoveArmyState extends StateAdapter {
         game.nextPlayer();
         return new BuyCardState(game);
     }
-
 }
