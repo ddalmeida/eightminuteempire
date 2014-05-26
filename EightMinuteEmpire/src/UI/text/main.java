@@ -213,7 +213,7 @@ public class main {
             x = 0;
         }
 
-        if (!game.S_PlaceArmy(y, x));
+        if (game.placeArmy(y, x) == 0);
         {
             System.err.println("You can't add an Army there!");
             sc.nextLine();
@@ -258,7 +258,7 @@ public class main {
             x = 0;
         }
 
-        if (!game.S_foundCity(y, x)) {
+        if (game.foundCity(y, x) == 0) {
             System.err.println("You can't found a City there!");
             sc.nextLine();
         }

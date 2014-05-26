@@ -9,7 +9,7 @@ import logic.actions.*;
 import logic.cards.*;
 import logic.states.*;
 
-public class Game implements Serializable{
+public class Game implements Serializable {
 
     private ArrayList<Player> players;
     private ArrayList<RegularCard> cards;
@@ -51,8 +51,7 @@ public class Game implements Serializable{
             cardNumber = 0;
         }
         if (useAction) {
-            if (cardsTable.get(cardNumber) instanceof OrCard)
-            {
+            if (cardsTable.get(cardNumber) instanceof OrCard) {
                 state = state.pickAction(cardNumber);
             }
             // Ver se é uma carta de colocar excecito e se nao atingiu os 14
@@ -86,34 +85,25 @@ public class Game implements Serializable{
         state = state.bet(playerNumber, coins);
     }
 
-    public boolean S_foundCity(int y, int x) {
-        City newCity = board.getRegion(y, x).addCity(y, x, getActivePlayer());
-        if (newCity == null) {
-            return false;
-        } else {
-            getActivePlayer().addCity(newCity);
-            state = state.endTurn();
-            return true;
-        }
+    public int foundCity(int y, int x) {
+        int aux = getActivePlayer().addCity(board.getRegion(y, x));
+        state = state.endTurn();
+        return aux;
     }
 
-    public boolean S_PlaceArmy(int y, int x) {
-        Army newArmy = board.getRegion(y, x).addArmy(y, x, getActivePlayer());
-        if (newArmy == null) {
-            return false;
+    public int placeArmy(int y, int x) {
+        int aux = getActivePlayer().addArmy(board.getRegion(y, x));
+
+        if (aux < 2) {
+            state = state.placeArmy();
         } else {
-            if (getActivePlayer().getArmies().size() >= 14) {
-                state = state.endTurn();
-            } else {
-                state = state.placeArmy();
-            }
+            state = state.endTurn();
         }
 
-        return true;
+        return aux;
     }
 
     // ** JOGADORES
-
     public int numberOfPlayers() {
         return players.size();
     }
@@ -203,7 +193,7 @@ public class Game implements Serializable{
     public void addInitialArmies() {
         for (int i = 0; i < numberOfPlayers(); ++i) {
             for (int j = 0; j < 3; ++j) {
-                players.get(i).addArmy(new Army(board.getInicialRegion()));
+                players.get(i).addArmy(board.getInicialRegion());
             }
         }
     }

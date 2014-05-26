@@ -75,19 +75,42 @@ public class Player implements Comparable<Player>, Serializable {
     public void addCity(City city) {
         cities.add(city);
     }
-    
-        public ArrayList<City> getCities() {
+
+    public ArrayList<City> getCities() {
         return cities;
     }
+    
+    public int addCity(BaseRegion region) {
+        if (cities.size() >= 3) return 2;
+        
+        // Jogador escolheu regiao onde tem um exercito E não é no meio do mar
+        if (haveArmyInRegion(region) && region.isSettleable()) {
+            cities.add(new City(region));
+            return 1;
+        }
+
+        return 0;
+    }
+
 
     public ArrayList<Army> getArmies() {
         return armies;
     }
 
-    public void addArmy(Army army) {
-        armies.add(army);
+    public int addArmy(BaseRegion region) {
+        if (armies.size() >= 14) {
+            return 2; // nao pode ter mais exercitos
+        }
+
+        // jogador escolheu regiao inicial
+        // ou jogador escolheu regiao onde tem uma cidade
+        if (region.isInitialRegion() || haveCityInRegion(region)) {
+            armies.add(new Army(region));
+            return 1; // novo exercito adicionado
+        }
+        return 0; // O jogador não escolheu a regiao inicial ou uma regiao com cidade
     }
-    
+
     public boolean removeArmy(BaseRegion region) {
 
         for (int i = 0; i < armies.size(); i++) {
@@ -96,39 +119,26 @@ public class Player implements Comparable<Player>, Serializable {
                 return true; // Apaga o primeiro exercito encontrado na regiao
             }
         }
-            return false; // Nenhum exercito encontrado na regiao
+        return false; // Nenhum exercito encontrado na regiao
     }
-    
-    public boolean haveArmyInRegion(int y, int x)
-    {
-        for (int i = 0; i < armies.size(); ++i)
-        {
-            if (armies.get(i).getRegion().getY() == y && armies.get(i).getRegion().getX() == x)
+
+    public boolean haveArmyInRegion(BaseRegion region) {
+        for (int i = 0; i < armies.size(); ++i) {
+            if (armies.get(i).getRegion().equals(region)) {
                 return true;
+            }
         }
-        
+
         return false;
     }
-    
-     public boolean haveArmyInRegion(BaseRegion region)
-    {
-        for (int i = 0; i < armies.size(); ++i)
-        {
-            if (armies.get(i).getRegion() == region)
+
+    public boolean haveCityInRegion(BaseRegion region) {
+        for (int i = 0; i < armies.size(); ++i) {
+            if (cities.get(i).getRegion() == region) {
                 return true;
+            }
         }
-        
-        return false;
-    }
-     
-          public boolean haveCityInRegion(BaseRegion region)
-    {
-        for (int i = 0; i < armies.size(); ++i)
-        {
-            if (cities.get(i).getRegion() == region)
-                return true;
-        }
-        
+
         return false;
     }
 }
