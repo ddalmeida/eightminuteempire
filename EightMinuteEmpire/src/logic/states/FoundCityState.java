@@ -8,6 +8,7 @@ public class FoundCityState extends StateAdapter {
         super(game);
     }
 
+    @Override
     public State endTurn() {
         game.nextPlayer();
         return new BuyCardState(game);

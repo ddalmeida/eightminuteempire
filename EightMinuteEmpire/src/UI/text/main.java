@@ -226,6 +226,53 @@ public class main {
         System.out.println("***");
         System.out.println();
         drawMap();
+        
+        System.out.println("Move an Army FROM Region");
+        System.out.print("Y: ");
+        int y;
+        try {
+            y = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            y = 0;
+        }
+
+        System.out.print("X: ");
+        int x;
+        try {
+            x = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            x = 0;
+        }
+        
+        System.out.println("TO Region");
+        System.out.print("Y: ");
+        int y2;
+        try {
+            y2 = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            y2 = 0;
+        }
+
+        System.out.print("X: ");
+        int x2;
+        try {
+            x2 = Integer.parseInt(sc.next());
+        } catch (Exception e) {
+            x2 = 0;
+        }
+
+        int aux = game.moveArmy(y, x, y2, x2);
+        if (aux == 0);
+        {
+            System.err.println("You can't move an Army to that Region!");
+            sc.nextLine();
+        }
+        
+        if (aux == 2);
+        {
+            System.err.println("You don't have an Army in that Region!");
+            sc.nextLine();
+        }
     }
 
     private static void doRemoveArmyState() {
@@ -291,13 +338,12 @@ public class main {
     }
 
     private static Game loadGame(String filename) {
-        FileOutputStream f;
         try {
             FileInputStream fis = new FileInputStream(filename + ".sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (Game) ois.readObject();
         } catch (Exception ex) {
-            System.err.println("Error reading file! Starting a New Game!");
+            System.err.println("Error reading file! Starting a New Game! " + ex.getMessage());
             return new Game();
         }
     }

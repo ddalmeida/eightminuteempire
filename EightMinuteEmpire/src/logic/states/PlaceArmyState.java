@@ -10,6 +10,7 @@ public class PlaceArmyState extends StateAdapter {
         this.x = x;
     }
 
+    @Override
     public State placeArmy() {
         x--;
         if (x == 0) {
@@ -19,8 +20,15 @@ public class PlaceArmyState extends StateAdapter {
         }
     }
 
+    @Override
     public State endTurn() {
         game.nextPlayer();
         return new BuyCardState(game);
+    }
+    
+    @Override
+    public int getX()
+    {
+        return x;
     }
 }

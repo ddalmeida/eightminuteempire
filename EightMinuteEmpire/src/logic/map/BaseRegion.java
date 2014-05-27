@@ -1,7 +1,6 @@
 package logic.map;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import logic.game.Player;
 
 public abstract class BaseRegion implements Serializable{

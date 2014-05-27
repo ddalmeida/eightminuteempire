@@ -11,6 +11,8 @@ import logic.states.*;
 
 public class Game implements Serializable {
 
+    private static long serialVersionUID = 888L;
+
     private ArrayList<Player> players;
     private ArrayList<RegularCard> cards;
     private ArrayList<RegularCard> cardsTable;
@@ -33,8 +35,13 @@ public class Game implements Serializable {
         return state;
     }
 
+    // apenas para debug
     public void setState(State state) {
         this.state = state;
+    }
+
+    public int getCardTurns() {
+        return state.getX();
     }
 
     public void addPlayer(String name) {
@@ -100,6 +107,12 @@ public class Game implements Serializable {
             state = state.endTurn();
         }
 
+        return aux;
+    }
+
+    public int moveArmy(int y, int x, int y2, int x2) {
+        int aux = getActivePlayer().moveArmy(board.getRegion(y, x), board.getRegion(y2, x2));
+        state = state.moveArmy();
         return aux;
     }
 

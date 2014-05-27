@@ -79,19 +79,19 @@ public class Player implements Comparable<Player>, Serializable {
     public ArrayList<City> getCities() {
         return cities;
     }
-    
+
     public int addCity(BaseRegion region) {
-        if (cities.size() >= 3) return 2;
-        
+        if (cities.size() >= 3) {
+            return 2; // jogador ja tem 3 cidades
+        }
         // Jogador escolheu regiao onde tem um exercito E não é no meio do mar
         if (haveArmyInRegion(region) && region.isSettleable()) {
             cities.add(new City(region));
-            return 1;
+            return 1; // Cidade fundada
         }
 
-        return 0;
+        return 0; // cidade não fundada porque regiao nao é validade para tal
     }
-
 
     public ArrayList<Army> getArmies() {
         return armies;
@@ -120,6 +120,25 @@ public class Player implements Comparable<Player>, Serializable {
             }
         }
         return false; // Nenhum exercito encontrado na regiao
+    }
+
+    public int moveArmy(BaseRegion from, BaseRegion to) {
+        if (!to.isPassable()) {
+            return 0;
+        }
+        if (!haveArmyInRegion(from)) {
+            return 2;
+        }
+
+        // Procurar um exercito na regiao FROM e move-lo para a regiao TO
+        for (int i = 0; i < armies.size(); ++i) {
+            if (armies.get(i).getRegion().equals(from)) {
+                armies.get(i).setRegion(to);
+                return 1;
+            }
+        }
+        
+        return 3; // Se sair por aqui algo correu mal.
     }
 
     public boolean haveArmyInRegion(BaseRegion region) {

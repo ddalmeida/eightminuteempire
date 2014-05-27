@@ -21,6 +21,7 @@ public class RemoveArmyState extends StateAdapter {
         return this;
     }
 
+    @Override
     public State endTurn() {
         game.nextPlayer();
         return new BuyCardState(game);

@@ -28,4 +28,5 @@ public abstract class State implements Serializable{
     public abstract State playRemoveArmyCard(int cardNumber);
     public abstract State removeArmy(Player player, BaseRegion region);
     public abstract State endGame();
+    public abstract int getX();
 }

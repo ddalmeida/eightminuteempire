@@ -3,6 +3,7 @@ package logic.states;
 import logic.game.Game;
 
 public class MoveArmyState extends StateAdapter {
+
     private int x;
 
     public MoveArmyState(Game game, int x) {
@@ -10,6 +11,7 @@ public class MoveArmyState extends StateAdapter {
         this.x = x;
     }
 
+    @Override
     public State moveArmy() {
         x--;
         if (x == 0) {
@@ -19,8 +21,14 @@ public class MoveArmyState extends StateAdapter {
         }
     }
 
+    @Override
     public State endTurn() {
         game.nextPlayer();
         return new BuyCardState(game);
+    }
+
+    @Override
+    public int getX() {
+        return x;
     }
 }
