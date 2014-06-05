@@ -2,16 +2,12 @@ package UI.text;
 
 import java.io.Console;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logic.cards.RegularCard;
 import logic.game.Game;
 import logic.game.Player;
@@ -20,7 +16,7 @@ import logic.map.LandRegion;
 
 public class main {
 
-    final static int REGION_SIZE = 7;
+    final static int REGION_SIZE = 7; //Não mudar
     static Game game;
     static Scanner sc;
 
@@ -91,7 +87,7 @@ public class main {
                     break;
 
                 default:
-                    System.out.println("ERROR! Unknown state! Killing the game!");
+                    System.err.println("ERROR! Unknown state! Killing the game!");
                     System.exit(-1);
             }
         }

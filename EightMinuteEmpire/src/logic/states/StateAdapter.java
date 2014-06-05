@@ -1,13 +1,16 @@
 package logic.states;
 
+import java.io.Serializable;
 import logic.game.Game;
 import logic.game.Player;
 import logic.map.BaseRegion;
 
-public abstract class StateAdapter extends State {
+public abstract class StateAdapter implements State, Serializable {
+    Game game;
 
     public StateAdapter(Game game) {
-        super(game);
+        super();
+        this.game = game;
     }
 
     @Override

@@ -1,18 +1,9 @@
 package logic.states;
 
-import java.io.Serializable;
-import logic.game.Game;
 import logic.game.Player;
 import logic.map.BaseRegion;
 
-public abstract class State implements Serializable{
-    Game game;
-    
-    State(Game game)
-    {
-        this.game = game;
-    }
-    
+public abstract interface State{ 
     public abstract State playersAdded();
     public abstract State run();
     public abstract State bet(int playerNumber, int coins);
