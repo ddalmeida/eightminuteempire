@@ -16,7 +16,7 @@ import logic.map.LandRegion;
 
 public class main {
 
-      final static int REGION_SIZE = 7; //Não mudar
+      final static int REGION_SIZE = 7; //Não mudar ou explode tudo
       static Game game;
       static Scanner sc;
 
@@ -209,7 +209,7 @@ public class main {
                   x = 0;
             }
 
-            if (game.placeArmy(y, x) == 0);
+            if (game.placeArmy(y, x) == 0)
             {
                   System.err.println("You can't add an Army there!");
                   sc.nextLine();
@@ -258,13 +258,13 @@ public class main {
             }
 
             int aux = game.moveArmy(y, x, y2, x2);
-            if (aux == 0);
+            if (aux == 0)
             {
                   System.err.println("You can't move an Army to that Region!");
                   sc.nextLine();
             }
 
-            if (aux == 2);
+            if (aux == 2)
             {
                   System.err.println("You don't have an Army in that Region!");
                   sc.nextLine();

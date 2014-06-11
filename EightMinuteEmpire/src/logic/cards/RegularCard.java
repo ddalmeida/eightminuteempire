@@ -31,8 +31,9 @@ public class RegularCard implements Serializable {
         return action;
     }
 
+    @Override
     public String toString() {
-        return resource + " card with " + action.toString();
+        return resource + " (" + resourceNumber + ") card with " + action.toString();
     }
 
     public int getImageID() {
