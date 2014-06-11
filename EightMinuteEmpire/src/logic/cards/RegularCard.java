@@ -5,17 +5,18 @@ import logic.actions.BaseAction;
 
 public class RegularCard implements Serializable {
 
-    String resource;
-    int resourceNumber;
-    BaseAction action;
-    static int idc = 0;
-    int id;
+     String resource;
+     int resourceNumber;
+     BaseAction action;
+    //static int idc = 0;
+     int imageID;
 
-    public RegularCard(String resource, int resourceNumber, BaseAction action) {
+    public RegularCard(String resource, int resourceNumber, BaseAction action, int imageID) {
         this.resource = resource;
         this.resourceNumber = resourceNumber;
         this.action = action;
-        id = idc++;
+        //id = idc++;
+        this.imageID = imageID;
     }
 
     public String getResource() {
@@ -34,7 +35,7 @@ public class RegularCard implements Serializable {
         return resource + " card with " + action.toString();
     }
 
-    public int getID() {
-        return id;
+    public int getImageID() {
+        return imageID;
     }
 }

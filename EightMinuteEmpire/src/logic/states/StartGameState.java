@@ -11,7 +11,7 @@ public class StartGameState extends StateAdapter {
     @Override
     public State playersAdded() {
         // Se existirem 2+ jogadores avançar para o proximo estado.
-        if (game.numberOfPlayers() >= 2) {
+        if (game.getNumberOfPlayers() >= 2) {
             game.addInitialCoins();
             game.addInitialArmies();
             game.initializeCards();

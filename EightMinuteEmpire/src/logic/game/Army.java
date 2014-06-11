@@ -18,4 +18,5 @@ public class Army implements Serializable {
     public void setRegion(BaseRegion newRegion) {
         region = newRegion;
     }
+    
 }

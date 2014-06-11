@@ -15,7 +15,7 @@ public class AuctionState extends StateAdapter {
     public State bet(int playerNumber, int coins) {
         game.betCoins(playerNumber, coins);
         playersBet++;
-        if (playersBet == game.numberOfPlayers()) {
+        if (playersBet == game.getNumberOfPlayers()) {
             game.determinateActivePlayer();
             return new BuyCardState(game);
         } else {
