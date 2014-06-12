@@ -123,12 +123,19 @@ public class Player implements Comparable<Player>, Serializable {
     }
 
     public int moveArmy(BaseRegion from, BaseRegion to) {
+          // ver se destino é "passavel"
         if (!to.isPassable()) {
             return 0;
         }
+        
+        // ver se existe um exercito na origem
         if (!haveArmyInRegion(from)) {
             return 2;
         }
+        
+        // ver se as regioes são adjacentes
+        if (!from.isAdjacentTo(to))
+             return 0; 
 
         // Procurar um exercito na regiao FROM e move-lo para a regiao TO
         for (int i = 0; i < armies.size(); ++i) {

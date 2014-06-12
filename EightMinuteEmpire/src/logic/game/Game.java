@@ -83,6 +83,7 @@ public class Game implements Serializable {
                   state = cardsTable.get(cardNumber).getAction().doAction(this, cardNumber);
             } else {
                   // Não fazer acção da carta
+                  boughtCard(cardNumber);
                   state = state.endTurn();
             }
 

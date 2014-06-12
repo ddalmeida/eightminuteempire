@@ -40,6 +40,12 @@ public abstract class BaseRegion implements Serializable {
             return initialRegion;
       }
 
+      public boolean isAdjacentTo(BaseRegion to) {
+            // Se uma região é adejacente, o valor da conta tem de dar 1 (diagonais ignoradas).
+            // Se der 0 é porque a região é a mesma (ou algo está muito mal).
+            return Math.abs(x + to.getX()) + Math.abs(y + to.getY()) <= 1;
+      }
+
       public int countArmiesOfPlayer(Player player) {
             int number = 0;
             for (int i = 0; i < player.getArmies().size(); ++i) {

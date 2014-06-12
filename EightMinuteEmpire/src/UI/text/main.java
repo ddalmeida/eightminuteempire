@@ -192,6 +192,8 @@ public class main {
             System.out.println();
             drawMap();
 
+                        System.out.println("[ PLACE ARMY  - " + game.getState().getX() + " turns left]");
+            System.out.println();
             System.out.println("In which region do you want to add an Army?");
             System.out.print("Y: ");
             int y;
@@ -223,6 +225,8 @@ public class main {
             System.out.println();
             drawMap();
 
+            System.out.println("[ MOVE ARMY  - " + game.getState().getX() + " turns left]");
+            System.out.println();
             System.out.println("Move an Army FROM Region");
             System.out.print("Y: ");
             int y;
