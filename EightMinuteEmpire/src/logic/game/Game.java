@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import logic.actions.*;
 import logic.cards.*;
+import logic.map.BaseRegion;
 import logic.states.*;
 
 public class Game implements Serializable {
@@ -101,20 +102,50 @@ public class Game implements Serializable {
       }
 
       public int placeArmy(int y, int x) {
-            int aux = getActivePlayer().addArmy(board.getRegion(y, x));
-
-            if (aux < 2) {
-                  state = state.placeArmy();
-            } else {
+            // verificar se jogador ja tem 14 exercitos
+            if (getActivePlayer().getArmies().size() >= 14) {
                   state = state.endTurn();
-            }
+                  return 2;
+            } else {
+                  state = state.placeArmy();
 
-            return aux;
+                  BaseRegion region = board.getRegion(y, x);
+                  if (region == null) {
+                        return 3; // Região fora dos limites do mapa
+                  }
+                  // jogador escolheu regiao inicial ou jogador escolheu regiao onde tem uma cidade
+                  if (region.isInitialRegion() || getActivePlayer().haveCityInRegion(region)) {
+                        getActivePlayer().addArmy(board.getRegion(y, x));
+                        return 1; // novo exercito adicionado
+                  } else {
+                        return 0; // escolheu uma regiao onde não pode adicionar um novo exercito
+                  }
+            }
       }
 
       public int moveArmy(int y, int x, int y2, int x2) {
-            int aux = getActivePlayer().moveArmy(board.getRegion(y, x), board.getRegion(y2, x2));
             state = state.moveArmy();
+
+            BaseRegion from = board.getRegion(y, x);
+            BaseRegion to = board.getRegion(y2, x2);
+
+            // verificar se FROM e TO estáo dentro dos limites do mapa
+            if (from == null || to == null) {
+                  return 3; // Região fora dos limites do mapa
+            }
+
+            // ver se destino é "passavel"
+            if (!to.isPassable()) {
+                  return 0;
+            }
+
+            // ver se as regioes são adjacentes
+            if (!from.isAdjacentTo(to)) {
+                  return 0;
+            }
+
+            // tentar mover um exercito da regiao y,x para y2,x2
+            int aux = getActivePlayer().moveArmy(board.getRegion(y, x), board.getRegion(y2, x2));
             return aux;
       }
 

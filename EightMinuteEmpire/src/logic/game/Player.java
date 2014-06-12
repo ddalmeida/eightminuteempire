@@ -97,18 +97,8 @@ public class Player implements Comparable<Player>, Serializable {
         return armies;
     }
 
-    public int addArmy(BaseRegion region) {
-        if (armies.size() >= 14) {
-            return 2; // nao pode ter mais exercitos
-        }
-
-        // jogador escolheu regiao inicial
-        // ou jogador escolheu regiao onde tem uma cidade
-        if (region.isInitialRegion() || haveCityInRegion(region)) {
+    public void addArmy(BaseRegion region) {
             armies.add(new Army(region));
-            return 1; // novo exercito adicionado
-        }
-        return 0; // O jogador não escolheu a regiao inicial ou uma regiao com cidade
     }
 
     public boolean removeArmy(BaseRegion region) {
@@ -122,21 +112,7 @@ public class Player implements Comparable<Player>, Serializable {
         return false; // Nenhum exercito encontrado na regiao
     }
 
-    public int moveArmy(BaseRegion from, BaseRegion to) {
-          // ver se destino é "passavel"
-        if (!to.isPassable()) {
-            return 0;
-        }
-        
-        // ver se existe um exercito na origem
-        if (!haveArmyInRegion(from)) {
-            return 2;
-        }
-        
-        // ver se as regioes são adjacentes
-        if (!from.isAdjacentTo(to))
-             return 0; 
-
+    public int moveArmy(BaseRegion from, BaseRegion to) {                
         // Procurar um exercito na regiao FROM e move-lo para a regiao TO
         for (int i = 0; i < armies.size(); ++i) {
             if (armies.get(i).getRegion().equals(from)) {
@@ -145,7 +121,7 @@ public class Player implements Comparable<Player>, Serializable {
             }
         }
         
-        return 3; // Se sair por aqui algo correu mal.
+        return 2; // Não tem nenhum exercito na região FROM
     }
 
     public boolean haveArmyInRegion(BaseRegion region) {

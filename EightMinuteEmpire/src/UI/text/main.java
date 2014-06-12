@@ -192,7 +192,7 @@ public class main {
             System.out.println();
             drawMap();
 
-                        System.out.println("[ PLACE ARMY  - " + game.getState().getX() + " turns left]");
+            System.out.println("[ PLACE ARMY  - " + game.getState().getX() + " turns left]");
             System.out.println();
             System.out.println("In which region do you want to add an Army?");
             System.out.print("Y: ");
@@ -211,12 +211,21 @@ public class main {
                   x = 0;
             }
 
-            if (game.placeArmy(y, x) == 0)
-            {
-                  System.err.println("You can't add an Army there!");
-                  sc.nextLine();
-            }
+            switch (game.placeArmy(y, x)) {
+                  case 0:
+                        System.err.println("You can't add an Army there!");
+                        sc.nextLine();
+                        break;
 
+                  case 2:
+                        System.err.println("You have 14 armies already!");
+                        sc.nextLine();
+                        break;
+
+                  case 3:
+                        System.err.println("That region doesn't exist!");
+                        sc.nextLine();
+            }
       }
 
       private static void doMoveArmyState() {
@@ -261,17 +270,20 @@ public class main {
                   x2 = 0;
             }
 
-            int aux = game.moveArmy(y, x, y2, x2);
-            if (aux == 0)
-            {
-                  System.err.println("You can't move an Army to that Region!");
-                  sc.nextLine();
-            }
+            switch (game.moveArmy(y, x, y2, x2)) {
+                  case 0:
+                        System.err.println("You can't move an Army to that Region!");
+                        sc.nextLine();
+                        break;
 
-            if (aux == 2)
-            {
-                  System.err.println("You don't have an Army in that Region!");
-                  sc.nextLine();
+                  case 2:
+                        System.err.println("You don't have an Army in that Region!");
+                        sc.nextLine();
+                        break;
+
+                  case 3:
+                        System.err.println("You entered a region that doesn't exist!");
+                        sc.nextLine();
             }
       }
 
@@ -421,7 +433,7 @@ public class main {
                   for (int j = 0; j < game.getBoard().getMapSizeX(); ++j) {
                         StringBuilder info = new StringBuilder();
                         for (int p = 0; p < game.getNumberOfPlayers(); ++p) {
-                              // Ver quanto exercitos e cidades o jogador p tem na regiao i, j
+                              // Ver quantos exercitos e cidades o jogador p tem na regiao i, j
                               int a = game.getBoard().getRegion(i, j).armiesOfPlayer(game.getPlayer(p)).size();
                               int c = game.getBoard().getRegion(i, j).citiesOfPlayer(game.getPlayer(p)).size();
                               if (a > 0 || c > 0) {
@@ -434,6 +446,7 @@ public class main {
                         }
                   }
             }
+            System.out.println();
       }
 
       private static void drawRegion(BaseRegion region, StringBuilder drawBuffer[]) {
