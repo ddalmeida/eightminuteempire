@@ -96,9 +96,24 @@ public class Game implements Serializable {
       }
 
       public int foundCity(int y, int x) {
-            int aux = getActivePlayer().addCity(board.getRegion(y, x));
             state = state.endTurn();
-            return aux;
+
+            // Verficar se jogador ja tem 3 cidades
+            if (getActivePlayer().getCities().size() >= 3) {
+                  return 2;
+            }
+
+            BaseRegion region = board.getRegion(y, x);
+            if (region == null) {
+                  return 3; // Região fora dos limites do mapa
+            }
+
+            // Jogador escolheu regiao onde tem um exercito E não é no meio do mar
+            if (getActivePlayer().haveArmyInRegion(region) && region.isSettleable()) {
+                  getActivePlayer().addCity(region);
+                  return 1; // Cidade fundada
+            }
+            return 0; // Cidade não fundada     
       }
 
       public int placeArmy(int y, int x) {
@@ -129,7 +144,7 @@ public class Game implements Serializable {
             BaseRegion from = board.getRegion(y, x);
             BaseRegion to = board.getRegion(y2, x2);
 
-            // verificar se FROM e TO estáo dentro dos limites do mapa
+            // verificar se FROM e TO estão dentro dos limites do mapa
             if (from == null || to == null) {
                   return 3; // Região fora dos limites do mapa
             }
@@ -139,12 +154,12 @@ public class Game implements Serializable {
                   return 0;
             }
 
-            // ver se as regioes são adjacentes
+            // ver se as regiões são adjacentes
             if (!from.isAdjacentTo(to)) {
                   return 0;
             }
 
-            // tentar mover um exercito da regiao y,x para y2,x2
+            // tentar mover um exercito da região y,x para y2,x2
             int aux = getActivePlayer().moveArmy(board.getRegion(y, x), board.getRegion(y2, x2));
             return aux;
       }
@@ -316,6 +331,12 @@ public class Game implements Serializable {
                   cardsTable.add(cards.get(randomCard));
                   cards.remove(randomCard);
             }
+      }
+      
+      public RegularCard getBoughtCard(){
+            // Como os objectos são guardados por ordem num ArrayList,
+            // sabemos que a ultima carta de um jogador é a ultima carta que comprou.
+           return getActivePlayer().getCardsInHand().get(getActivePlayer().getCardsInHand().size()- 1);
       }
 
       // ** OUTRAS

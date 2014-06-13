@@ -30,6 +30,10 @@ public class RegularCard implements Serializable {
     public BaseAction getAction() {
         return action;
     }
+    
+    public BaseAction getAction2(){
+          return null;
+    }
 
     @Override
     public String toString() {

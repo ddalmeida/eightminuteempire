@@ -11,6 +11,7 @@ public class AndCard extends RegularCard {
             this.action2 = action2;
       }
 
+      @Override
       public BaseAction getAction2() {
             return action2;
       }

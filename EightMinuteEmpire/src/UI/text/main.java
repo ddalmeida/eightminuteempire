@@ -110,7 +110,7 @@ public class main {
 
                   try {
                         players = Integer.parseInt(sc.next());
-                  } catch (Exception e) {
+                  } catch (NumberFormatException e) {
                         players = 0;
                   }
             }
@@ -162,7 +162,7 @@ public class main {
             String input = sc.next();
             try {
                   cardChosen = Integer.parseInt(input) - 1;
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   if (input.toUpperCase().charAt(0) == 'S') {
                         saveGame();
                         return;
@@ -199,7 +199,7 @@ public class main {
             int y;
             try {
                   y = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   y = 0;
             }
 
@@ -207,7 +207,7 @@ public class main {
             int x;
             try {
                   x = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   x = 0;
             }
 
@@ -241,7 +241,7 @@ public class main {
             int y;
             try {
                   y = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   y = 0;
             }
 
@@ -249,7 +249,7 @@ public class main {
             int x;
             try {
                   x = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   x = 0;
             }
 
@@ -258,7 +258,7 @@ public class main {
             int y2;
             try {
                   y2 = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   y2 = 0;
             }
 
@@ -266,7 +266,7 @@ public class main {
             int x2;
             try {
                   x2 = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   x2 = 0;
             }
 
@@ -305,7 +305,7 @@ public class main {
             int y;
             try {
                   y = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   y = 0;
             }
 
@@ -313,7 +313,7 @@ public class main {
             int x;
             try {
                   x = Integer.parseInt(sc.next());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   x = 0;
             }
 
@@ -321,12 +321,47 @@ public class main {
                   System.err.println("You can't found a City there!");
                   sc.nextLine();
             }
+            
+            switch (game.foundCity(y, x)) {
+                  case 0:
+                        System.err.println("You can't found a City there!");
+                        sc.nextLine();
+                        break;
+
+                  case 2:
+                        System.err.println("You have 3 cities already!");
+                        sc.nextLine();
+                        break;
+
+                  case 3:
+                        System.err.println("That region doesn't exist!");
+                        sc.nextLine();
+            }
       }
 
       private static void doAndState() {
       }
 
       private static void doOrState() {
+            System.out.println();
+            System.out.println("***");
+            System.out.println();
+            
+            System.out.println("Which action do you want to do?");
+            System.out.println("[1] " + game.getBoughtCard().getAction().toString());
+            System.out.println("[2] " + game.getBoughtCard().getAction2().toString());
+            
+             int actionChosen;
+            String input = sc.next();
+            try {
+                  actionChosen = Integer.parseInt(input) - 1;
+            } catch (NumberFormatException e) {
+                        actionChosen = 1;
+                  }
+            
+            // verificar se é uma escolha válida
+            if (actionChosen != 1 && actionChosen != 2)
+                  actionChosen = 1;
       }
 
       private static void doGameOver() {
@@ -389,7 +424,7 @@ public class main {
 
             try {
                   return Integer.parseInt(bet);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                   return 0;
             }
       }
