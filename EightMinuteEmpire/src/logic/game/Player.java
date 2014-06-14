@@ -126,7 +126,7 @@ public class Player implements Comparable<Player>, Serializable {
     }
 
     public boolean haveCityInRegion(BaseRegion region) {
-        for (int i = 0; i < armies.size(); ++i) {
+        for (int i = 0; i < cities.size(); ++i) {
             if (cities.get(i).getRegion() == region) {
                 return true;
             }

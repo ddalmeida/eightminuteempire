@@ -21,6 +21,8 @@ public abstract class BaseAction implements Serializable{
     }
 
     public abstract State doAction(Game game);
+    
+    public boolean getMoveOverSea() {return false;}
 
     @Override
     public abstract String toString();

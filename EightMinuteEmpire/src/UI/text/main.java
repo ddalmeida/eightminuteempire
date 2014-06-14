@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import logic.cards.RegularCard;
+import logic.game.Board_Console;
 import logic.game.Game;
 import logic.game.Player;
 import logic.map.BaseRegion;
+import logic.map.Board;
 import logic.map.LandRegion;
 
 public class main {
@@ -19,6 +21,7 @@ public class main {
       final static int REGION_SIZE = 7; //Não mudar ou explode tudo
       static Game game;
       static Scanner sc;
+      static Board board;
 
       public static void main(String[] args) {
             sc = new Scanner(System.in);
@@ -35,12 +38,15 @@ public class main {
             System.out.println("the game will pick the worst option for you! Punch them or yourself now!");
             System.out.println();
             System.out.println();
+            
+            // Criar novo mapa para jogo em interface consola
+            board = new Board_Console();
 
             // perguntar se quer carregar um jogo ou iniciar um novo
             System.out.println("Load a game? (Enter a file name to load or just press Enter for a New Game):");
             String filename = sc.nextLine();
             if (filename.equals("")) {
-                  game = new Game();
+                  game = new Game(board);
             } else {
                   game = loadGame(filename);
             }
@@ -359,6 +365,7 @@ public class main {
                         actionChosen = 1;
                   }
             
+            game.pickAction(actionChosen);            
       }
 
       private static void doGameOver() {
@@ -388,7 +395,7 @@ public class main {
                   return (Game) ois.readObject();
             } catch (Exception ex) {
                   System.err.println("Error reading file! Starting a New Game! " + ex.getMessage());
-                  return new Game();
+                  return new Game(board);
             }
       }
 

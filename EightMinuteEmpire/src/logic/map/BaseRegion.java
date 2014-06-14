@@ -8,11 +8,11 @@ import logic.game.Player;
 
 public abstract class BaseRegion implements Serializable {
 
-      int x;
-      int y;
-      boolean passable;
-      boolean settleable; //Se é possível fundar cidades
-      boolean initialRegion;
+      protected int x;
+      protected int y;
+      protected boolean passable;
+      protected boolean settleable; //Se é possível fundar cidades
+      protected boolean initialRegion;
 
       public BaseRegion(int y, int x) {
             this.x = x;
@@ -40,13 +40,7 @@ public abstract class BaseRegion implements Serializable {
             return initialRegion;
       }
 
-      public boolean isAdjacentTo(BaseRegion to) {
-            // Se uma região é adejacente, o valor da conta tem de dar 1 (diagonais ignoradas).
-            // Se der 0 é porque a região é a mesma (ou algo está muito mal).
-            return Math.abs(x + to.getX()) + Math.abs(y + to.getY()) <= 1;
-      }
-
-      public int countArmiesOfPlayer(Player player) {
+          public int countArmiesOfPlayer(Player player) {
             int number = 0;
             for (int i = 0; i < player.getArmies().size(); ++i) {
                   if (player.getArmies().get(i).getRegion().equals(this)) {

@@ -1,5 +1,6 @@
 package logic.game;
 
+import logic.map.Board;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,13 +23,14 @@ public class Game implements Serializable {
       private Board board;
       private Random rnd;
 
-      public Game() {
+      public Game(Board board) {
             players = new ArrayList<>();
             cards = new ArrayList<>();
             cardsTable = new ArrayList<>();
-            board = new Board();
+            this.board = board;
             rnd = new Random();
             state = new StartGameState(this);
+            
       }
 
       // ** ESTADOS
@@ -163,7 +165,7 @@ public class Game implements Serializable {
             }
 
             // ver se as regiões são adjacentes
-            if (!from.isAdjacentTo(to)) {
+            if (!board.areAdjacent(from, to, getBoughtCard().getAction().getMoveOverSea())) {
                   return 0;
             }
 
@@ -347,7 +349,7 @@ public class Game implements Serializable {
             return getActivePlayer().getCardsInHand().get(getActivePlayer().getCardsInHand().size() - 1);
       }
 
-      public void pickActionCard(int actionChosen) {
+      public void pickAction(int actionChosen) {
             // Verificar se foi uma escolha válida
             if (actionChosen != 1 && actionChosen != 2) {
                   actionChosen = 1;
