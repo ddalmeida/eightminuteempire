@@ -46,43 +46,45 @@ public class main {
             }
 
             while (game.getState() != null) {
-                  switch (game.getState().getClass().toString()) {
-                        case "class logic.states.StartGameState":
+                  switch (game.getState().getClass().getSimpleName()) {
+                        
+                        case "StartGameState":
                               doStartGameState();
                               break;
-                        case "class logic.states.AuctionState":
+                              
+                        case "AuctionState":
                               doAuctionState();
                               break;
 
-                        case "class logic.states.BuyCardState":
+                        case "BuyCardState":
                               doBuyCardState();
                               break;
 
-                        case "class logic.states.PlaceArmyState":
+                        case "PlaceArmyState":
                               doPlaceArmyState();
                               break;
 
-                        case "class logic.states.MoveArmyState":
+                        case "MoveArmyState":
                               doMoveArmyState();
                               break;
 
-                        case "class logic.states.RemoveArmyState":
+                        case "RemoveArmyState":
                               doRemoveArmyState();
                               break;
 
-                        case "class logic.states.FoundCityState":
+                        case "FoundCityState":
                               doFoundCityState();
                               break;
 
-                        case "class logic.states.AndState":
+                        case "AndState":
                               doAndState();
                               break;
 
-                        case "class logic.states.OrState":
+                        case "OrState":
                               doOrState();
                               break;
 
-                        case "class logic.states.GameOverState":
+                        case "GameOverState":
                               doGameOver();
                               break;
 
@@ -193,7 +195,6 @@ public class main {
             drawMap();
 
             System.out.println("[ PLACE ARMY  - " + game.getState().getX() + " turns left]");
-            System.out.println();
             System.out.println("In which region do you want to add an Army?");
             System.out.print("Y: ");
             int y;
@@ -235,7 +236,6 @@ public class main {
             drawMap();
 
             System.out.println("[ MOVE ARMY  - " + game.getState().getX() + " turns left]");
-            System.out.println();
             System.out.println("Move an Army FROM Region");
             System.out.print("Y: ");
             int y;
@@ -354,14 +354,11 @@ public class main {
              int actionChosen;
             String input = sc.next();
             try {
-                  actionChosen = Integer.parseInt(input) - 1;
+                  actionChosen = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                         actionChosen = 1;
                   }
             
-            // verificar se é uma escolha válida
-            if (actionChosen != 1 && actionChosen != 2)
-                  actionChosen = 1;
       }
 
       private static void doGameOver() {

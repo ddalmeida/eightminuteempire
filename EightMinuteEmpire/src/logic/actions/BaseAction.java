@@ -20,7 +20,8 @@ public abstract class BaseAction implements Serializable{
         return times;
     }
 
-    public abstract State doAction(Game game, int cardNumber);
+    public abstract State doAction(Game game);
 
+    @Override
     public abstract String toString();
 }

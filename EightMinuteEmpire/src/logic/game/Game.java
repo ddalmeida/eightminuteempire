@@ -64,27 +64,35 @@ public class Game implements Serializable {
                   cardNumber = 0;
             }
 
+            // Guardar referencia para a carta comprada
+            RegularCard boughtCard = cardsTable.get(cardNumber);
+
+            // Comprar a carta
+            boughtCard(cardNumber);
+
             if (useAction) {
-                  if (cardsTable.get(cardNumber) instanceof OrCard) {
-                        state = state.pickAction(cardNumber);
+                  // ver se é uma carta OR
+                  if (boughtCard.getClass().equals(OrCard.class)) {
+                        state = state.pickAction();
+                        return 0;
                   }
+
                   // Ver se é uma carta de colocar exercito e se atingiu os 14
-                  if (cardsTable.get(cardNumber).getAction() instanceof PlaceArmyAction && getActivePlayer().getArmies().size() >= 14) {
+                  if (boughtCard.getAction().getClass().equals(PlaceArmyAction.class) && getActivePlayer().getArmies().size() >= 14) {
                         state = state.endTurn();
                         return 1;
                   }
 
                   // Ver se é uma carta de fundar cidade e se atingiu as 3
-                  if (cardsTable.get(cardNumber).getAction() instanceof FoundCityAction && getActivePlayer().getCities().size() >= 3) {
+                  if (boughtCard.getAction().getClass().equals(FoundCityAction.class) && getActivePlayer().getCities().size() >= 3) {
                         state = state.endTurn();
                         return 2;
                   }
 
                   // Fazer acção da carta
-                  state = cardsTable.get(cardNumber).getAction().doAction(this, cardNumber);
+                  state = boughtCard.getAction().doAction(this);
             } else {
                   // Não fazer acção da carta
-                  boughtCard(cardNumber);
                   state = state.endTurn();
             }
 
@@ -332,11 +340,23 @@ public class Game implements Serializable {
                   cards.remove(randomCard);
             }
       }
-      
-      public RegularCard getBoughtCard(){
+
+      public RegularCard getBoughtCard() {
             // Como os objectos são guardados por ordem num ArrayList,
             // sabemos que a ultima carta de um jogador é a ultima carta que comprou.
-           return getActivePlayer().getCardsInHand().get(getActivePlayer().getCardsInHand().size()- 1);
+            return getActivePlayer().getCardsInHand().get(getActivePlayer().getCardsInHand().size() - 1);
+      }
+
+      public void pickActionCard(int actionChosen) {
+            // Verificar se foi uma escolha válida
+            if (actionChosen != 1 && actionChosen != 2) {
+                  actionChosen = 1;
+            }
+
+            // Fazer acção da carta
+            if (actionChosen == 1) {
+                  state = getBoughtCard().getAction().doAction(this);
+            }
       }
 
       // ** OUTRAS

@@ -34,7 +34,7 @@ public abstract class StateAdapter implements State, Serializable {
     }
 
     @Override
-    public State playMoveArmyCard(int cardNumber, int x) {
+    public State playMoveArmyCard(int x) {
         return this;
     }
 
@@ -44,7 +44,7 @@ public abstract class StateAdapter implements State, Serializable {
     }
 
     @Override
-    public State playFoundCityCard(int cardNumber) {
+    public State playFoundCityCard() {
         return this;
     }
 
@@ -54,7 +54,7 @@ public abstract class StateAdapter implements State, Serializable {
     }
 
     @Override
-    public State pickAction(int cardNumber) {
+    public State pickAction() {
         return this;
     }
 
@@ -64,7 +64,7 @@ public abstract class StateAdapter implements State, Serializable {
     }
 
     @Override
-    public State playPlaceArmyCard(int cardNumber, int x) {
+    public State playPlaceArmyCard(int x) {
         return this;
     }
 
@@ -74,7 +74,7 @@ public abstract class StateAdapter implements State, Serializable {
     }
 
     @Override
-    public State playRemoveArmyCard(int cardNumber) {
+    public State playRemoveArmyCard() {
         return this;
     }
 

@@ -10,22 +10,22 @@ public class OrState extends StateAdapter {
       }
 
       @Override
-      public State playFoundCityCard(int cardNumber) {
+      public State playFoundCityCard() {
             return new FoundCityState(game);
       }
 
       @Override
-      public State playMoveArmyCard(int cardNumber, int x) {
+      public State playMoveArmyCard(int x) {
             return new MoveArmyState(game, x);
       }
 
       @Override
-      public State playPlaceArmyCard(int cardNumber, int x) {
+      public State playPlaceArmyCard(int x) {
             return new PlaceArmyState(game, x);
       }
 
       @Override
-      public State playRemoveArmyCard(int cardNumber) {
+      public State playRemoveArmyCard() {
             return new RemoveArmyState(game);
       }
 }

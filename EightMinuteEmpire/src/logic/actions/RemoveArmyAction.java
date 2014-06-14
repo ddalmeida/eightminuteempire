@@ -10,8 +10,8 @@ public class RemoveArmyAction extends BaseAction {
     }
 
     @Override
-    public State doAction(Game game, int cardNumber) {
-        return game.getState().playRemoveArmyCard(cardNumber);
+    public State doAction(Game game) {
+        return game.getState().playRemoveArmyCard();
     }
 
     @Override
