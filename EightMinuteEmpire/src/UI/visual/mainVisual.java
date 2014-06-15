@@ -9,7 +9,7 @@ public class mainVisual {
     static JFrame window;
 
     public static void main(String[] args) {
-        window = new MenuWindow(50, 50, "Eight Minute Empire", game, window);
+        window = new MenuWindow(50, 50, "Eight Minute Empire", game);
         window.setVisible(true);
     }
 }

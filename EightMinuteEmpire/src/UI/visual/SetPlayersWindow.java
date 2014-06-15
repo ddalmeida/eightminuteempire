@@ -22,11 +22,11 @@ public final class SetPlayersWindow extends JFrame {
     int x;
     int y;
     Game game;
-    JFrame window;
+    JFrame window = this;
     int number;
     boolean allSet;
 
-    public SetPlayersWindow(int x, int y, String title, Game game, JFrame window, int number) {
+    public SetPlayersWindow(int x, int y, String title, Game game, int number) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,7 +38,6 @@ public final class SetPlayersWindow extends JFrame {
         this.x = x;
         this.y = y;
         this.game = game;
-        this.window = window;
         this.number = number;
         allSet = false;
     }
@@ -86,7 +85,7 @@ public final class SetPlayersWindow extends JFrame {
                     }
 
                     window.dispose();
-                    window = new GameWindow(x, y, "Name the Players", game, window);
+                    window = new GameWindow(x, y, "Name the Players", game);
                     window.setVisible(true);
                 }
             }

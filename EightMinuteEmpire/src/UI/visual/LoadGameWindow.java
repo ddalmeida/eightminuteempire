@@ -29,10 +29,10 @@ public final class LoadGameWindow extends JFrame {
     int x;
     int y;
     Game game;
-    JFrame window;
+    JFrame window = this;
     boolean success;
 
-    public LoadGameWindow(int x, int y, String title, Game game, JFrame window) {
+    public LoadGameWindow(int x, int y, String title, Game game) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,7 +44,6 @@ public final class LoadGameWindow extends JFrame {
         this.x = x;
         this.y = y;
         this.game = game;
-        this.window = window;
         success = true;
     }
 
@@ -108,7 +107,7 @@ public final class LoadGameWindow extends JFrame {
                     }
                     if (success == true) {
                         window.setVisible(false);
-                        window = new GameWindow(x, y, "Eight Minute Empire", game, window);
+                        window = new GameWindow(x, y, "Eight Minute Empire", game);
                         window.setVisible(true);
                     }
                 }
@@ -119,7 +118,7 @@ public final class LoadGameWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window.dispose();
-                window = new MenuWindow(x, y, "Eight Minute Empire", game, window);
+                window = new MenuWindow(x, y, "Eight Minute Empire", game);
                 window.setVisible(true);
             }
         });

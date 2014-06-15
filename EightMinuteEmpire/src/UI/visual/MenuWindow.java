@@ -19,9 +19,9 @@ public final class MenuWindow extends JFrame {
     int x;
     int y;
     Game game;
-    JFrame window;
+    JFrame window = this;
 
-    public MenuWindow(int x, int y, String title, Game game, JFrame window) {
+    public MenuWindow(int x, int y, String title, Game game) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,7 +33,6 @@ public final class MenuWindow extends JFrame {
         this.x = x;
         this.y = y;
         this.game = game;
-        this.window = window;
     }
 
     public void buildComponents(Game game) {
@@ -63,7 +62,7 @@ public final class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window.dispose();
-                window = new NewGameWindow(x, y, "New Game", game, window);
+                window = new NewGameWindow(x, y, "New Game", game);
                 window.setVisible(true);
             }
         });
@@ -73,7 +72,7 @@ public final class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window.dispose();
-                window = new LoadGameWindow(x, y, "Load Game", game, window);
+                window = new LoadGameWindow(x, y, "Load Game", game);
                 window.setVisible(true);
             }
         });

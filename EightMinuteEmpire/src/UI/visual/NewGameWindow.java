@@ -21,10 +21,10 @@ public final class NewGameWindow extends JFrame {
     int x;
     int y;
     Game game;
-    JFrame window;
+    JFrame window = this;
     int number;
 
-    public NewGameWindow(int x, int y, String title, Game game, JFrame window) {
+    public NewGameWindow(int x, int y, String title, Game game) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -36,7 +36,6 @@ public final class NewGameWindow extends JFrame {
         this.x = x;
         this.y = y;
         this.game = game;
-        this.window = window;
     }
 
     public void buildComponents(Game game) {
@@ -64,7 +63,7 @@ public final class NewGameWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (Integer.parseInt(numberPlayersTextField.getText()) > 1 || Integer.parseInt(numberPlayersTextField.getText()) < 6) {
                     window.dispose();
-                    window = new SetPlayersWindow(x, y, "Name the Players", game, window, number);
+                    window = new SetPlayersWindow(x, y, "Name the Players", game, number);
                     window.setVisible(true);
                 }
             }

@@ -35,9 +35,9 @@ public final class GameWindow extends JFrame {
     BufferedImage image;
     boolean hasColor;
     Game game;
-    JFrame window;
+    JFrame window = this;
 
-    public GameWindow(int x, int y, String title, Game game, JFrame window) {
+    public GameWindow(int x, int y, String title, Game game) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,7 +48,6 @@ public final class GameWindow extends JFrame {
         addListeners();
         hasColor = false;
         this.game = game;
-        this.window = window;
     }
 
     public void buildComponents(Game game) {
