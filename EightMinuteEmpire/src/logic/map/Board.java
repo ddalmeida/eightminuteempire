@@ -9,7 +9,7 @@ public class Board implements Serializable {
       protected ArrayList<Continent> continents;
       protected ArrayList<SeaPath> seapaths;
 
-      protected Board() {
+      public Board() {
       }
 
       public BaseRegion getRegion(int x, int y) {

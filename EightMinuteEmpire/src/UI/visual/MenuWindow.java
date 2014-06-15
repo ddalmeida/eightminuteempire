@@ -1,6 +1,5 @@
 package UI.visual;
 
-import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -11,31 +10,32 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import logic.game.Game;
+import logic.game.Model;
 
 public final class MenuWindow extends JFrame {
 
-    JButton newGame;
-    JButton loadGame;
-    int x;
-    int y;
-    Game game;
-    JFrame window = this;
+    private JButton newGame;
+    private JButton loadGame;
+    private int x;
+    private int y;
+   private Model model;
+    private JFrame window = this;
 
-    public MenuWindow(int x, int y, String title, Game game) {
+    public MenuWindow(int x, int y, String title, Model model) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setSize(800, 600);
-        buildComponents(game);
+        buildComponents();
         setComponents();
         addListeners();
         this.x = x;
         this.y = y;
-        this.game = game;
+        this.model = model;
     }
 
-    public void buildComponents(Game game) {
+    public void buildComponents() {
         newGame = new JButton("New Game");
         newGame.setMinimumSize(new Dimension(80, 27));
         newGame.setPreferredSize(new Dimension(80, 27));
@@ -62,7 +62,7 @@ public final class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window.dispose();
-                window = new NewGameWindow(x, y, "New Game", game);
+                window = new NewGameWindow(x, y, "New Game", model);
                 window.setVisible(true);
             }
         });
@@ -72,7 +72,7 @@ public final class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window.dispose();
-                window = new LoadGameWindow(x, y, "Load Game", game);
+                window = new LoadGameWindow(x, y, "Load Game", model);
                 window.setVisible(true);
             }
         });

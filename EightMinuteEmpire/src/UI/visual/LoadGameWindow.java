@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import logic.game.Game;
+import logic.game.Model;
 
 public final class LoadGameWindow extends JFrame {
 
@@ -28,26 +29,26 @@ public final class LoadGameWindow extends JFrame {
     JPanel buttons;
     int x;
     int y;
-    Game game;
+   Model model;
     JFrame window = this;
     boolean success;
 
-    public LoadGameWindow(int x, int y, String title, Game game) {
+    public LoadGameWindow(int x, int y, String title, Model model) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setSize(1024, 600);
-        buildComponents(game);
+        buildComponents();
         setComponents();
         addListeners();
         this.x = x;
         this.y = y;
-        this.game = game;
+        this.model = model;
         success = true;
     }
 
-    public void buildComponents(Game game) {
+    public void buildComponents() {
         fileNameLabel = new JLabel("File Name?");
         fileNameTextField = new JTextField();
         confirm = new JButton("Confirm");
@@ -101,13 +102,13 @@ public final class LoadGameWindow extends JFrame {
                     try {
                         FileInputStream fis = new FileInputStream(fileNameTextField.getText() + ".sav");
                         ObjectInputStream ois = new ObjectInputStream(fis);
-                        game = (Game) ois.readObject();
+                        //game = (Game) ois.readObject();
                     } catch (Exception ex) {
                         success = false;
                     }
                     if (success == true) {
                         window.setVisible(false);
-                        window = new GameWindow(x, y, "Eight Minute Empire", game);
+                        window = new GameWindow(x, y, "Eight Minute Empire", model);
                         window.setVisible(true);
                     }
                 }
@@ -118,7 +119,7 @@ public final class LoadGameWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window.dispose();
-                window = new MenuWindow(x, y, "Eight Minute Empire", game);
+                window = new MenuWindow(x, y, "Eight Minute Empire", model);
                 window.setVisible(true);
             }
         });
