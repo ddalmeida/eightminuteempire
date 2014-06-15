@@ -77,15 +77,15 @@ public final class LoadGameWindow extends JFrame {
 
         cp.setLayout(new BorderLayout());
         cp.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        cp.add(main, BorderLayout.CENTER);
+        cp.add(main, BorderLayout.NORTH);
         cp.add(buttons, BorderLayout.SOUTH);
 
-        main.setLayout(new GridLayout(1, 2, 10, 10));
+        main.setLayout(new GridLayout(2, 1, 10, 10));
         main.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         main.add(fileNameLabel);
         main.add(fileNameTextField);
 
-        buttons.setLayout(new GridLayout(2, 1, 10, 10));
+        buttons.setLayout(new GridLayout(1, 2, 10, 10));
         buttons.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         main.add(confirm);
         main.add(cancel);

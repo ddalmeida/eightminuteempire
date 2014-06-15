@@ -23,6 +23,7 @@ public final class NewGameWindow extends JFrame {
     Game game;
     JFrame window = this;
     int number;
+    boolean validPlayers;
 
     public NewGameWindow(int x, int y, String title, Game game) {
         super(title);
@@ -36,6 +37,8 @@ public final class NewGameWindow extends JFrame {
         this.x = x;
         this.y = y;
         this.game = game;
+        validPlayers = false;
+        number = 0;
     }
 
     public void buildComponents(Game game) {
@@ -61,7 +64,15 @@ public final class NewGameWindow extends JFrame {
         confirmNumberPlayers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Integer.parseInt(numberPlayersTextField.getText()) > 1 || Integer.parseInt(numberPlayersTextField.getText()) < 6) {
+                validPlayers = false;
+                number = Integer.parseInt(numberPlayersTextField.getText());
+                if (number <= 1 || number >= 6) {
+                    validPlayers = false;
+                } else {
+                    validPlayers = true;
+                }
+
+                if (validPlayers == true) {
                     window.dispose();
                     window = new SetPlayersWindow(x, y, "Name the Players", game, number);
                     window.setVisible(true);
