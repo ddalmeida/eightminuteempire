@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import logic.game.Game;
 
 public final class GameWindow extends JFrame {
 
@@ -33,20 +34,24 @@ public final class GameWindow extends JFrame {
     List<JPanel> cards;
     BufferedImage image;
     boolean hasColor;
+    Game game;
+    JFrame window;
 
-    public GameWindow(int x, int y, String title) {     // RECEBE Game
+    public GameWindow(int x, int y, String title, Game game, JFrame window) {
         super(title);
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setSize(1024, 600);
-        buildComponents();                              // RECEBE Game
+        buildComponents(game);
         setComponents();
         addListeners();
         hasColor = false;
+        this.game = game;
+        this.window = window;
     }
 
-    public void buildComponents() {
+    public void buildComponents(Game game) {
         useCard = new JButton("Use Card");
         useCard.setPreferredSize(new Dimension(80, 27));
 

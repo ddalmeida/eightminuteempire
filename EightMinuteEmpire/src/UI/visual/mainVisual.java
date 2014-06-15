@@ -1,9 +1,15 @@
 package UI.visual;
 
+import javax.swing.JFrame;
+import logic.game.Game;
+
 public class mainVisual {
+
+    static Game game;
+    static JFrame window;
+
     public static void main(String[] args) {
-        GameWindow gw = new GameWindow(50, 50, "Eight Minute Empire");
-        
-        gw.setVisible(true);
+        window = new MenuWindow(50, 50, "Eight Minute Empire", game, window);
+        window.setVisible(true);
     }
 }
