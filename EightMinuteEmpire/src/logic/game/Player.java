@@ -54,12 +54,10 @@ public class Player implements Comparable<Player>, Serializable {
             coins += n;
       }
 
-      // inutil?
       public void addPoints(int n) {
             points += n;
       }
 
-      // inutil?
       public int getPoints() {
             return points;
       }

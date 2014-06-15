@@ -2,11 +2,6 @@ package logic.map;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import logic.map.BaseRegion;
-import logic.map.Continent;
-import logic.map.LandRegion;
-import logic.map.SeaPath;
-import logic.map.WaterRegion;
 
 public class Board implements Serializable {
 
@@ -57,19 +52,23 @@ public class Board implements Serializable {
 
             return false;
       }
-      
-       public boolean areAdjacent(BaseRegion b1, BaseRegion b2, boolean overSea) {
+
+      public boolean areAdjacent(BaseRegion b1, BaseRegion b2, boolean overSea) {
             // Se uma região é adejacente, o valor da conta tem de dar 1 (diagonais ignoradas).
             // Se der 0 é porque a região é a mesma (ou algo está muito mal).
-            if (Math.abs(b1.getX() + b2.getX()) + Math.abs(b1.getY() + b2.getY()) <= 1)
+            if (Math.abs(b1.getX() + b2.getX()) + Math.abs(b1.getY() + b2.getY()) <= 1) {
                   return true;
-            
+            }
+
             // Se é a conta deu 2 ou mais, ver se tem caminho maritimo para lá
-            if (overSea)
-            {
+            if (overSea) {
                   return isThereSeaPath(b1, b2);
             }
-            
+
             return false;
+      }
+
+      public ArrayList<Continent> getContinents() {
+            return continents;
       }
 }

@@ -14,4 +14,8 @@ public class Continent implements Serializable {
       public void addRegion(BaseRegion region) {
             regions.add(region);
       }
+
+      public ArrayList<BaseRegion> getRegions() {
+            return regions;
+      }
 }

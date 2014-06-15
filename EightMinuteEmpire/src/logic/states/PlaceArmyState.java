@@ -54,7 +54,13 @@ public class PlaceArmyState extends StateAdapter {
             } else {
                   game.nextPlayer();
                   previousStateResult = result;
-                  return new BuyCardState(game);
+
+                  // Se game over se verificar, ir para o estado de jogo terminou.
+                  if (game.checkForGameOver()) {
+                        return new GameOverState(game);
+                  } else {
+                        return new BuyCardState(game);
+                  }
             }
       }
 
