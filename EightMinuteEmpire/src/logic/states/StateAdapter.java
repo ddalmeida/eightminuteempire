@@ -87,11 +87,6 @@ public abstract class StateAdapter implements State, Serializable {
       }
 
       @Override
-      public State endGame() {
-            return this;
-      }
-
-      @Override
       public State chosenAction(int firstAction) {
             return this;
       }
