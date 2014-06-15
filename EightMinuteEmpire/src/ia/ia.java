@@ -3,19 +3,24 @@ package ia;
 import java.util.Observable;
 import java.util.Observer;
 import logic.game.Model;
+import logic.game.Player;
 
 public class ia implements Observer{
-    private String name;
-    private Model model;
+    private final Player me;
+    private final Model model;
     
-    public ia(String name, Model model)
+    public ia(Player me, Model model)
     {
-        this.name = name;
+        this.me = me;
         this.model = model;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-    
+   switch(model.getState().getClass().getSimpleName())
+   {
+         case "BuyCardState":
+               break;
+   }
     }
 }
