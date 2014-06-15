@@ -30,7 +30,7 @@ public class Game implements Serializable {
             this.board = board;
             rnd = new Random();
             state = new StartGameState(this);
-            
+
       }
 
       // ** ESTADOS
@@ -38,7 +38,6 @@ public class Game implements Serializable {
             return state;
       }
 
-      // apenas para debug
       public void setState(State state) {
             this.state = state;
       }
@@ -76,29 +75,23 @@ public class Game implements Serializable {
                   // ver se é uma carta OR
                   if (boughtCard.getClass().equals(OrCard.class)) {
                         state = state.pickAction();
-                        return 0;
+                        return state.getResult(); // irrelevante o resultado
                   }
 
-                  // Ver se é uma carta de colocar exercito e se atingiu os 14
-                  if (boughtCard.getAction().getClass().equals(PlaceArmyAction.class) && getActivePlayer().getArmies().size() >= 14) {
-                        state = state.endTurn();
-                        return 1;
-                  }
-
-                  // Ver se é uma carta de fundar cidade e se atingiu as 3
-                  if (boughtCard.getAction().getClass().equals(FoundCityAction.class) && getActivePlayer().getCities().size() >= 3) {
-                        state = state.endTurn();
-                        return 2;
+                  // ver se é uma carta AND
+                  if (boughtCard.getClass().equals(AndCard.class)) {
+                        state = state.pickFirstAction();
+                        return state.getResult(); // irrelevante o resultado
                   }
 
                   // Fazer acção da carta
                   state = boughtCard.getAction().doAction(this);
+                  return state.getPreviousStateResult();
             } else {
                   // Não fazer acção da carta
                   state = state.endTurn();
+                  return state.getResult(); // irrelevante o resultado
             }
-
-            return 0;
       }
 
       public void placeBet(int playerNumber, int coins) {
@@ -106,72 +99,60 @@ public class Game implements Serializable {
       }
 
       public int foundCity(int y, int x) {
-            state = state.endTurn();
-
-            // Verficar se jogador ja tem 3 cidades
-            if (getActivePlayer().getCities().size() >= 3) {
-                  return 2;
-            }
-
-            BaseRegion region = board.getRegion(y, x);
-            if (region == null) {
-                  return 3; // Região fora dos limites do mapa
-            }
-
-            // Jogador escolheu regiao onde tem um exercito E não é no meio do mar
-            if (getActivePlayer().haveArmyInRegion(region) && region.isSettleable()) {
-                  getActivePlayer().addCity(region);
-                  return 1; // Cidade fundada
-            }
-            return 0; // Cidade não fundada     
+            state = state.foundCity(board.getRegion(y, x));
+            return state.getPreviousStateResult();
       }
 
       public int placeArmy(int y, int x) {
-            // verificar se jogador ja tem 14 exercitos
-            if (getActivePlayer().getArmies().size() >= 14) {
-                  state = state.endTurn();
-                  return 2;
+            state = state.placeArmy(board.getRegion(y, x));
+            if (state.getResult() == State.NEW_STATE_CODE) {
+                  return state.getPreviousStateResult();
             } else {
-                  state = state.placeArmy();
-
-                  BaseRegion region = board.getRegion(y, x);
-                  if (region == null) {
-                        return 3; // Região fora dos limites do mapa
-                  }
-                  // jogador escolheu regiao inicial ou jogador escolheu regiao onde tem uma cidade
-                  if (region.isInitialRegion() || getActivePlayer().haveCityInRegion(region)) {
-                        getActivePlayer().addArmy(board.getRegion(y, x));
-                        return 1; // novo exercito adicionado
-                  } else {
-                        return 0; // escolheu uma regiao onde não pode adicionar um novo exercito
-                  }
+                  return state.getResult();
             }
       }
 
       public int moveArmy(int y, int x, int y2, int x2) {
-            state = state.moveArmy();
+            state = state.moveArmy(board.getRegion(y, x), board.getRegion(y2, x2), getBoughtCard().getAction().getMoveOverSea());
+            if (state.getResult() == State.NEW_STATE_CODE) {
+                  return state.getPreviousStateResult();
+            } else {
+                  return state.getResult();
+            }
+      }
 
-            BaseRegion from = board.getRegion(y, x);
-            BaseRegion to = board.getRegion(y2, x2);
+      public int removeArmy(Player player, int y, int x) {
+            return removeArmy(player, board.getRegion(y, x));
+      }
 
-            // verificar se FROM e TO estão dentro dos limites do mapa
-            if (from == null || to == null) {
-                  return 3; // Região fora dos limites do mapa
+      public int removeArmy(Player player, BaseRegion region) {
+            state = state.removeArmy(player, region);
+            return state.getPreviousStateResult();
+            
+      }
+
+      public void pickAction(int actionChosen) {
+            // Verificar se foi uma escolha válida
+            if (actionChosen != 1 && actionChosen != 2) {
+                  actionChosen = 1;
             }
 
-            // ver se destino é "passavel"
-            if (!to.isPassable()) {
-                  return 0;
+            // Fazer acção da escolha
+            if (actionChosen == 1) {
+                  state = getBoughtCard().getAction().doAction(this);
+            } else {
+                  state = getBoughtCard().getAction2().doAction(this);
+            }
+      }
+
+      public void pickFirstAction(int actionChosen) {
+            // Verificar se foi uma escolha válida
+            if (actionChosen != 1 && actionChosen != 2) {
+                  actionChosen = 1;
             }
 
-            // ver se as regiões são adjacentes
-            if (!board.areAdjacent(from, to, getBoughtCard().getAction().getMoveOverSea())) {
-                  return 0;
-            }
-
-            // tentar mover um exercito da região y,x para y2,x2
-            int aux = getActivePlayer().moveArmy(board.getRegion(y, x), board.getRegion(y2, x2));
-            return aux;
+            // Fazer acção da escolha
+            state = state.chosenAction(actionChosen);
       }
 
       // ** JOGADORES
@@ -180,7 +161,15 @@ public class Game implements Serializable {
       }
 
       public Player getPlayer(int i) {
+            // Verificar se é um numero valido
+            if (i < 0 || i >= players.size())
+                  return null;
+            else
             return players.get(i);
+      }
+
+      public ArrayList<Player> getPlayers() {
+            return players;
       }
 
       public Player getActivePlayer() {
@@ -323,7 +312,7 @@ public class Game implements Serializable {
                   cards.add(new RegularCard("Iron", 1, new MoveArmyAction(2, true), 24));
                   cards.add(new RegularCard("Tools", 2, new MoveArmyAction(4, false), 32));
             }
-
+            
             // Escolher 6 e mete-las na "mesa"
             for (int i = 1; i <= 6; ++i) {
                   cardToTable();
@@ -347,18 +336,6 @@ public class Game implements Serializable {
             // Como os objectos são guardados por ordem num ArrayList,
             // sabemos que a ultima carta de um jogador é a ultima carta que comprou.
             return getActivePlayer().getCardsInHand().get(getActivePlayer().getCardsInHand().size() - 1);
-      }
-
-      public void pickAction(int actionChosen) {
-            // Verificar se foi uma escolha válida
-            if (actionChosen != 1 && actionChosen != 2) {
-                  actionChosen = 1;
-            }
-
-            // Fazer acção da carta
-            if (actionChosen == 1) {
-                  state = getBoughtCard().getAction().doAction(this);
-            }
       }
 
       // ** OUTRAS

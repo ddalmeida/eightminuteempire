@@ -6,24 +6,29 @@ import logic.map.BaseRegion;
 
 public class RemoveArmyState extends StateAdapter {
 
-    public RemoveArmyState(Game game) {
-        super(game);
-    }
+      public RemoveArmyState(Game game) {
+            super(game);
+      }
 
-    @Override
-    public State removeArmy(Player player, BaseRegion region) {
-        boolean deleted = player.removeArmy(region);
-        if (deleted) {
-            game.nextPlayer();
-            return new BuyCardState(game);
-        }
+      @Override
+      public State removeArmy(Player player, BaseRegion region) {
+            result = player.removeArmy(region);
+            return endTurn();
+      }
 
-        return this;
-    }
-
-    @Override
-    public State endTurn() {
-        game.nextPlayer();
-        return new BuyCardState(game);
-    }
+      @Override
+      public State endTurn() {
+            // Verificar se veio de um AndState
+            if (previousStateResult == RETURN_TO_AND_FIRST_OPTION_DONE
+                    || previousStateResult == RETURN_TO_AND_SECOND_OPTION_DONE) {
+                  int aux = previousStateResult;
+                  previousStateResult = result;
+                  game.setState(new AndState(game));
+                  return new AndState(game).chosenAction(aux);
+            } else {
+                  game.nextPlayer();
+                  previousStateResult = result;
+                  return new BuyCardState(game);
+            }
+      }
 }

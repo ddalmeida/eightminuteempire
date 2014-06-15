@@ -38,7 +38,7 @@ public class main {
             System.out.println("the game will pick the worst option for you! Punch them or yourself now!");
             System.out.println();
             System.out.println();
-            
+
             // Criar novo mapa para jogo em interface consola
             board = new Board_Console();
 
@@ -53,11 +53,11 @@ public class main {
 
             while (game.getState() != null) {
                   switch (game.getState().getClass().getSimpleName()) {
-                        
+
                         case "StartGameState":
                               doStartGameState();
                               break;
-                              
+
                         case "AuctionState":
                               doAuctionState();
                               break;
@@ -182,10 +182,10 @@ public class main {
             System.out.print("Do you want to use it's action? (Y/N): ");
             if (sc.next().toUpperCase().charAt(0) == 'Y') {
                   int errorCode = game.choseCard(cardChosen, true);
-                  if (errorCode == 1) {
+                  if (errorCode == -1) {
                         System.err.println("You already have a maximum of 14 Armies");
                         sc.next();
-                  } else if (errorCode == 2) {
+                  } else if (errorCode == -2) {
                         System.err.println("You already have a maximum of 3 Cities");
                         sc.next();
                   }
@@ -200,7 +200,7 @@ public class main {
             System.out.println();
             drawMap();
 
-            System.out.println("[ PLACE ARMY  - " + game.getState().getX() + " turns left]");
+            System.out.println("[ PLACE ARMY - " + game.getState().getX() + " turns left ]");
             System.out.println("In which region do you want to add an Army?");
             System.out.print("Y: ");
             int y;
@@ -224,12 +224,12 @@ public class main {
                         sc.nextLine();
                         break;
 
-                  case 2:
+                  case -1:
                         System.err.println("You have 14 armies already!");
                         sc.nextLine();
                         break;
 
-                  case 3:
+                  case -2:
                         System.err.println("That region doesn't exist!");
                         sc.nextLine();
             }
@@ -241,7 +241,7 @@ public class main {
             System.out.println();
             drawMap();
 
-            System.out.println("[ MOVE ARMY  - " + game.getState().getX() + " turns left]");
+            System.out.println("[ MOVE ARMY - " + game.getState().getX() + " turns left ]");
             System.out.println("Move an Army FROM Region");
             System.out.print("Y: ");
             int y;
@@ -282,12 +282,12 @@ public class main {
                         sc.nextLine();
                         break;
 
-                  case 2:
+                  case -1:
                         System.err.println("You don't have an Army in that Region!");
                         sc.nextLine();
                         break;
 
-                  case 3:
+                  case -2:
                         System.err.println("You entered a region that doesn't exist!");
                         sc.nextLine();
             }
@@ -298,6 +298,45 @@ public class main {
             System.out.println("***");
             System.out.println();
             drawMap();
+
+                 System.out.println("[ REMOVE ARMY ]");
+            System.out.println("In which region do you want to remove an Army?");
+            System.out.print("Y: ");
+            int y;
+            try {
+                  y = Integer.parseInt(sc.next());
+            } catch (NumberFormatException e) {
+                  y = 0;
+            }
+
+            System.out.print("X: ");
+            int x;
+            try {
+                  x = Integer.parseInt(sc.next());
+            } catch (NumberFormatException e) {
+                  x = 0;
+            }
+
+            System.out.println("From which player?");
+            ArrayList<Player> players = game.getPlayers();
+            for (int i = 0; i < players.size(); i++) {
+                  System.out.println("[" + (i+1) + "] " + players.get(i).getName());
+            }
+
+            System.out.print("Player: ");
+            int player;
+            try {
+                  player = Integer.parseInt(sc.next()) - 1;
+            } catch (NumberFormatException e) {
+                  player = 0;
+            }
+
+            switch (game.removeArmy(game.getPlayer(player), y, x)) {
+                  case 0:
+                        System.err.println("Didn't find any Army from that Player in that Region!");
+                        sc.nextLine();
+                        break;
+            }
       }
 
       private static void doFoundCityState() {
@@ -306,6 +345,7 @@ public class main {
             System.out.println();
             drawMap();
 
+                 System.out.println("[ FOUND CITY ] "); 
             System.out.println("In which region do you want to found a City?");
             System.out.print("Y: ");
             int y;
@@ -323,49 +363,61 @@ public class main {
                   x = 0;
             }
 
-            if (game.foundCity(y, x) == 0) {
-                  System.err.println("You can't found a City there!");
-                  sc.nextLine();
-            }
-            
             switch (game.foundCity(y, x)) {
                   case 0:
                         System.err.println("You can't found a City there!");
                         sc.nextLine();
                         break;
 
-                  case 2:
+                  case -1:
                         System.err.println("You have 3 cities already!");
                         sc.nextLine();
                         break;
 
-                  case 3:
+                  case -2:
                         System.err.println("That region doesn't exist!");
                         sc.nextLine();
             }
       }
 
       private static void doAndState() {
+            System.out.println();
+            System.out.println("***");
+            System.out.println();
+
+            System.out.println("Which action do you want to first?");
+            System.out.println("[1] " + game.getBoughtCard().getAction().toString());
+            System.out.println("[2] " + game.getBoughtCard().getAction2().toString());
+
+            int actionChosen;
+            String input = sc.next();
+            try {
+                  actionChosen = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                  actionChosen = 1;
+            }
+
+            game.pickFirstAction(actionChosen);
       }
 
       private static void doOrState() {
             System.out.println();
             System.out.println("***");
             System.out.println();
-            
+
             System.out.println("Which action do you want to do?");
             System.out.println("[1] " + game.getBoughtCard().getAction().toString());
             System.out.println("[2] " + game.getBoughtCard().getAction2().toString());
-            
-             int actionChosen;
+
+            int actionChosen;
             String input = sc.next();
             try {
                   actionChosen = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                        actionChosen = 1;
-                  }
-            
-            game.pickAction(actionChosen);            
+                  actionChosen = 1;
+            }
+
+            game.pickAction(actionChosen);
       }
 
       private static void doGameOver() {

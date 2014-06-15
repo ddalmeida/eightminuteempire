@@ -10,16 +10,28 @@ public class BuyCardState extends StateAdapter {
 
       @Override
       public State playFoundCityCard() {
+            // Verificar se jogador ja atingiu as 3 cidades
+            if (game.getActivePlayer().getCities().size() >= 3) {
+                  result = -2;
+                  return endTurn();
+            }
+
             return new FoundCityState(game);
       }
 
       @Override
-      public State playMoveArmyCard( int x) {
+      public State playMoveArmyCard(int x) {
             return new MoveArmyState(game, x);
       }
 
       @Override
       public State playPlaceArmyCard(int x) {
+            // Verificar se jogador ja atingiu os 14 exercitos
+            if (game.getActivePlayer().getArmies().size() >= 14) {
+                  result = -1;
+                  return endTurn();
+            }
+
             return new PlaceArmyState(game, x);
       }
 
@@ -34,8 +46,14 @@ public class BuyCardState extends StateAdapter {
       }
 
       @Override
+      public State pickFirstAction() {
+            return new AndState(game);
+      }
+
+      @Override
       public State endTurn() {
             game.nextPlayer();
+            previousStateResult = result;
             return this;
       }
 }
