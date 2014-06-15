@@ -1,5 +1,6 @@
 package UI.visual;
 
+import java.awt.Checkbox;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ public final class SetPlayersWindow extends JFrame {
 
     List<JLabel> playerNameLabel;
     List<JTextField> playerNameTextField;
+    List<JCheckBox> playerAI;
     JButton confirmPlayers;
     int x;
     int y;
@@ -46,6 +49,7 @@ public final class SetPlayersWindow extends JFrame {
         for (int i = 0; i < number; i++) {
             playerNameLabel.add(new JLabel("Player " + (i + 1)));
             playerNameTextField.add(new JTextField());
+            playerAI.add(new JCheckBox("AI?"));
         }
 
         confirmPlayers = new JButton("Confirm");
@@ -79,7 +83,7 @@ public final class SetPlayersWindow extends JFrame {
                     }
                 }
 
-                if (allSet) {
+                if (allSet == true) {
                     for (int i = 0; i < number; i++) {
                         game.addPlayer(playerNameTextField.get(i).getText());
                     }
