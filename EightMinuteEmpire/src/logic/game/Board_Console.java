@@ -27,7 +27,7 @@ public class Board_Console extends Board {
             map[0][2] = new WaterRegion(0, 2);
 
             map[1][0] = new LandRegion(1, 0);
-            conti1.addRegion(map[1][1]);
+            conti1.addRegion(map[1][0]);
             map[1][1] = new WaterRegion(1, 1);
             map[1][2] = new WaterRegion(1, 2);
 

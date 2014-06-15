@@ -5,42 +5,61 @@ import logic.actions.BaseAction;
 
 public class RegularCard implements Serializable {
 
-     String resource;
-     int resourceNumber;
-     BaseAction action;
-    //static int idc = 0;
-     int imageID;
+      public static enum Type {
 
-    public RegularCard(String resource, int resourceNumber, BaseAction action, int imageID) {
-        this.resource = resource;
-        this.resourceNumber = resourceNumber;
-        this.action = action;
-        //id = idc++;
-        this.imageID = imageID;
-    }
+            Jewels(0), Food(1), Wood(2), Iron(3), Tools(4), Joker(5);
 
-    public String getResource() {
-        return resource;
-    }
+            private final int code;
 
-    public int getResourceNumber() {
-        return resourceNumber;
-    }
+            private Type(int c) {
+                  code = c;
+            }
 
-    public BaseAction getAction() {
-        return action;
-    }
-    
-    public BaseAction getAction2(){
-          return null;
-    }
+            public int getCode() {
+                  return code;
+            }
+      }
 
-    @Override
-    public String toString() {
-        return resource + " (" + resourceNumber + ") card with " + action.toString();
-    }
+     Type resource;
+      int resourceNumber;
+      BaseAction action;
+      //static int idc = 0;
+      int imageID;
 
-    public int getImageID() {
-        return imageID;
-    }
+      public RegularCard(Type resource, int resourceNumber, BaseAction action, int imageID) {
+            this.resource = resource;
+            this.resourceNumber = resourceNumber;
+            this.action = action;
+            //id = idc++;
+            this.imageID = imageID;
+      }
+
+      public Type getResource() {
+            return resource;
+      }
+      
+      public void setResource(Type newType) {
+            resource = newType;
+      }
+
+      public int getResourceNumber() {
+            return resourceNumber;
+      }
+
+      public BaseAction getAction() {
+            return action;
+      }
+
+      public BaseAction getAction2() {
+            return null;
+      }
+
+      @Override
+      public String toString() {
+            return resource.toString() + " (" + resourceNumber + ") card with " + action.toString();
+      }
+
+      public int getImageID() {
+            return imageID;
+      }
 }

@@ -149,6 +149,7 @@ public class main {
             System.out.println("***");
             System.out.println();
 
+            System.out.println("[ ROUND " + game.getRound() + " ]");
             System.out.println(game.getActivePlayer().getName() + ", it's your turn! Pick a card! (enter 'S' to save the game)");
             System.out.println("You have: " + game.getActivePlayer().getCoins() + " coins, "
                     + game.getActivePlayer().getArmies().size() + " armies and "
@@ -299,7 +300,7 @@ public class main {
             System.out.println();
             drawMap();
 
-                 System.out.println("[ REMOVE ARMY ]");
+            System.out.println("[ REMOVE ARMY ]");
             System.out.println("In which region do you want to remove an Army?");
             System.out.print("Y: ");
             int y;
@@ -320,7 +321,7 @@ public class main {
             System.out.println("From which player?");
             ArrayList<Player> players = game.getPlayers();
             for (int i = 0; i < players.size(); i++) {
-                  System.out.println("[" + (i+1) + "] " + players.get(i).getName());
+                  System.out.println("[" + (i + 1) + "] " + players.get(i).getName());
             }
 
             System.out.print("Player: ");
@@ -345,7 +346,7 @@ public class main {
             System.out.println();
             drawMap();
 
-                 System.out.println("[ FOUND CITY ] "); 
+            System.out.println("[ FOUND CITY ] ");
             System.out.println("In which region do you want to found a City?");
             System.out.print("Y: ");
             int y;
@@ -421,23 +422,51 @@ public class main {
       }
 
       private static void doGameOver() {
+            System.out.println();
+            System.out.println("***");
+            System.out.println();
+
+            // Verificar se algum jogador tem jokers
+            for (int p = 0; p < game.getPlayers().size(); ++p) {
+                  if (game.getPlayers().get(p).getJokerCardsInHandCount() > 0) {
+                        System.out.println(game.getPlayer(p).getName() + ", you have " + game.getPlayers().get(p).getJokerCardsInHandCount() + " Joker Cards. To which type do you want to convert them?");
+                        for (RegularCard.Type type : RegularCard.Type.values()) {
+                              System.out.println("[" + (type.getCode() + 1) + "] " + type.toString());
+                        }
+                        System.out.print("New type: ");
+
+                        int newType;
+                        String input = sc.next();
+                        try {
+                              newType = Integer.parseInt(input) - 1;
+                        } catch (NumberFormatException e) {
+                              newType = RegularCard.Type.Food.getCode();
+                        }
+
+                        game.getPlayer(p).convertJokersTo(newType);
+                        System.out.println();
+                  }
+            }
+
+            System.out.println();
             System.out.println("=================================");
-            System.out.println("POS\tPOINTS\tNAME");
+            System.out.println("POS\tPOINTS\tCOINS\tNAME");
 
             // Apresentar tabela de pontuação e mensagem de parabens
             List<Player> scoreTable = game.getScoreTable();
 
             for (int i = 0; i < game.getNumberOfPlayers(); ++i) {
-                  System.out.println(String.format("%d\t%d\t%s",
-                          i + 1, scoreTable.get(i).getPoints(), scoreTable.get(i).getName()));
+                  System.out.println(String.format("%d\t%d\t%d\t%s",
+                          i + 1, scoreTable.get(i).getPoints(), scoreTable.get(i).getCoins(), scoreTable.get(i).getName()));
             }
             System.out.println("=================================");
             System.out.println();
-            System.out.println(String.format("CONGRATULATIONS, %s!", scoreTable.get(0).getName()));
+            System.out.println(String.format("CONGRATULATIONS, %s!", scoreTable.get(0).getName().toUpperCase()));
             System.out.println("YOU ARE THE STRATEGY MASTER OF THE WORLD!!!");
 
             // Sai do jogo
             game.setState(null);
+            System.exit(0);
       }
 
       private static Game loadGame(String filename) {

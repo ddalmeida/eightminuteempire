@@ -6,7 +6,7 @@ public class OrCard extends RegularCard {
 
       private BaseAction action2;
 
-      public OrCard(String resource, int resourceNumber, BaseAction action, BaseAction action2, int imageID) {
+      public OrCard(Type resource, int resourceNumber, BaseAction action, BaseAction action2, int imageID) {
             super(resource, resourceNumber, action, imageID);
             this.action2 = action2;
       }
@@ -18,6 +18,6 @@ public class OrCard extends RegularCard {
 
       @Override
       public String toString() {
-            return resource + " (" + resourceNumber + ") card with " + action.toString() + " OR " + action2.toString();
+            return resource.toString() + " (" + resourceNumber + ") card with " + action.toString() + " OR " + action2.toString();
       }
 }

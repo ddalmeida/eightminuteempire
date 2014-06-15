@@ -14,8 +14,9 @@ public class Player implements Comparable<Player>, Serializable {
       private ArrayList<RegularCard> cardsInHand;
       private ArrayList<Army> armies;
       private ArrayList<City> cities;
+      private Game game;
 
-      Player(String name, int coins) {
+      Player(String name, int coins, Game game) {
             this.name = name;
             this.coins = coins;
             points = 0;
@@ -23,11 +24,29 @@ public class Player implements Comparable<Player>, Serializable {
             cardsInHand = new ArrayList<>();
             armies = new ArrayList<>();
             cities = new ArrayList<>();
+            this.game = game;
       }
 
       @Override
       public int compareTo(Player o) {
-            return (int) (o.getPoints() - this.points);
+            // valor negativo = este jogador é superior
+            // 0 = estao empatados
+            // valor positivo = jogador O é superior
+
+            // Verificar se estão empatados em pontos
+            if (o.getPoints() == this.points) {
+                  // Verificar se estão empatados em moedas
+                  if (o.getCoins() == this.coins) {
+                        // Verificar se estão empatados em exercitos
+                        if (o.getArmies().size() == this.armies.size()) {
+                              // Verificar se estão empatados em controlo de regiões
+                              if (game.howManyRegionsControls(o) == game.howManyRegionsControls(this))
+                                    return 0;
+                              else
+                                    return (int) game.howManyRegionsControls(o) - game.howManyRegionsControls(this);
+                        } else return (int) (o.getArmies().size() - this.armies.size());
+                  } else return (int) (o.getCoins() - this.coins);
+            } else return (int) (o.getPoints() - this.points);
       }
 
       public String getName() {
@@ -69,6 +88,29 @@ public class Player implements Comparable<Player>, Serializable {
       public ArrayList<RegularCard> getCardsInHand() {
             return cardsInHand;
       }
+      
+            public int getJokerCardsInHandCount()
+            {
+                  int count = 0;
+                  for (int i = 0; i < cardsInHand.size(); ++i)
+                        if (cardsInHand.get(i).getResource() == RegularCard.Type.Joker)
+                              count++;
+                  
+                  return count;
+            }
+            
+            public void convertJokersTo(int newType)
+            {
+                  // verificar se novo tipo de recurso está dentro dos limites.
+                  // se não estiver, castigar jogador.
+                  if (newType < 0 || newType >= RegularCard.Type.values().length)
+                        newType = RegularCard.Type.Food.getCode();
+                  
+                  // Converter Jokers
+                  for (int i = 0; i < cardsInHand.size(); ++i)
+                        if (cardsInHand.get(i).getResource() == RegularCard.Type.Joker)
+                              cardsInHand.get(i).setResource(RegularCard.Type.values()[newType]);
+            }
 
       public void addCity(City city) {
             cities.add(city);

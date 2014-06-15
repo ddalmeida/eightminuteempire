@@ -52,8 +52,13 @@ public class BuyCardState extends StateAdapter {
 
       @Override
       public State endTurn() {
-            game.nextPlayer();
-            previousStateResult = result;
-            return this;
+             game.nextPlayer();
+             
+            // Se game over se verificar, ir para o estado de jogo terminou.
+            if (game.checkForGameOver()) {
+                  return new GameOverState(game);
+            } else {
+                  return this;
+            }
       }
 }
