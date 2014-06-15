@@ -85,7 +85,7 @@ public final class SetPlayersWindow extends JFrame {
                     }
 
                     window.dispose();
-                    window = new GameWindow(x, y, "Name the Players", game);
+                    window = new GameWindow(x, y, "Eight Minute Empire", game);
                     window.setVisible(true);
                 }
             }

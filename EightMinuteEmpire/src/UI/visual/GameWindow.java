@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import logic.game.Game;
+import logic.game.*;
 
 public final class GameWindow extends JFrame {
 
@@ -58,6 +57,9 @@ public final class GameWindow extends JFrame {
         endTurn.setPreferredSize(new Dimension(80, 27));
 
         // INICIALIZA Game.getPlayers().size() LABELS
+        for (int i = 0; i < game.getNumberOfPlayers(); i++) {
+            players.add(new JLabel(game.getPlayer(i).getName()));
+        }
 
         mainPanel = new JPanel() {
             @Override
@@ -87,13 +89,13 @@ public final class GameWindow extends JFrame {
 
         cards = new ArrayList<>();
 
-        try {
-            image = ImageIO.read(new File("C:\\Users\\L\\Desktop\\ISEC\\2º Semestre\\Programação Avançada\\Trabalho Prático\\Projecto\\EightMinuteEmpire\\00_place_army_3.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(GameWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         for (int i = 0; i < 6; i++) {
+            try {
+                image = ImageIO.read(Resource.getResourceFile("UI/visual/resources/images/card" + game.getCardsTable().get(i).getImageID() + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(GameWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             JPanel jb = new JPanel() {
                 @Override
                 public void paint(Graphics g) {
